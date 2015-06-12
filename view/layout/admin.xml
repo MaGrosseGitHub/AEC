@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<uppermenu>
+  <menu name = "UpperMenu1" icon = "icon icon-phone">
+    <submenu name = "menu1" icon = "icon icon-male">
+      <name>
+        <title>menu1</title>
+        <icon>icon icon-shop</icon>
+      </name>
+      <link>
+        <href> test1.html</href>
+        <title>title1</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+
+      <submenu name = "menu1_1" icon = "icon icon-male">
+        <name>
+          <title>menu1_1</title>
+          <icon>icon icon-shop</icon>
+        </name>
+        <submenu name = "menu1_1_1" icon = "icon icon-male">
+          <name>
+            <title>menu1_1_1</title>
+            <icon>icon icon-shop</icon>
+          </name>
+          <link>
+            <href> test1_1.html</href>
+            <title>title1_1_1</title>
+            <icon>icon icon-female</icon>
+          </link>
+          <link>
+            <href> test1_2.html</href>
+            <title>title1__1_2</title>
+            <icon>icon icon-female</icon>
+          </link>
+        </submenu>
+        <link>
+          <href> test1_1.html</href>
+          <title>title1_1</title>
+          <icon>icon icon-female</icon>
+        </link>
+        <link>
+          <href> test1_2.html</href>
+          <title>title1_2</title>
+          <icon>icon icon-female</icon>
+        </link>
+      </submenu>
+
+    </submenu>
+    <submenu name = "menu2" icon = "icon icon-male">
+      <name>
+        <title>menu2</title>
+        <icon>icon icon-shop</icon>
+      </name>
+      <link>
+        <href> test3.html</href>
+        <title>title3</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test4.html</href>
+        <title>title4</title>
+        <icon>icon icon-female</icon>
+      </link>
+    </submenu>
+    <link>
+      <href> test5.html</href>
+      <title>title5</title>
+      <icon>icon icon-female</icon>
+    </link>
+    <link>
+      <href> test6.html</href>
+      <title>title6</title>
+      <icon>icon icon-female</icon>
+    </link>
+  </menu>
+
+  <menu name = "UpperMenu2" icon = "icon icon-food">
+    <submenu name = "menu1" icon = "icon icon-male">
+      <name>
+        <title>menu1</title>
+        <icon>icon icon-shop</icon>
+      </name>
+      <link>
+        <href> test1.html</href>
+        <title>title1</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test2.html</href>
+        <title>title2</title>
+        <icon>icon icon-female</icon>
+      </link>
+
+      <submenu name = "menu1_1" icon = "icon icon-male">
+        <name>
+          <title>menu1_1</title>
+          <icon>icon icon-shop</icon>
+        </name>
+        <submenu name = "menu1_1_1" icon = "icon icon-male">
+          <name>
+            <title>menu1_1_1</title>
+            <icon>icon icon-shop</icon>
+          </name>
+          <link>
+            <href> test1_1.html</href>
+            <title>title1_1_1</title>
+            <icon>icon icon-female</icon>
+          </link>
+          <link>
+            <href> test1_2.html</href>
+            <title>title1__1_2</title>
+            <icon>icon icon-female</icon>
+          </link>
+        </submenu>
+        <link>
+          <href> test1_1.html</href>
+          <title>title1_1</title>
+          <icon>icon icon-female</icon>
+        </link>
+        <link>
+          <href> test1_2.html</href>
+          <title>title1_2</title>
+          <icon>icon icon-female</icon>
+        </link>
+      </submenu>
+
+    </submenu>
+    <submenu name = "menu2" icon = "icon icon-male">
+      <name>
+        <title>menu2</title>
+        <icon>icon icon-shop</icon>
+      </name>
+      <link>
+        <href> test3.html</href>
+        <title>title3</title>
+        <icon>icon icon-female</icon>
+      </link>
+      <link>
+        <href> test4.html</href>
+        <title>title4</title>
+        <icon>icon icon-female</icon>
+      </link>
+    </submenu>
+    <link>
+      <href> test5.html</href>
+      <title>title5</title>
+      <icon>icon icon-female</icon>
+    </link>
+    <link>
+      <href> test6.html</href>
+      <title>title6</title>
+      <icon>icon icon-female</icon>
+    </link>
+  </menu>
+</uppermenu>

@@ -1,0 +1,44 @@
+﻿
+<div id="filelist">
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th>Titre</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+<button class = "deleteSelect btn">Supprimer groupe d'images</button> <br>
+<button class = "cancelDelete btn">Annuler</button>
+<form action="<?php echo Router::url('admin/medias/delete'); ?>" method="post">
+  <div class="actions">
+    <input class = "deleteImg btn" type="submit" class="btn primary" value="Tout supprimer">
+  </div>
+			<?php foreach ($images as $k => $v): 
+              if($v->type != "album"):
+        ?>
+				<tr>
+					<td>
+            <div class="file">
+							<a href="#" onclick="FileBrowserDialogue.sendURL('<?php echo Router::webroot('img/'.$v->file); ?>')">
+								<img src="<?php echo Router::webroot('img/'.$v->file); ?>" height="50">
+							</a>
+						</div>
+					</td>
+					<td><?php echo $v->name; ?></td>
+					<td>
+						<div class="actions">
+              <?php echo $this->Form->input($v->id,'',array('type'=>'checkbox', 'class' => "deleteImg")); ?>
+
+							<a class = "delete" onclick="return confirm('Voulez vous vraiment supprimer cette image'); " href="<?php echo Router::url('admin/medias/delete/'.$v->id); ?>"><?php echo HTML::getImg("delete.png",true, false, 'width ="30px" height = "30px"'); ?></a>
+						</div>
+	                </td>
+				</tr>
+      <?php endif ?>
+			<?php endforeach ?>
+
+</form>
+		</tbody>
+	</table>
+</div>
