@@ -28,50 +28,50 @@
 	# # RewriteRule .(?:jpe?g|gif|png)$ test.jpg
 
 	# # END Adaptive-Images -------------------------------------------------------------------------------
-    Options +FollowSymlinks
+ #    Options +FollowSymlinks
 
-    # Start the rewrite engine
-    RewriteEngine On
-    RewriteBase /
+ #    # Start the rewrite engine
+ #    RewriteEngine On
+ #    RewriteBase /
     
-	#############################################################################################################
-	# REDIRECT ANY DIRECT IMAGE REQUEST TO A CACHED VERSION
-	#
-	# You may add files or directories that shouldn't be touched by squeezr like this:
-	#
-	#    RewriteCond %{REQUEST_URI} !path/to/some/file-or-directory
-	#
-	# Please refer to the mod_rewrite documentation at http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html for
-	# further possibilities and instructions.
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	RewriteCond %{REQUEST_FILENAME} -f
-	RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
-	RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
-	RewriteCond %{HTTP_COOKIE} squeezr.images=(\d+px) [NC]
-	RewriteRule ^(.+)(\.(?:jpe?g|gif|png))$ squeezr/cache/$1-%1$2 [NC,E=BREAKPOINT:%1,L]
-	#RewriteRule .(\.(?:jpe?g|gif|png))$ test.jpg
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# Please make sure that you set this path     ^^^     to the squeezr root directory that is also specified
-	# for the SQUEEZR_ROOT constant in the common engine configuration (SQUEEZR_ROOT/conf/common.php). If you
-	# apply the default setup for squeezr (i.e. put everything into a directory named "squeezr" under your
-	# website's document root), then you shouldn't have to change anything.
-	#############################################################################################################
+	# #############################################################################################################
+	# # REDIRECT ANY DIRECT IMAGE REQUEST TO A CACHED VERSION
+	# #
+	# # You may add files or directories that shouldn't be touched by squeezr like this:
+	# #
+	# #    RewriteCond %{REQUEST_URI} !path/to/some/file-or-directory
+	# #
+	# # Please refer to the mod_rewrite documentation at http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html for
+	# # further possibilities and instructions.
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# RewriteCond %{REQUEST_FILENAME} -f
+	# RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
+	# RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
+	# RewriteCond %{HTTP_COOKIE} squeezr.images=(\d+px) [NC]
+	# RewriteRule ^(.+)(\.(?:jpe?g|gif|png))$ squeezr/cache/$1-%1$2 [NC,E=BREAKPOINT:%1,L]
+	# #RewriteRule .(\.(?:jpe?g|gif|png))$ test.jpg
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# # Please make sure that you set this path     ^^^     to the squeezr root directory that is also specified
+	# # for the SQUEEZR_ROOT constant in the common engine configuration (SQUEEZR_ROOT/conf/common.php). If you
+	# # apply the default setup for squeezr (i.e. put everything into a directory named "squeezr" under your
+	# # website's document root), then you shouldn't have to change anything.
+	# #############################################################################################################
 	    
 	    
-	#############################################################################################################
-	# REDIRECT ANY DIRECT CSS REQUEST TO A CACHED VERSION
-	#
-	# See above for some hints about excluding files or directories from the squeezr processing
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	RewriteCond %{REQUEST_FILENAME} -f
-	RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
-	RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
-	RewriteCond %{HTTP_COOKIE} squeezr.css=(\d+x\d+@\d+(?:\.\d+)?) [NC]
+	# #############################################################################################################
+	# # REDIRECT ANY DIRECT CSS REQUEST TO A CACHED VERSION
+	# #
+	# # See above for some hints about excluding files or directories from the squeezr processing
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# RewriteCond %{REQUEST_FILENAME} -f
+	# RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
+	# RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
+	# RewriteCond %{HTTP_COOKIE} squeezr.css=(\d+x\d+@\d+(?:\.\d+)?) [NC]
+	# # RewriteRule ^(.+)\.css$ squeezr/cache/$1-%1.css [NC,E=BREAKPOINT:%1,L]
 	# RewriteRule ^(.+)\.css$ squeezr/cache/$1-%1.css [NC,E=BREAKPOINT:%1,L]
-	RewriteRule ^(.+)\.css$ squeezr/cache/$1-%1.css [NC,E=BREAKPOINT:%1,L]
-	# ~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	# See above for hints on      ^^^     this path.
-	#############################################################################################################
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# # See above for hints on      ^^^     this path.
+	# #############################################################################################################
 
 	
 

@@ -6,7 +6,7 @@
     var isHistoryAvailable, prevPageTitle = "", eventIndex = false, prevIndex = false;
     </script>
 
-    <script type="text/javascript" id="squeezr" data-breakpoints-images="480,768,1024"> ... </script>
+    <!-- <script type="text/javascript" id="squeezr" data-breakpoints-images="480,768,1024"> ... </script> -->
     <!-- lines for Adaptive images -->
     <!-- <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script> -->
     <!-- Use this line instaead for retina (and dpi screens) users -->
