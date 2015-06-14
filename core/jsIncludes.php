@@ -2,13 +2,11 @@
     <!--<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
    <script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>   -->
-    <script> 
-    var isHistoryAvailable, prevPageTitle = "", eventIndex = false, prevIndex = false;
-    </script>
 
     <!-- <script type="text/javascript" id="squeezr" data-breakpoints-images="480,768,1024"> ... </script> -->
     <!-- lines for Adaptive images -->
-    <!-- <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script> -->
+    <!--<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>-->
+    <!--<script type="text/javascript">document.cookie='resolution='+Math.max(window.innerWidth,window.innerHeight)+'; expires=; path=/';</script>-->
     <!-- Use this line instaead for retina (and dpi screens) users -->
     <!-- <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/';</script> -->
     <!-- CSS alternative to js -->
@@ -25,6 +23,10 @@
          html { background-image:url(ai-cookie.php?maxwidth=unknown); } }
     </style> -->
     <!-- lines for Adaptive images -->
+    <script> 
+    var isHistoryAvailable, prevPageTitle = "", eventIndex = false, prevIndex = false;
+    </script>
+
     <?php 
 
     // echo HTML::JS("//code.jquery.com/jquery.min.js");

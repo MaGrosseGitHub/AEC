@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /* PROJECT INFO --------------------------------------------------------------------------------------------------------
    Version:   1.5.2
    Changelog: http://adaptive-images.com/changelog.txt
@@ -25,6 +25,7 @@ $browser_cache = 60*60*24*7; // How long the BROWSER cache should last (seconds,
 
 /* get all of the required data from the HTTP request */
 $document_root  = $_SERVER['DOCUMENT_ROOT'];
+// $document_root  = "K:/wamp/www/AEC/webroot/";
 $requested_uri  = parse_url(urldecode($_SERVER['REQUEST_URI']), PHP_URL_PATH);
 $requested_file = basename($requested_uri);
 $source_file    = $document_root.$requested_uri;

@@ -11,23 +11,23 @@
 	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 	# END HTTPS -------------------------------------------------------------------------------
 
-	# # Adaptive-Images -----------------------------------------------------------------------------------
+	# Adaptive-Images -----------------------------------------------------------------------------------
 
- 	#Options +FollowSymlinks
+ 	Options +FollowSymlinks
 
-	# # Add any directories you wish to omit from the Adaptive-Images process on a new line, as follows:
-	# # RewriteCond %{REQUEST_URI} !ignore-this-directory
-	# # RewriteCond %{REQUEST_URI} !and-ignore-this-directory-too
+	# Add any directories you wish to omit from the Adaptive-Images process on a new line, as follows:
+	# RewriteCond %{REQUEST_URI} !ignore-this-directory
+	# RewriteCond %{REQUEST_URI} !and-ignore-this-directory-too
 
-	# RewriteCond %{REQUEST_URI} !assets
-	# # don't apply the AI behaviour to images inside AI's cache folder:
-	# RewriteCond %{REQUEST_URI} !ai-cache
-	# # Send any GIF, JPG, or PNG request that IS NOT stored inside one of the above directories
-	# # to adaptive-images.php so we can select appropriately sized versions
-	# RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
-	# # RewriteRule .(?:jpe?g|gif|png)$ test.jpg
+	RewriteCond %{REQUEST_URI} !assets
+	# don't apply the AI behaviour to images inside AI's cache folder:
+	RewriteCond %{REQUEST_URI} !ai-cache
+	# Send any GIF, JPG, or PNG request that IS NOT stored inside one of the above directories
+	# to adaptive-images.php so we can select appropriately sized versions
+	RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
+	# RewriteRule .(?:jpe?g|gif|png)$ test.jpg
 
-	# # END Adaptive-Images -------------------------------------------------------------------------------
+	# END Adaptive-Images -------------------------------------------------------------------------------
  #    Options +FollowSymlinks
 
  #    # Start the rewrite engine

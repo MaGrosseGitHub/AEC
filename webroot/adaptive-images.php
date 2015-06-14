@@ -1,6 +1,14 @@
-﻿<?php
+<?php
 
-// sendErrorImage("there is a problem");
+// $requested_uri_temp = explode("/", $requested_uri);
+// function writeHeader($filename) {
+//   $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+//   if (in_array($extension, array('png', 'gif', 'jpeg', 'jpg'))) {
+//     header("Content-Type: image/".$extension);
+//   } else {
+//     header("Content-Type: image/jpeg");
+//   }
+// }
 /* PROJECT INFO --------------------------------------------------------------------------------------------------------
    Version:   1.5.2
    Changelog: http://adaptive-images.com/changelog.txt
@@ -14,7 +22,7 @@
 
 /* CONFIG ----------------------------------------------------------------------------------------------------------- */
 
-$resolutions   = array(1382, 992, 768, 480); // the resolution break-points to use (screen widths, in pixels)
+$resolutions   = array(2160,1382, 992, 768, 480); // the resolution break-points to use (screen widths, in pixels)
 $cache_path    = "ai-cache"; // where to store the generated re-sized images. Specify from your document root!
 $jpg_quality   = 75; // the quality of any generated JPGs on a scale of 0 to 100
 $sharpen       = TRUE; // Shrinking images can blur details, perform a sharpen on re-scaled images?
@@ -27,6 +35,7 @@ $browser_cache = 60*60*24*7; // How long the BROWSER cache should last (seconds,
 
 /* get all of the required data from the HTTP request */
 $document_root  = $_SERVER['DOCUMENT_ROOT'];
+// $document_root  = "K:/wamp/www/AEC/webroot/";
 $requested_uri  = parse_url(urldecode($_SERVER['REQUEST_URI']), PHP_URL_PATH);
 $requested_file = basename($requested_uri);
 $source_file    = $document_root.$requested_uri;
@@ -48,7 +57,7 @@ if(!is_mobile()){
 
 // does the $cache_path directory exist already?
 if (!is_dir("$document_root/$cache_path")) { // no
-  if (!mkdir("$document_root/$cache_path", 0755, true)) { // so make it
+  if (!mkdir("$document_root/$cache_path", 0777, true)) { // so make it
     if (!is_dir("$document_root/$cache_path")) { // check again to protect against race conditions
       // uh-oh, failed to make that directory
       sendErrorImage("Failed to create cache directory at: $document_root/$cache_path");
@@ -59,7 +68,7 @@ if (!is_dir("$document_root/$cache_path")) { // no
 /* helper function: Send headers and returns an image. */
 function sendImage($filename, $browser_cache) {
   $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-  if (in_array($extension, array('png', 'gif', 'jpeg'))) {
+  if (in_array($extension, array('png', 'gif', 'jpeg', 'jpg'))) {
     header("Content-Type: image/".$extension);
   } else {
     header("Content-Type: image/jpeg");
@@ -70,7 +79,6 @@ function sendImage($filename, $browser_cache) {
   readfile($filename);
   exit();
 }
-
 /* helper function: Create and send an image with an error message. */
 function sendErrorImage($message) {
   /* get all of the required data from the HTTP request */
@@ -192,7 +200,7 @@ function generateImage($source_file, $cache_file, $resolution) {
 
   // does the directory exist already?
   if (!is_dir($cache_dir)) { 
-    if (!mkdir($cache_dir, 0755, true)) {
+    if (!mkdir($cache_dir, 0777, true)) {
       // check again if it really doesn't exist to protect against race conditions
       if (!is_dir($cache_dir)) {
         // uh-oh, failed to make that directory
@@ -225,6 +233,55 @@ function generateImage($source_file, $cache_file, $resolution) {
   }
 
   return $cache_file;
+}
+
+function MakePath($pathname, $is_filename=false){
+
+  if($is_filename){
+
+      $pathname = substr($pathname, 0, strrpos($pathname, '/'));
+
+  }
+
+    // Check if directory already exists
+
+    if (is_dir($pathname) || empty($pathname)) {
+
+        return true;
+
+    }
+
+    // Ensure a file does not already exist with the same name
+
+    $pathname = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $pathname);
+
+    if (is_file($pathname)) {
+
+        trigger_error('mkdirr() File exists', E_USER_WARNING);
+
+        return false;
+
+    }
+
+    // Crawl up the directory tree
+     
+    $pathtree = explode(DIRECTORY_SEPARATOR, $pathname);
+    $curPath = "";
+
+    for ($i=0; $i < count($pathtree); $i++) { 
+      if($curPath != ""){
+        $curPath = $curPath.DIRECTORY_SEPARATOR.$pathtree[$i];
+      } else{
+        $curPath = $pathtree[$i];
+      }
+
+      if(!is_dir($curPath)){
+        mkdir($curPath);
+      }
+    }
+
+    return true;
+
 }
 
 // check if the file exists at all
@@ -308,15 +365,30 @@ if(substr($requested_uri, 0,1) == "/") {
 }
 
 /* whew might the cache file be? */
-$cache_file = $document_root."/$cache_path/$resolution/".$requested_uri;
-
+$requested_uri_temp = explode("/", $requested_uri);
+$cache_file = $document_root."AEC/$cache_path/$resolution/".$requested_uri_temp[count($requested_uri_temp)-1];
 /* Use the resolution value as a path variable and check to see if an image of the same name exists at that path */
+$cache_folder = "";
+if(!file_exists($cache_file)){
+  MakePath($cache_file);
+}
+
+  // echo '<pre>';
+  // print_r(explode("/", $requested_uri));
+  // echo '</pre>';
+  // die($source_file);
+  // die("<h1>".$cache_file."</h1>");
+
 if (file_exists($cache_file)) { // it exists cached at that size
   if ($watch_cache) { // if cache watching is enabled, compare cache and source modified dates to ensure the cache isn't stale
     $cache_file = refreshCache($source_file, $cache_file, $resolution);
   }
+//Report any errors
+ini_set("display_errors", "1");
+error_reporting(E_ALL); 
 
   sendImage($cache_file, $browser_cache);
+  die("<h1>".$cache_file."</h1>");
 }
 
 /* It exists as a source file, and it doesn't exist cached - lets make one: */

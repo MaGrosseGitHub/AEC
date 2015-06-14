@@ -380,7 +380,6 @@
 <?php echo HTML::CSS("bookblock"); ?>
     <!-- <div class="md-content" style = "overflow-y : scroll;"> -->
       <!-- <h3><button class="md-close" style="font-size: 1.5em;">x</button> Galerie </h3> -->
-        
 <!-- Modal -->
 <div class="modal modal-wide fade" id="imgModal" style="overflow-y: auto;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -423,7 +422,7 @@
     <div class="galleryFilters"></div>
     <ul id="og-grid" class="og-grid filelist">   
 
-    			<?php 
+          <?php 
 
             $zIndex = 100;
             $albumsArray = array();
@@ -627,7 +626,6 @@
                       <?php if ($image->type == "album"): ?>
                       <div class="bb-bookblock">
                         <?php 
-                          // debug($albumImgs);
                           if(count($albumImgs) >= 5){
                             $randImgs = array();
                             for($i = 0; $i < 4; $i++){
@@ -646,6 +644,7 @@
                           <?php
                             }
                           } else {
+                            debug(count($albumImgs));
                             for($i = 0; $i < count($albumImgs); $i++){
                               $albumLiThumb = $albumsArray[$image->name.'_'.$image->user][$i]['phpThumb'];                     
                               if(!preg_match("#^http#", $albumLiThumb))
@@ -716,7 +715,7 @@
               </li>
 
             <?php endif ?>
-    			<?php endforeach ?>
+          <?php endforeach ?>
 
       <?php 
         $nextPage = $curPage+1;

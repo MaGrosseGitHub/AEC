@@ -4,6 +4,8 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
       <title><?php echo isset($title_for_layout)?$title_for_layout:'Mon site'; ?></title> 
       <?php //require CORE.DS.'scriptsInclude.php'; ?>
+      <!--<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>-->
+      <script type="text/javascript">document.cookie='resolution='+Math.max(320,480)+'; expires=; path=/';</script>
       <?php require CORE.DS.'cssIncludes.php'; ?>
       <?php require CORE.DS.'jsIncludes.php'; ?>
     </head>
