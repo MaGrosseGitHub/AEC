@@ -1,7 +1,6 @@
 <!DOCTYPE html> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr"> 
     <head> 
-      <script> var adaptiveImages; </script>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
       <title><?php echo isset($title_for_layout)?$title_for_layout:'Mon site'; ?></title> 
       <?php //require CORE.DS.'scriptsInclude.php'; ?>

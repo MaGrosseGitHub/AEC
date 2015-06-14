@@ -11,8 +11,9 @@ class Dispatcher{
 	* Fonction principale du dispatcher
 	* Charge le controller en fonction du routing
 	**/
-	function __construct(){
+	function __construct($replaceInUrl){
 		$this->request = new Request(); 
+		$this->request->replaceInUrl = $replaceInUrl;
 		Router::parse($this->request->url,$this->request); 
 		$controller = $this->loadController();
 		$action = $this->request->action;

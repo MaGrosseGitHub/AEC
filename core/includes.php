@@ -18,3 +18,5 @@ require 'Model.php';
 require 'Dispatcher.php'; 
 require 'lib/Comments.php';
 require 'lib/Images.php';
+
+?>

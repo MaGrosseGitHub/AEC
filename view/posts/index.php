@@ -20,7 +20,7 @@
           </small>
         </h3>
         
-        <?php echo HTML::getImg("cache/post/".$v->slug.DS.$v->slug."_150x100.jpg", null, null, null, true); ?>
+        <?php echo HTML::getImg("cache/post/".$v->slug.'/'.$v->slug."_150x100.jpg", null, null, null, true); ?>
         <div class="newsPreview"><?php echo substr(strip_tags($v->content),0,300); ?>...</div>
       </div>
       <p style="text-align:right">

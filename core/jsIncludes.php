@@ -1,17 +1,39 @@
 ﻿    <!-- JS Files -->
-    <!--<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-   <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>   -->
+    <!--<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   <script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>   -->
     <script> 
     var isHistoryAvailable, prevPageTitle = "", eventIndex = false, prevIndex = false;
     </script>
+
+    <script type="text/javascript" id="squeezr" data-breakpoints-images="480,768,1024"> ... </script>
+    <!-- lines for Adaptive images -->
+    <!-- <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script> -->
+    <!-- Use this line instaead for retina (and dpi screens) users -->
+    <!-- <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+("devicePixelRatio" in window ? ","+devicePixelRatio : ",1")+'; path=/';</script> -->
+    <!-- CSS alternative to js -->
+    <!-- <style>
+        @media only screen and (max-device-width: 479px) {
+         html { background-image:url(ai-cookie.php?maxwidth=479); } }
+        @media only screen and (min-device-width: 480px) and (max-device-width: 767px) {
+         html { background-image:url(ai-cookie.php?maxwidth=767); } }
+        @media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
+         html { background-image:url(ai-cookie.php?maxwidth=991); } }
+        @media only screen and (min-device-width: 992px) and (max-device-width: 1381px) {
+         html { background-image:url(ai-cookie.php?maxwidth=1381); } }
+        @media only screen and (min-device-width: 1382px) {
+         html { background-image:url(ai-cookie.php?maxwidth=unknown); } }
+    </style> -->
+    <!-- lines for Adaptive images -->
     <?php 
 
-    echo HTML::JS("http://code.jquery.com/jquery.min.js");
-    echo HTML::JS("http://code.jquery.com/jquery-migrate-1.2.1.min.js");
-    echo HTML::JS("http://code.jquery.com/ui/1.10.3/jquery-ui.js");
-    echo HTML::JS("http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js");
-    echo HTML::JS("http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js");
+    // echo HTML::JS("//code.jquery.com/jquery.min.js");
+    echo HTML::JS("//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js");
+    echo HTML::JS("//code.jquery.com/jquery-migrate-1.2.1.min.js");
+    // echo HTML::JS("//code.jquery.com/ui/1.10.3/jquery-ui.js");
+    echo HTML::JS("//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js");
+    echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js");
+    echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js");
 
     // echo HTML::JS("jquery/jquery.min");   
     // echo HTML::JS("jquery/jquery-migrate-1.2.1.min");
@@ -19,7 +41,7 @@
     // echo HTML::JS("modernizr.custom");
     // echo HTML::JS("underscore.min");
     
-    echo HTML::JS("http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js");
+    echo HTML::JS("//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js");
     // echo HTML::JS("bootstrap/bootstrap.min"); //Bootstrap with modal and dropdown and tooltips and collapse and scrollapsy and tabs (with transitions) only
     // echo HTML::JS("bootstrap/bootstrap.modal"); 
     echo HTML::JS("bootstrap/bootstrap-select.min"); //custom bootstrap for select inputs
@@ -51,8 +73,8 @@
     </script>
 
     <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
     <![endif]-->
     <script type="text/javascript">
         $(document).ready(function() {

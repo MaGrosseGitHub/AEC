@@ -1,4 +1,17 @@
 ﻿<?php 
+spl_autoload_register(function ($class) {
+
+  $lib = LIB.DS . $class . '.php';
+  $config = CONF.DS . $class.'.php';
+  $core = CORE.DS . $class . '.php';
+
+  $paths = array($core, $lib, $config);
+  foreach ($paths as &$filename) {
+    if(file_exists($filename))
+        require_once($filename) ;
+  }
+});
+
 function debug($var, $varName = null){
 
 	if(Conf::$debug>0){
@@ -348,5 +361,34 @@ function RandAlbumImgs($input, $output){
     return intval($randImg);
   } else {
     return RandAlbumImgs($input, $output);
+  }
+}
+
+function changeToHHTPS(){
+  if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+      if(!headers_sent()) {
+          header("Status: 301 Moved Permanently");
+          header(sprintf(
+              'Location: https://%s%s',
+              $_SERVER['HTTP_HOST'],
+              $_SERVER['REQUEST_URI']
+          ));
+          exit();
+      }
+  }
+}
+
+function forceHTTPS(){
+  $httpsURL = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+  if( count( $_POST )>0 )
+    die( 'Page should be accessed with HTTPS, but a POST Submission has been sent here. Adjust the form to point to '.$httpsURL );
+  if( !isset( $_SERVER['HTTPS'] ) || $_SERVER['HTTPS']!=='on' ){
+    if( !headers_sent() ){
+      header( "Status: 301 Moved Permanently" );
+      header( "Location: $httpsURL" );
+      exit();
+    }else{
+      die( '<script type="javascript">document.location.href="'.$httpsURL.'";</script>' );
+    }
   }
 }

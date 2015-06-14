@@ -1,5 +1,5 @@
 ﻿	<!-- CSS Files -->
-    <!-- <link rel="stylesheet" href="http://getbootstrap.com/2.3.2/assets/css/bootstrap.css"> -->
+    <!-- <link rel="stylesheet" href="//getbootstrap.com/2.3.2/assets/css/bootstrap.css"> -->
     <?php 
 
     echo HTML::CSS("normalize"); 
@@ -7,13 +7,13 @@
     echo HTML::CSS("Flick/Flick");
 
     ?>
-    <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css"> -->
-    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.css">-->
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="//twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css"> -->
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.css">-->
     <?php     
     // echo HTML::CSS("bootstrap/bootstrap.min");
     // echo HTML::CSS("bootstrap/bootstrap_flat"); 
-    // echo HTML::CSS("http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"); 
+    // echo HTML::CSS("//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"); 
     
     echo HTML::CSS("bootstrap/flatstrap.min");
     echo HTML::CSS("bootstrap/bootstrap-select.min");
@@ -35,17 +35,17 @@
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 body, html { font-size: 100%; padding: 0; margin: 0;}
 
-/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+/* Clearfix hack by Nicolas Gallagher: //nicolasgallagher.com/micro-clearfix-hack/ */
 .clearfix:before, .clearfix:after { content: " "; display: table; }
 .clearfix:after { clear: both; }
 </style>
 
 <style>
     /* Importing Fonts */
-    @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-    @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-    @import url(http://fonts.googleapis.com/css?family=Pacifico:400);
-    @import url(http://fonts.googleapis.com/css?family=Merriweather:400,700|Open+Sans:400,300,600);
+    @import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
+    @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+    @import url(//fonts.googleapis.com/css?family=Pacifico:400);
+    @import url(//fonts.googleapis.com/css?family=Merriweather:400,700|Open+Sans:400,300,600);
 
     body {
         font-family: 'Lato', Calibri, Arial, sans-serif;

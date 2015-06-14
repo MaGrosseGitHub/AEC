@@ -8,7 +8,7 @@ class HTML{
 			return $newUrl;
 		}
 		$newUrl = BASE_URL.'/js/'.$url; 
-		if(!preg_match("#^http|https#", $url) || !preg_match("#//#", $url)){
+		if(!preg_match("#^http|https|//#", $url) || !preg_match("#//#", $url)){
 			$newUrl = $newUrl.'.js';
 		} else {
 			$newUrl = $url;

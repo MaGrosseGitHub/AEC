@@ -20,12 +20,12 @@ class UsersController extends Controller{
 
 		if(isset($data) && !empty($data)){
 			if(!isset($_COOKIE['userInfo'])) {
-				$data->password = md5(sha1($data->password));
+				$data->password = md5(hash("sha256", $data->password));
 			}
 			$this->loadModel('User'); 
 			$user = $this->User->findFirst(array(
-				'conditions' => array('login' => $data->login,'password' => $data->password
-			)));
+				'conditions' => array('login' => $data->login,'password' => $data->password)
+				));
 			if(!empty($user)){
 				$this->Session->write('User',$user); 
 				if(isset($data->saveLogin)) {
