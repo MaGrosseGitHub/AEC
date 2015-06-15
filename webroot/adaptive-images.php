@@ -22,9 +22,9 @@
 
 /* CONFIG ----------------------------------------------------------------------------------------------------------- */
 
-$resolutions   = array(2160,1382, 992, 768, 480); // the resolution break-points to use (screen widths, in pixels)
+$resolutions   = array(1382, 992, 768, 480); // the resolution break-points to use (screen widths, in pixels)
 $cache_path    = "ai-cache"; // where to store the generated re-sized images. Specify from your document root!
-$jpg_quality   = 75; // the quality of any generated JPGs on a scale of 0 to 100
+$jpg_quality   = 85; // the quality of any generated JPGs on a scale of 0 to 100
 $sharpen       = TRUE; // Shrinking images can blur details, perform a sharpen on re-scaled images?
 $watch_cache   = TRUE; // check that the adapted image isn't stale (ensures updated source images are re-cached)
 $browser_cache = 60*60*24*7; // How long the BROWSER cache should last (seconds, minutes, hours, days. 7days by default)
@@ -35,7 +35,6 @@ $browser_cache = 60*60*24*7; // How long the BROWSER cache should last (seconds,
 
 /* get all of the required data from the HTTP request */
 $document_root  = $_SERVER['DOCUMENT_ROOT'];
-// $document_root  = "K:/wamp/www/AEC/webroot/";
 $requested_uri  = parse_url(urldecode($_SERVER['REQUEST_URI']), PHP_URL_PATH);
 $requested_file = basename($requested_uri);
 $source_file    = $document_root.$requested_uri;
@@ -366,19 +365,25 @@ if(substr($requested_uri, 0,1) == "/") {
 
 /* whew might the cache file be? */
 $requested_uri_temp = explode("/", $requested_uri);
-$cache_file = $document_root."AEC/$cache_path/$resolution/".$requested_uri_temp[count($requested_uri_temp)-1];
-/* Use the resolution value as a path variable and check to see if an image of the same name exists at that path */
-$cache_folder = "";
-if(!file_exists($cache_file)){
-  MakePath($cache_file);
-}
+
+$requested_uri_AEC = explode("/", $requested_uri); //<----------------------------- If you encouter errors, check these lines first
+$requested_uri_AEC = $requested_uri_AEC[0]; //<----------------------------- If you encouter errors, check these lines first
+
+$cache_file = $document_root."$requested_uri_AEC/$cache_path/$resolution/".$requested_uri_temp[count($requested_uri_temp)-1];
 
   // echo '<pre>';
-  // print_r(explode("/", $requested_uri));
+  // print_r($_SERVER);
   // echo '</pre>';
-  // die($source_file);
   // die("<h1>".$cache_file."</h1>");
 
+$cache_folder = explode("/", $cache_file);
+unset($cache_folder[count($cache_folder)-1]);
+$cache_folder = implode("/", $cache_folder);
+if(!file_exists($cache_file)){
+  MakePath($cache_folder);
+}
+
+/* Use the resolution value as a path variable and check to see if an image of the same name exists at that path */// 
 if (file_exists($cache_file)) { // it exists cached at that size
   if ($watch_cache) { // if cache watching is enabled, compare cache and source modified dates to ensure the cache isn't stale
     $cache_file = refreshCache($source_file, $cache_file, $resolution);
@@ -388,7 +393,6 @@ ini_set("display_errors", "1");
 error_reporting(E_ALL); 
 
   sendImage($cache_file, $browser_cache);
-  die("<h1>".$cache_file."</h1>");
 }
 
 /* It exists as a source file, and it doesn't exist cached - lets make one: */
