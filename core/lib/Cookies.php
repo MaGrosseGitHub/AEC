@@ -43,6 +43,7 @@ class Cookies{
 		}		
 	}
 
+	//check if the old value and the new value are the same, returns true if the values are different
 	public static function CookieChange($name,$newValue){
 		if(self::CheckCookie($name)) {
 			if($_COOKIE[$name] != $newValue)

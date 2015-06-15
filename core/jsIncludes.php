@@ -4,9 +4,9 @@
    <script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>   -->
 
     <!-- lines for Adaptive images -->
-    <!--<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>-->
+    <script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
     <!-- test lines for Adaptive images -->
-      <script type="text/javascript">document.cookie='resolution='+Math.max(320,480)+'; expires=; path=/';</script> 
+    <!--  <script type="text/javascript">document.cookie='resolution='+Math.max(320,480)+'; expires=; path=/';</script> -->
     <!-- test lines for Adaptive images -->
     <!--<script type="text/javascript">document.cookie='resolution='+Math.max(window.innerWidth,window.innerHeight)+'; expires=; path=/';</script>-->
     <!-- Use this line instaead for retina (and dpi screens) users -->

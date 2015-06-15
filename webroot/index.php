@@ -22,6 +22,7 @@ define('BASE_URL',dirname(dirname($_SERVER['SCRIPT_NAME'])).'/webroot');
 // require CORE.DS.'includes.php'; 
 require LIB.DS.'functions.php'; //contains an autoloader for all the important classes and multiple useful global functions
 
+new Language();
 new Dispatcher("/AEC/webroot/");
 
 ?>
