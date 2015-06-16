@@ -5,6 +5,7 @@ class UsersController extends Controller{
 	* Login
 	**/
 	function login(){
+
 		$encryptData = new Encrypt();
 		if(isset($this->request->data)) {
 			$data = $this->request->data;

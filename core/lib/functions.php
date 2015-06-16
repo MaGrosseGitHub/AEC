@@ -253,7 +253,7 @@ function url_slug($str, $options = array()) {
 
 /*Create  Directory Tree if none exists
 If you are passing a path with a filename on the end, pass true as the second parameter to snip it off */
-function MakePath($pathname, $is_filename=false){
+function MakePath($pathname, $is_filename=false, $permission = 0777){
 
   if($is_filename){
 
@@ -294,7 +294,7 @@ function MakePath($pathname, $is_filename=false){
       }
 
       if(!is_dir($curPath)){
-        mkdir($curPath);
+        mkdir($curPath, $permission);
       }
     }
 

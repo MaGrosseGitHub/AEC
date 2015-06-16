@@ -8,7 +8,11 @@ class Cookies{
 			}
 			$duration = time()+$duration;
 			// setcookie($key, $value, $duration "/", ".".$_SERVER['SERVER_NAME']);
-			setcookie($key, $value, $duration, "/", null);
+			try {
+				setcookie($key, $value, $duration, "/", null);
+			} catch (Exception $e) {				
+				$this->Notification->setFlash("Un probléme inconnu s'est produit", "error", false, array("title" => "Cookies")); 
+			}
 		} else {
 			return false;
 		}

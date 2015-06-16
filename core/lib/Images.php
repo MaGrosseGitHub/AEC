@@ -250,7 +250,7 @@ class Images{
                   $controller->Notification->setFlash('Repertoir ou nom du fichier manquant !', 'error'); 
                   return false;
                 }
-                if(!file_exists($saveOptions['directory'])) mkdir($saveOptions['directory'],0777); 
+                if(!file_exists($saveOptions['directory'])) MakePath($saveOptions['directory']); 
                 move_uploaded_file($img['tmp_name'], $saveOptions['directory'] .'/'. $saveOptions['imgName'] .'.'.$extension_upload);
                 $image = $saveOptions['directory'] .'/'. $saveOptions['imgName'] .'.'.$extension_upload;
                 if(isset($saveOptions['convert']) && $saveOptions['convert']){                
