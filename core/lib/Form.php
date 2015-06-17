@@ -199,7 +199,6 @@ class Form{
 		if($error){
 			$html .= '<span class="help-inline '.$class.'">'.$error.'</span>';
 		}
-		$html .= '<i data-fv-icon-for="name" class="form-control-feedback fa fa-asterisk" style=""></i>';
 		$html .= '</div></div>';
 
 		// if($this->checkWJS && (isset($options['rule']) || isset($options['message']) )){
