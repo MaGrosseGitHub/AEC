@@ -112,6 +112,8 @@
                 $("#notifications").css("top", ($(document).scrollTop()+80)+'px');
                 $("notif").hide(); 
             });
+
+            
         });
     </script>  
 

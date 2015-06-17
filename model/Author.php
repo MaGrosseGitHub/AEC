@@ -10,9 +10,13 @@ class Author extends Model{
 			'rule' => 'notEmpty',
 			'message' => 'Vous devez préciser un nom'
 		),
-		'bio' => array(
+		'bio_FR' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Vous devez préciser une bio'
+			'message' => 'Vous devez préciser une bio (FR)'
+		),
+		'bio_EN' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Vous devez préciser une bio (EN)'
 		)
 	);
 

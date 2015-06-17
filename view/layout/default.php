@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr"> 
     <head> 
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-      <title><?php echo isset($title_for_layout)?$title_for_layout:'Mon site'; ?></title> 
+      <title><?php echo isset($GLOBALS['title_for_layout'])?$GLOBALS['title_for_layout']:'AEC'; ?></title> 
       <?php require CORE.DS.'cssIncludes.php'; ?>
       <?php require CORE.DS.'jsIncludes.php'; ?>
     </head>

@@ -149,6 +149,13 @@ class Form{
 		}elseif($options['type'] == 'email'){
 			$class = $class.' validate[required,custom[email]]"';
 			$html .= '<input '.$class.' type="email" id="input'.$name.'" name="'.$name.'" '.$requiredData.' placeholder = "'.$placeHolder.'" value="'.$value.'" '.$attr.'>';
+		}elseif($options['type'] == 'url'){
+			if(!isset($options['requireUrl']) || (isset($options['requireUrl']) && $options['requireUrl'])){
+				$class = $class.' validate[required,custom[url]]"';
+				$html .= '<input '.$class.' type="url" id="input'.$name.'" name="'.$name.'" '.$requiredData.' placeholder = "'.$placeHolder.'" value="'.$value.'" '.$attr.'>';
+			} else if(isset($options['requireUrl']) && !$options['requireUrl']){
+				$html .= '<input '.$class.' type="url" id="input'.$name.'" name="'.$name.'" placeholder = "'.$placeHolder.'" value="'.$value.'" '.$attr.'>';				
+			}
 		}elseif($options['type'] == 'textarea'){
 			if(isset($options['class']) && preg_match("#redactors#", $options['class'])) {
 				$class = $class.' validate[required, funcCall[checkRedactor]]"';
@@ -192,6 +199,7 @@ class Form{
 		if($error){
 			$html .= '<span class="help-inline '.$class.'">'.$error.'</span>';
 		}
+		$html .= '<i data-fv-icon-for="name" class="form-control-feedback fa fa-asterisk" style=""></i>';
 		$html .= '</div></div>';
 
 		// if($this->checkWJS && (isset($options['rule']) || isset($options['message']) )){

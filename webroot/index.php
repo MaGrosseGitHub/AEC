@@ -25,6 +25,7 @@ require LIB.DS.'functions.php'; //contains an autoloader for all the important c
 new Language();
 new Dispatcher("/AEC/webroot/");
 
+global $title_for_layout;
 ?>
 <!-- <h1>TEST</h1> -->
 <div style="position:fixed;bottom:0; background:#900; color:#FFF; line-height:30px; height:30px; left:0; right:0; padding-left:10px; ">

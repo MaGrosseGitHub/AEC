@@ -108,6 +108,7 @@ class AuthorsController extends Controller{
 	* Liste les différents articles
 	**/
 	function admin_index(){
+		$GLOBALS['title_for_layout'] = "Index auteurs";
 		$perPage = 100; 
 		$this->loadModel('Author');
 		$condition = array('type'=>'individual'); 
@@ -126,6 +127,7 @@ class AuthorsController extends Controller{
 	* Permet d'éditer un article
 	**/
 	function admin_edit($id = null){
+		$GLOBALS['title_for_layout'] = "Edit auteur";
 		$this->loadModel('Author'); 
 		if($id === null){
 			$id = "";
@@ -134,29 +136,28 @@ class AuthorsController extends Controller{
 		if($this->request->data){
 			if($this->Author->validates($this->request->data)){
 				$this->request->data->type = 'individual';
+				$slug = makeSlug($this->request->data->firstName.$this->request->data->lastName);
 
 				$preDir = "tmp/Author/";
-				// if(Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$this->request->data->slug, 'imgName' => $this->request->data->slug, "convert" => true, "resize" => true))){
-				// 	unlink($preDir.$this->request->data->slug."/".$this->request->data->slug.".jpg");
-				// }
+				Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$slug, 'imgName' => $slug, "convert" => true));
 
 				$this->Author->save($this->request->data);
 				// $cacheDir = Cache::POST.DS.$this->request->data->slug;
 				// $this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success'); 
-				$this->redirect('admin/authors/index'); 
+				// $this->redirect('admin/authors/index'); 
 			}else{
-				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
+				$this->Notification->setFlash('Merci de corriger vos informations','error');  
+				foreach ($this->Form->errors as $error => $value) {
+					$this->Notification->setFlash($value,'error', false, array("title" => ucfirst($error))); 
+				}
 			}
 			
-		}else{
+		}else {
 			$this->request->data = $this->Author->findFirst(array(
 				'conditions' => array('id'=>$id)
 			));
 		}
-		// On veut un sélecteur de catégorie donc on récup la liste des catégories
-		$this->loadModel('Category');
-		$d['categories'] = $this->Category->findList(); 
 		$this->set($d);
 	}
 
@@ -164,10 +165,10 @@ class AuthorsController extends Controller{
 	* Permet de supprimer un article
 	**/
 	function admin_delete($id){
-		$this->loadModel('Post');
-		$this->Post->delete($id);
-		$this->Notification->setFlash('Le contenu a bien été supprimé', 'success'); 
-		$this->redirect('admin/posts/index'); 
+		$this->loadModel('Author');
+		$this->Author->delete($id);
+		$this->Notification->setFlash('L\'auteur a bien été supprimé', 'success'); 
+		$this->redirect('admin/authors/index'); 
 	}
 
 	/**
