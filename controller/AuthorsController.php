@@ -67,37 +67,28 @@ class AuthorsController extends Controller{
 	* Affiche un article en particulier
 	**/
 	function view($id,$slug){	
-		if(!$this->Cache->read(Cache::POST.DS.$slug.DS.$slug)){			
-			$this->loadModel('Post');
-			$d['post']  = $this->Post->findFirst(array(
-				'fields'	 => 'Post.id,Post.content,Post.name,Post.slug,Post.category_id, Post.user_id',
-				'conditions' => array('Post.online' => 1,'Post.id'=>$id,'Post.type'=>'post')
-			)); 
+		if(!$this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug)){			
+			$this->loadModel('Author');
+			$d['author']  = $this->Author->findFirst(array(
+				'fields'	 => 'Author.id,Author.firstName,Author.lastName,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
+				'conditions' => array('Author.id'=>$id,'Author.type'=>'individual')
+			));
+			$slug = makeSlug($d['author']->firstName.$d['author']->lastName);
+			$d['author']->slug = $slug;
 
-			$cacheDir = Cache::POST.DS.$slug;
-			$this->Cache->write($slug, $d['post'], $cacheDir, true);
+			$cacheDir = Cache::AUTHOR.DS.$slug;
+			$this->Cache->write($slug, $d['author'], $cacheDir, true);
 		} else {
-			$d['post'] = $this->Cache->read(Cache::POST.DS.$slug.DS.$slug, true);
+			$d['author'] = $this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug, true);
 		}	
-		$this->SetHits(Cache::POST.DS.$slug.DS.$slug);
+		$this->SetHits(Cache::AUTHOR.DS.$slug.DS.$slug);
 
-		if(empty($d['post'])){
+		if(empty($d['author'])){
 			$this->e404('Page introuvable'); 
 		}
-		if($slug != $d['post']->slug){
-			$this->redirect("posts/view/id:$id/slug:".$d['post']->slug,301);
+		if($slug != $d['author']->slug){
+			$this->redirect("authors/view/id:$id/slug:".$d['author']->slug,301);
 		}
-		$this->set($d);
-	}
-
-	function flux(){
-		$this->loadModel('Post');
-		$condition = 'online = 1 AND type != "page" '; 
-		$options = array(
-			'conditions' => $condition,
-			'order'      => 'created DESC',
-		);
-		$d['posts'] = $this->Post->find($options);
 		$this->set($d);
 	}
 	
@@ -142,10 +133,10 @@ class AuthorsController extends Controller{
 				Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$slug, 'imgName' => $slug, "convert" => true));
 
 				$this->Author->save($this->request->data);
-				// $cacheDir = Cache::POST.DS.$this->request->data->slug;
-				// $this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
+				$cacheDir = Cache::AUTHOR.DS.$slug;
+				$this->Cache->write($slug, $this->request->data, $cacheDir, true);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success'); 
-				// $this->redirect('admin/authors/index'); 
+				$this->redirect('admin/authors/index'); 
 			}else{
 				$this->Notification->setFlash('Merci de corriger vos informations','error');  
 				foreach ($this->Form->errors as $error => $value) {

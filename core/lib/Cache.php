@@ -6,6 +6,7 @@ class Cache{
 	public $buffer;		// Buffer (utilisé pour les méthodes start/end)
 
 	const POST = "tmp/Post";
+	const AUTHOR = "tmp/Author";
 	const EVENT = "tmp/Event";
 	const WEATHER = "tmp/Weather";
 

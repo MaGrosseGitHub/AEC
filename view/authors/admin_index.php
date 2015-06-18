@@ -2,7 +2,7 @@
 	<h1><?php echo $total; ?> Auteurs</h1>
 </div>
 
-<table>
+<table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -38,3 +38,4 @@
 </div>
 
 <a href="<?php echo Router::url('admin/authors/edit'); ?>" class="primary btn">Ajouter un auteur</a>
+

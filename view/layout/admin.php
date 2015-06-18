@@ -6,7 +6,13 @@
    <?php //require CORE.DS.'scriptsInclude.php'; ?>
     <?php require CORE.DS.'cssIncludes.php'; ?>
     </head> 
-    <body>       
+    <body>
+
+    <style>
+      body {
+        background-color: #ecf0f1;
+      }
+    </style>     
       <!-- <?php //debug($_SESSION); ?> -->
       <!-- navbar navbar-inverse navbar-fixed-top bs-docs-nav -->
       <!-- role="navigation" -->

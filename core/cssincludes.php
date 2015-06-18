@@ -257,3 +257,17 @@ body, html { font-size: 100%; padding: 0; margin: 0;}
   color : red;
 }
 </style>
+
+<style>
+
+    .required:after { 
+        color: #d00;
+        content: "*";
+        position: absolute;
+        margin-right: 8px;
+        top:12px;
+        right : 15px;
+        font-family: 'Glyphicons Halflings';
+        font-weight: normal;
+        font-size: 14px; }
+</style>

@@ -91,10 +91,14 @@ class Form{
 		} 
 
 		if ( isset($options['class'] ) ) {
-			$class = 'class = "'.$options['class'].'';
+			$class = 'class = "form-control '.$options['class'].'';
 		} else {
-			$class = 'class = "';
-		}		
+			$class = 'class = "form-control ';
+		}	
+
+		// if($this->required || (isset($options['required']) && $options['required'])) {
+		// 	$class .= "required";
+		// }	
 
 		if($label == 'hidden'){
 			return '<input type="hidden" name="'.$name.'" value="'.$value.'">'; 
@@ -107,10 +111,29 @@ class Form{
 			$placeHolder = $label;
 		}
 		
-		$html = '<div class="clearfix'.$classError.'">';
+		$html = '<div class="clearfix control-group'.$classError.'">';
 		if(!isset($options['phOnly']) || !$options['phOnly'])
-			$html .= '<label for="input'.$name.'">'.$label.'</label>';
-		$html .= '			<div class="input">';			
+			$html .= '<label class = "control-label" for="input'.$name.'">'.$label.'</label><br>';
+
+		$html .= '<div class="controls ';
+		if((isset($options['type']) && $options['type'] != "textarea") || !isset($options['type']))
+			$html .= 'col-md-4 ';
+
+		$addRequired = true;
+		if((!$this->required || (isset($options['required']) && !$options['required'])))
+			$addedRequired = false;
+
+		if((isset($options['type']) && ($options['type'] == 'file' || $options['type'] == 'fileImg')) && (isset($options['fileSkip']) && $options['fileSkip']))
+			$addRequired = false;
+		if((isset($options['type']) && $options['type'] == "datepicker") && (isset($options['dateSkip']) && !$options['dateSkip']))
+			$addRequired = false;
+		if((isset($options['type']) && $options['type'] == "url") && (isset($options['requireUrl']) && !$options['requireUrl']))
+			$addRequired = false;
+
+		if($addRequired)
+			$html .= 'required ';	//adds asterisk at the end of the field
+
+		$html .= ' input">';	
 		$attr = ' '; 
 
 		$paramsArray = ['inputValue', 'type', 'placeHolder', 'phOnly', 'class', 'dateSkip', 'listInvert', 'required', 'CbRequired', 'fileSkip', 'rule', 'message'];
