@@ -79,7 +79,7 @@ class PostsController extends Controller{
 		} else {
 			$d['post'] = $this->Cache->read(Cache::POST.DS.$slug.DS.$slug, true);
 		}	
-		$this->SetHits(Cache::POST.DS.$slug.DS.$slug);
+		$this->SetHits(Cache::POST.DS.$d['post']->slug.DS.$d['post']->slug);
 
 		if(empty($d['post'])){
 			$this->e404('Page introuvable'); 
@@ -140,6 +140,18 @@ class PostsController extends Controller{
 				));
 				$id = $this->Post->id;
 			} 
+
+			if(file_exists("img/galerie/".$id)){
+				// rmdir("img/galerie/".$id);
+				// MakePath("img/galerie/".$id."/",false, 0777); 
+				$files = glob("img/galerie/".$id."/*"); 
+				if(count($files) > 0){
+					foreach($files as $file){ 
+						if(is_file($file))
+							unlink($file);
+					}
+				}
+			}
 		}
 		$d['id'] = $id; 
 		if($this->request->data){
@@ -222,6 +234,60 @@ class PostsController extends Controller{
 		$d['authors'] = json_encode($authorsSimple);
 
 		$this->set($d);
+	}
+
+	function admin_process(){
+		if($this->request->data && !empty($this->request->data) && !empty($_FILES['file']['name'])){
+			if(strpos($_FILES['file']['type'], 'image') !== false) {
+
+				$fileId = $this->request->data->phpId;
+				$imgDir = "img/galerie/".$fileId."/";
+				if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
+
+				$ext = substr($_FILES['file']['name'], -4);
+				$imageName = generateRandomString();
+				$image = $imgDir.$imageName.time().$ext;
+				$imgData = $image;
+
+				move_uploaded_file($_FILES['file']['tmp_name'], $image);
+				$image = Images::convert($image, "jpg", true);
+				Images::resize($image, 180, 135);
+				// // Images::watermark($image, $watermark, 70);
+				$v = Router::webroot($image);
+				$v = str_replace('\\','/',$v);
+
+				$html = '<div class="file"><img src="'.$v.'"/> '.basename($_FILES['file']['name']).'<div class="actions"><a href="delete_img/'.$fileId.'/'.basename($v).'" class="del">Supprimer</a></div> </div>';
+				$html = str_replace('"','\\"',$html);
+
+				$returnArray = array("error"=> false, "html" => $html, "imgData" => $imgData);
+				$returnArray = json_encode($returnArray);
+
+				// die($returnArray); 
+				die('{"error":false, "html": "'.$html.'", "imgData" : "'.$imgData.'"}');
+			} else {
+				die('{"error":true, "html": "Le fichier n\'est pas une image"}');
+			}	
+		}
+		die('{"error":true, "une erreur est survenu"}');	
+	}
+
+	function admin_delete_img($id, $file){
+		// unlink(WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS.$file);
+		// $imgInfo = pathinfo($file);
+		// $imgName = $imgInfo['basename'];
+		// $imgDir = $imgInfo['dirname'];
+		// $imgNameExt = str_replace(".".$imgInfo['extension'], "", $imgName);	
+		$imgDir = WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS;
+		// unlink($imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
+		// unlink(WEBROOT.DS.'img'.DS.$imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
+		// unlink(WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS.$file);
+		
+
+
+		//show existing imgs when editiong post
+		//add function to delete imgs
+		//also delete imgs from database
+		//correct css for imgs
 	}
 
 	/**
