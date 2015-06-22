@@ -48,7 +48,7 @@
     .file {
       padding: 0 10px;
       border: 1px solid #DFDFDF;
-      line-height: 70px;
+      /*line-height: 70px;*/
       margin-bottom: 10px;
       display : inline-block;
       width : 190px;
@@ -57,7 +57,6 @@
 
     .file img {
       margin : 10px;
-      height : 50px;
     }
 
     .delete, .deleteImg, .addImg {
@@ -150,7 +149,6 @@
 
 <form id = "form" action="<?php echo Router::url('cockpitInc/posts/edit/'.$id); ?>" method="post" enctype="multipart/form-data">
     <div id="firstPart">
-    <?php echo HTML::getImg("cache/post/test1/test1_150x100.jpg"); ?>
         <h3>Informations principales du projet</h3>
     	<?php 
             echo $this->Form->input('title_FR','Titre <span style = "color : red;">FR</span>');
@@ -170,7 +168,6 @@
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
 
-        <?php echo  $this->Form->input('filesData','hidden'); ?>
         <div id="plupload">
             <div id="droparea">
                 <p>Drag & drop files here</p>
@@ -178,9 +175,7 @@
                 <a href="#" id="browse">Browse</a> <br><br>
                 Refresh to see uploaded files on homepage
             </div>
-            <div id="filelist"></div>
         </div>
-        <div id="debug"></div>
     </div>
             
     <div id="thirdpart">
@@ -267,9 +262,9 @@
             searchInputPlaceholder: 'Type to search for authors'
         });
 
-        // console.log($("#inputauthorsHidden").val());
-        // console.log(selectItems);
-        // console.log(selectItemsCat);
+        console.log($("#inputauthorsHidden").val());
+        console.log(selectItems);
+        console.log(selectItemsCat);
 
         $('#form').on('submit',function(){
             alert("TEST");

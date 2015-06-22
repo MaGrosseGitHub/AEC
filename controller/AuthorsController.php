@@ -79,7 +79,7 @@ class AuthorsController extends Controller{
 		} else {
 			$d['author'] = $this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug, true);
 		}	
-		$this->SetHits(Cache::AUTHOR.DS.$d['author']->slug.DS.$d['author']->slug);
+		$this->SetHits(Cache::AUTHOR.DS.$slug.DS.$slug);
 
 		if(empty($d['author'])){
 			$this->e404('Page introuvable'); 

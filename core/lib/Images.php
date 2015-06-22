@@ -7,7 +7,7 @@ class Images{
       self::$pathToLib  = ROOT.DS.'core'.DS.'lib/imagine.phar';
     }
 
-    static public function convert($image, $format, $unlink = false, $watermark = false, $quality = 100, $watermarkImg = null, $watermarkOpacity = null){
+    static public function convert($image, $format, $unlink = false, $watermark = true, $quality = 100, $watermarkImg = null, $watermarkOpacity = null){
       if(self::checkFormat($format)) {
         self::init();
         require_once self::$pathToLib;
