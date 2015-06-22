@@ -237,7 +237,6 @@ class PostsController extends Controller{
 	}
 
 	function admin_process(){
-		sleep(5);
 		if($this->request->data && !empty($this->request->data) && !empty($_FILES['file']['name'])){
 			if(strpos($_FILES['file']['type'], 'image') !== false) {
 

@@ -23,7 +23,16 @@
 		// 	return value != $removeItem;
 		// });
 		// $grepArray = $grepArray.splice($.inArray($removeItem, $grepArray),1);
-		return $grepArray.splice($.inArray($removeItem, $grepArray),1);;
+		return $grepArray.splice($.inArray($removeItem, $grepArray),1);
+	}
+
+	function removeFromArr(needle, haystack) {
+	    var found = haystack.indexOf(needle);
+
+	    while (found !== -1) {
+	        haystack.splice(found, 1);
+	        found = haystack.indexOf(needle);
+	    }
 	}
 
     function ObjectValToArray($object, $val, $array, $isInArray){    	
