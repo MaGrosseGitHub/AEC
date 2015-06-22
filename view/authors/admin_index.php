@@ -13,12 +13,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($posts as $k => $v): ?>
+		<?php foreach ($authors as $k => $v): ?>
 			<tr>
 				<td><?php echo $v->id; ?></td>
 				<td><?php echo $v->firstName; ?></td>
 				<td><?php echo $v->lastName; ?></td>
-				<td><?php echo $v->organization ?></td>
+				<td><?php echo strtoupper($v->organization) ?></td>
 				<td>
 					<a href="<?php echo Router::url('admin/authors/edit/'.$v->id); ?>">Editer</a>
 					<a onclick="return confirm('Voulez vous vraiment supprimer ce contenu'); " href="<?php echo Router::url('admin/authors/delete/'.$v->id); ?>">Supprimer</a>

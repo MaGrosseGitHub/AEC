@@ -16,7 +16,10 @@
     // echo HTML::CSS("//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"); 
     
     echo HTML::CSS("bootstrap/flatstrap.updated.min");
+    
     echo HTML::CSS("bootstrap/bootstrap-select.min");
+    echo HTML::CSS("selectivity/selectivity-full.min");
+
     echo HTML::CSS("notification");
     echo HTML::CSS("redactor/css/redactor", true,"JS"); 
 

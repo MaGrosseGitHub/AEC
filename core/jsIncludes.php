@@ -49,6 +49,7 @@
     // echo HTML::JS("bootstrap/bootstrap.min"); //Bootstrap with modal and dropdown and tooltips and collapse and scrollapsy and tabs (with transitions) only
     // echo HTML::JS("bootstrap/bootstrap.modal"); 
     echo HTML::JS("bootstrap/bootstrap-select.min"); //custom bootstrap for select inputs
+    echo HTML::JS("selectivity/selectivity-full.min"); 
 
     echo HTML::JS("jsFunctions"); 
     echo HTML::JS("jquery.cookie");  
@@ -99,8 +100,8 @@
                     dateFormat : 'dd-mm-yy',
                     changeMonth: true,
                     changeYear: true,
-                    minDate : 0,
-                    defaultDate : $(this).val()
+                    defaultDate : $(this).val(),
+                    yearRange: "-100:+10",
                 });
             }
 
@@ -112,8 +113,6 @@
                 $("#notifications").css("top", ($(document).scrollTop()+80)+'px');
                 $("notif").hide(); 
             });
-
-            
         });
     </script>  
 

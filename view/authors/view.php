@@ -9,13 +9,17 @@
 					<h1><span class="title"><?php echo $author->firstName.' '.$author->lastName; ?></span>, 
 						<small>
 							<!-- <a href="<?php //echo Router::url('posts/category/slug:'.$author->category_id); ?>"> -->
-								<?php //echo $author->category_id; ?>
+								<?php echo $author->organization; ?>
+								<?php echo $author->website; ?>
 							</a>
 						</small>
 					</h1>
 				</div>
 				<div class="newsContent">
-					<?php echo $author->bio_FR; ?>
+					<?php 
+						$bio = "bio_".strtoupper(Language::$curLang);
+						echo $author->$bio; 
+						?>
 				</div>
 			</div>
 	

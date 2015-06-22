@@ -14,8 +14,8 @@ class PostsController extends Controller{
 			$condition = array('online' => 1,'type'=>'post'); 
 		elseif(isset($user) && !empty($user))
 			$condition = array('online' => 1,'type'=>'post', 'user_id'=>$user);
-		$fields = ['id', 'name', 'created', 'online', 'type', 'slug', 'user_id', 'category_id'];
-		$fields = implode(",", $fields).', LEFT(content, 500) as content';
+		$fields = ['id', 'title_FR', 'created', 'online', 'type', 'slug', 'user_id', 'category_id'];
+		$fields = implode(",", $fields).', LEFT(content_FR, 500) as content';
 		// SELECT LEFT(field name, 40) FROM table name WHERE condition for first 40 and 
 		// SELECT RIGHT(field name, 40) FROM table name WHERE condition for last 40
 		$options = array(
@@ -145,11 +145,18 @@ class PostsController extends Controller{
 		if($this->request->data){
 			if($this->Post->validates($this->request->data)){
 				$this->request->data->type = 'post';
-				$this->request->data->slug = makeSlug($this->request->data->name, 200);
+				$this->request->data->slug = makeSlug($this->request->data->title_FR, 200);
 				// $this->request->data->slug = url_slug($this->request->data->name, array( 'limit' => 200));
-				// $this->request->data->user_id = $_SESSION['User']->login;
-				$this->request->data->created = strtotime($this->request->data->created);
+				$this->request->data->user_id = $_SESSION['User']->login;
+				$this->request->data->publication = new DateTime($this->request->data->publication);
+				$this->request->data->publication = $this->request->data->publication->getTimestamp();
+				// $d = new DateTime();
+				// $d->setTimestamp($this->request->data->publication);
+				// $d->format('U = Y-m-d H:i:s');
+				$this->request->data->created = time();
 
+				debug($this->request->data);
+				die();
 				$preDir = "tmp/Post/";
 				if(Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$this->request->data->slug, 'imgName' => $this->request->data->slug, "convert" => true, "resize" => true))){
 					unlink($preDir.$this->request->data->slug."/".$this->request->data->slug.".jpg");
@@ -172,6 +179,48 @@ class PostsController extends Controller{
 		// On veut un sélecteur de catégorie donc on récup la liste des catégories
 		$this->loadModel('Category');
 		$d['categories'] = $this->Category->findList(); 
+		$this->loadModel('Author');
+		$d['organizations'] = $this->Author->findList(array(
+				'conditions' => array('type'=>"organization"),
+				'fields' => 'id, firstName'
+			));
+
+		$d['authors_cat'] = $this->Author->find(array(
+				'conditions' => array('type'=>"individual"),
+				'fields' => 'id, firstName, lastName, organization'
+			));
+
+		$authorsSimple = array();
+		foreach ($d['authors_cat'] as $autK => $autVal) {
+			$item = new StdClass;
+			$item->id = $autVal->id;
+			$item->text = $autVal->firstName.' '.$autVal->lastName;
+			array_push($authorsSimple, $item);
+		}
+		$items = array();
+		foreach ($d['organizations'] as $orgK => $orgName) {
+			// $submenu = array();
+			$submenu = new StdClass;
+			$submenu->items = array();
+			foreach ($d['authors_cat'] as $autK => $autVal) {
+				if(strtolower($orgName) == strtolower($autVal->organization)){
+					$submenuPush = new StdClass;
+					$submenuPush->id = $autVal->id;
+					$submenuPush->text = $autVal->firstName.' '.$autVal->lastName;
+					array_push($submenu->items, $submenuPush);
+				}
+			}
+			$submenu->showSearchInput = true; 
+
+			$pushItems = new StdClass;
+			$pushItems->id = (string)$orgK;
+			$pushItems->text = $orgName;
+			$pushItems->submenu = $submenu;
+			array_push($items, $pushItems);
+		}
+		$d['authors_cat'] = json_encode($items);
+		$d['authors'] = json_encode($authorsSimple);
+
 		$this->set($d);
 	}
 

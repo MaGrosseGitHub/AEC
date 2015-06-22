@@ -24,7 +24,7 @@
               <ul class="nav navbar-nav"> 
                 <?php $pagesMenu = $this->request('Pages','getMenu'); ?>
                 <?php foreach($pagesMenu as $p): ?>
-                    <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->name; ?>"><?php echo $p->name; ?></a></li> 
+                    <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->title_FR; ?>"><?php echo $p->title_FR; ?></a></li> 
                 <?php endforeach; ?>
                 <li><a href="<?php echo Router::url('posts/index'); ?>">Actualité</a></li>
                 <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li>
@@ -36,14 +36,14 @@
               </ul>
               <div id="searchInput">
                 <?php echo $this->Form->input('search','search'); ?>
-                <select name="searchFilter" id="searchFilter">
+                <!-- <select name="searchFilter" id="searchFilter">
                   <option value="all">all</option>
                   <option value="media">Media</option>
                   <option value="post">Posts</option>
                   <option value="event">Events</option>
                   <option value="maps">Maps</option>
                   <option value="user">users</option>
-                </select>               
+                </select>  -->              
               </div>
           </nav>
         </div> 

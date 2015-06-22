@@ -7,6 +7,7 @@ class Cache{
 
 	const POST = "tmp/Post";
 	const AUTHOR = "tmp/Author";
+	const ORGANIZATION = "tmp/Organization";
 	const EVENT = "tmp/Event";
 	const WEATHER = "tmp/Weather";
 

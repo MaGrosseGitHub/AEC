@@ -37,31 +37,31 @@ class AuthorsController extends Controller{
 	/**
 	* Permet d'afficher les posts d'une catégorie
 	**/
-	function category($slug){
-		$this->loadModel('Category'); 
-		$category = $this->Category->findFirst(array(
-			'conditions' => array('slug' => $slug),
-			'fields'     => 'id,name'
-		));
-		if(empty($category)){
-			$this->e404();
-		}
-		$perPage = 100; 
-		$this->loadModel('Post');
-		$condition = array('online' => 1,'type'=>'post','category_id' => $category->id); 
-		$d['posts'] = $this->Post->find(array(
-			'conditions' => $condition,
-			'fields'     => 'Post.id,Post.name,Post.slug,Post.created,Post.category_id as catname,Post.content',
-			'order'      => 'created DESC',
-			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
-		));
-		$d['total'] = $this->Post->findCount($condition); 
-		$d['page'] = ceil($d['total'] / $perPage);
-		$d['title'] = 'Tous les articles "'.$category->name.'"'; 
-		$this->set($d);
-		// Le système est le même que la page index alors on rend la vue Index
-		$this->render('index'); 
-	}
+	// function category($slug){
+	// 	$this->loadModel('Category'); 
+	// 	$category = $this->Category->findFirst(array(
+	// 		'conditions' => array('slug' => $slug),
+	// 		'fields'     => 'id,name'
+	// 	));
+	// 	if(empty($category)){
+	// 		$this->e404();
+	// 	}
+	// 	$perPage = 100; 
+	// 	$this->loadModel('Post');
+	// 	$condition = array('online' => 1,'type'=>'post','category_id' => $category->id); 
+	// 	$d['posts'] = $this->Post->find(array(
+	// 		'conditions' => $condition,
+	// 		'fields'     => 'Post.id,Post.name,Post.slug,Post.created,Post.category_id as catname,Post.content',
+	// 		'order'      => 'created DESC',
+	// 		'limit'      => ($perPage*($this->request->page-1)).','.$perPage
+	// 	));
+	// 	$d['total'] = $this->Post->findCount($condition); 
+	// 	$d['page'] = ceil($d['total'] / $perPage);
+	// 	$d['title'] = 'Tous les articles "'.$category->name.'"'; 
+	// 	$this->set($d);
+	// 	// Le système est le même que la page index alors on rend la vue Index
+	// 	$this->render('index'); 
+	// }
 
 	/**
 	* Affiche un article en particulier
@@ -70,14 +70,12 @@ class AuthorsController extends Controller{
 		if(!$this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug)){			
 			$this->loadModel('Author');
 			$d['author']  = $this->Author->findFirst(array(
-				'fields'	 => 'Author.id,Author.firstName,Author.lastName,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
+				'fields'	 => 'Author.id,Author.slug,Author.firstName,Author.lastName,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
 				'conditions' => array('Author.id'=>$id,'Author.type'=>'individual')
 			));
-			$slug = makeSlug($d['author']->firstName.$d['author']->lastName);
-			$d['author']->slug = $slug;
 
-			$cacheDir = Cache::AUTHOR.DS.$slug;
-			$this->Cache->write($slug, $d['author'], $cacheDir, true);
+			$cacheDir = Cache::AUTHOR.DS.$d['author']->slug;
+			$this->Cache->write($d['author']->slug, $d['author'], $cacheDir, true);
 		} else {
 			$d['author'] = $this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug, true);
 		}	
@@ -103,7 +101,7 @@ class AuthorsController extends Controller{
 		$perPage = 100; 
 		$this->loadModel('Author');
 		$condition = array('type'=>'individual'); 
-		$d['posts'] = $this->Author->find(array(
+		$d['authors'] = $this->Author->find(array(
 			'fields'     => 'Author.id,Author.firstName,Author.lastName,Author.organization',
 			'order' 	 => 'id DESC',
 			'conditions' => $condition,
@@ -128,6 +126,7 @@ class AuthorsController extends Controller{
 			if($this->Author->validates($this->request->data)){
 				$this->request->data->type = 'individual';
 				$slug = makeSlug($this->request->data->firstName.$this->request->data->lastName);
+				$this->request->data->slug = $slug;
 
 				$preDir = "tmp/Author/";
 				Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$slug, 'imgName' => $slug, "convert" => true));
@@ -149,6 +148,12 @@ class AuthorsController extends Controller{
 				'conditions' => array('id'=>$id)
 			));
 		}
+		// On veut un sélecteur de catégorie donc on récup la liste des catégories
+		$d['organizations'] = $this->Author->findList(array(
+				'conditions' => array('type'=>"organization"),
+				'fields' => 'id, firstName'
+			));
+
 		$this->set($d);
 	}
 
@@ -156,6 +161,7 @@ class AuthorsController extends Controller{
 	* Permet de supprimer un article
 	**/
 	function admin_delete($id){
+		$GLOBALS['title_for_layout'] = "Suppr auteur";
 		$this->loadModel('Author');
 		$this->Author->delete($id);
 		$this->Notification->setFlash('L\'auteur a bien été supprimé', 'success'); 

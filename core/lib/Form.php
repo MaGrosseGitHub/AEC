@@ -7,6 +7,8 @@ class Form{
 	private $checkWJS = true;
 	private static $formIds = array();
 
+	public $addAsterisk = false;
+
 	public function __construct($controller){
 		$this->controller = $controller; 
 	}
@@ -101,7 +103,7 @@ class Form{
 		// }	
 
 		if($label == 'hidden'){
-			return '<input type="hidden" name="'.$name.'" value="'.$value.'">'; 
+			return '<input id = "input'.$name.'" type="hidden" name="'.$name.'" value="'.$value.'">'; 
 		}
 
 		if(isset($options['phOnly']) && $options['phOnly'] && (!isset($options['placeHolder']) || (isset($options['placeHolder']) && $options['placeHolder']))){
@@ -119,19 +121,21 @@ class Form{
 		if((isset($options['type']) && $options['type'] != "textarea") || !isset($options['type']))
 			$html .= 'col-md-4 ';
 
-		$addRequired = true;
-		if((!$this->required || (isset($options['required']) && !$options['required'])))
-			$addedRequired = false;
-
-		if((isset($options['type']) && ($options['type'] == 'file' || $options['type'] == 'fileImg')) && (isset($options['fileSkip']) && $options['fileSkip']))
-			$addRequired = false;
-		if((isset($options['type']) && $options['type'] == "datepicker") && (isset($options['dateSkip']) && !$options['dateSkip']))
-			$addRequired = false;
-		if((isset($options['type']) && $options['type'] == "url") && (isset($options['requireUrl']) && !$options['requireUrl']))
-			$addRequired = false;
-
-		if($addRequired)
-			$html .= 'required ';	//adds asterisk at the end of the field
+		if($this->addAsterisk)
+		{
+			$addRequired = true;
+			if((!$this->required || (isset($options['required']) && !$options['required'])))
+				$addedRequired = false;
+			if((isset($options['type']) && ($options['type'] == 'file' || $options['type'] == 'fileImg')) && (isset($options['fileSkip']) && $options['fileSkip']))
+				$addRequired = false;
+			if((isset($options['type']) && $options['type'] == "datepicker") && (isset($options['dateSkip']) && !$options['dateSkip']))
+				$addRequired = false;
+			if((isset($options['type']) && $options['type'] == "url") && (isset($options['requireUrl']) && !$options['requireUrl']))
+				$addRequired = false;
+	
+			if($addRequired)
+				$html .= 'required ';	//adds asterisk at the end of the field
+		}
 
 		$html .= ' input">';	
 		$attr = ' '; 
@@ -155,8 +159,10 @@ class Form{
 			} else{
 				$class = $class.' validate[required]"';
 			}
+
 			$html .= '<select '.$class.' id="input'.$name.'" name="'.$name.'">';
-			$html .= '<option value="">Choisissez une option</option>'; 
+			if(!isset($options['noPlaceholder']) || (isset($options['noPlaceholder']) && !$options['noPlaceholder']))
+				$html .= '<option value="">Choisissez une option</option>'; 
 			foreach($options['options'] as $k=>$v){
 				if(!isset($options['listInvert']) || !$options['listInvert']){
 					$html .= '<option value="'.$k.'" '.($k==$value?'selected':'').'>'.$v.'</option>'; 

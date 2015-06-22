@@ -315,6 +315,19 @@
 		    return -1;
 		}
 	}
+
+	// Launch function only after jquery is loaded
+	function defer(method) {
+	    if (window.jQuery)
+	        method();
+	    else
+	        setTimeout(function() { defer(method) }, 50);
+
+	    // Example : 
+	    // defer(function () {
+	    //     alert("jQuery is now loaded");
+	    // });
+	}
 	
 
 	// //sort arrays ascending, descending

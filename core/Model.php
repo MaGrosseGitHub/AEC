@@ -112,7 +112,7 @@ class Model{
 			} else {
 				$cond = array(); 
 				foreach($req['conditions'] as $k=>$v){
-					if(!is_numeric($v)){
+					if(!is_numeric($v)){ //if condition is string, escape characters
 						$v = $this->db->quote($v); 
 						// $v = '"'.mysql_real_escape_string($v).'"'; 
 					}
@@ -139,7 +139,6 @@ class Model{
 			$sql .= ' LIMIT '.$req['limit'];
 		}
 
-		// $pre = $this->db->quote($sql);
 		$pre = $this->db->prepare($sql); 
 		$pre->execute(); 
 		return $pre->fetchAll(PDO::FETCH_OBJ);
@@ -166,14 +165,45 @@ class Model{
 	/**
 	* Permet de récupérer un tableau indexé par primaryKey et avec name pour valeur
 	**/
-	function findList($req = array()){
+	function findList($req = array(), $fieldName = "name"){
 		if(!isset($req['fields'])){
-			$req['fields'] = $this->primaryKey.',name';
+			if(!isset($req['fieldName']))
+				$req['fields'] = $this->primaryKey.',name';
+			elseif(isset($req['fieldName']) && !empty($req['fieldName']))
+				$req['fields'] = $this->primaryKey.','.$fieldName;
 		}
-		$d = $this->find($req); 
+		$d = $this->find($req);
 		$r = array(); 
 		foreach($d as $k=>$v){
-			$r[current($v)] = next($v); 
+			//when getting more than two fields, we need a way to get all the data
+			//the way this works is it first count the number of fields we get
+			//if there are more than two fields, the user can specify a string
+			//that string will be used to format all fields' data
+			//Ex : i have requested 3 fields id, field1, field2 
+			//which correspond to the data id, data1, data2
+			//I want to return an array with the id as the key and the rest as the value
+			//the $req['formatProperties'] then needs to be 'field1, ,field2'
+			//the comma separating each field and the whitespaces are added as is
+			//this will will return an array : id=> 'data1 data2'
+			$nbProperties = count(get_object_vars($v)); 
+			if($nbProperties > 2 && isset($req['formatProperties']) && $req['formatProperties']!= ""){
+				$properties = explode(",", $req['formatProperties']);
+				$endVal = "";
+				foreach ($properties as $p => $val) {
+					if($val != " "){
+						$val = trim($val);
+						if(isset($v->$val) && !empty($v->$val))
+							$endVal .= $v->$val;
+					} elseif(!isset($v->$val) && $val == " "){
+						$endVal .= $val;
+					}
+				}
+				$r[current($v)] = $endVal; 
+			} else {
+				//this works when getting only two fields	
+				//get the first field as key and the second as value	
+				$r[current($v)] = next($v); 	
+			}
 		}
 		return $r; 
 	}
