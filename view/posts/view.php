@@ -125,6 +125,7 @@
         	var url = window.location.href;
         	url = url.substr(0, url.indexOf("blog"));
         	url = url+"lookFor_blog/";
+        	console.log(url);
 			$.get(url, function(data) {
         		$("#loading").clone().prependTo("#all");
 	        	$("#all").find('#loading').show();

@@ -143,6 +143,7 @@
 }
 
 </style>
+<?php echo HTML::CSS("browser/browser"); ?>
 
 <div class="page-header">
 	<h1>Editer un projet</h1>
@@ -161,14 +162,28 @@
             echo $this->Form->input('id','hidden');
             echo $this->Form->input('user_id','hidden', array('inputValue'=>$_SESSION['User']->login));
             // echo $this->Form->input('content','Contenu',array('type'=>'textarea','class'=>'xxlarge wysiwyg validate[required,funcCall[checkTextArea]]','rows'=>5));
-            echo $this->Form->input('content','Contenu <span style = "color : red;">FR</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
-            echo $this->Form->input('content','Contenu <span style = "color : red;">EN</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
+            echo $this->Form->input('content_FR','Contenu <span style = "color : red;">FR</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
+            echo $this->Form->input('content_EN','Contenu <span style = "color : red;">EN</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
         ?>
     </div>
     <div id="secondpart">
             
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
+        <?php echo $this->Form->input('video_server','Vidéo correspandante sur le serveur <span style = "color : red;">Vimeo</span>'); ?>
+        <button type="button" id="browseVid">Browse for video</button>
+        <div class="browser">
+          <p style = "display : none;" class="pfilter">filter files by type
+            <input type="hidden" id="txtFilter" value=""/>
+            <!-- <input type="button" value="Refresh" id="btnrefresh"/> -->
+          </p>
+          <p class="pfilter">Search : 
+            <input type="text" id="txtsearch" value=""/>
+            <input type="button" value="Refresh" id="btnrefresh"/>
+          </p>
+          <p id="pPathDisplay" class="pPathDisplay">Loading...</p>
+          <div id="dvContents" class="dvContents">&nbsp;</div>
+        </div>
 
         <?php echo  $this->Form->input('filesData','hidden'); ?>
         <div id="plupload">
@@ -178,7 +193,10 @@
                 <a href="#" id="browse">Browse</a> <br><br>
                 Refresh to see uploaded files on homepage
             </div>
-            <div id="filelist"></div>
+              <button type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
+            <div id="filelist">
+              
+            </div>
         </div>
         <div id="debug"></div>
     </div>
@@ -186,18 +204,17 @@
     <div id="thirdpart">
         <h3>Informations sur les auteurs du projet</h3>
         <?php 
-            echo $this->Form->input('organization','Organisation',array('options' => $organizations, 'class'=>'selectpicker', 'listInvert' => true, 'required'=> true));
+            echo $this->Form->input('organization_id','Organisation',array('options' => $organizations, 'class'=>'selectpicker', 'listInvert' => true, 'required'=> true));
         ?>
         <label class="control-label" for="inputauthors">Auteur(s)</label>
+
         <br>
         <button  type="button" id = "switchAuthors" >Voir les auteurs par organizations</button>
-        <p>
-            <span id="inputauthors" class="selectivity-input"></span>
-        </p>
-        <p>
-            <span id="inputauthors_cat" class="selectivity-input"></span>
-        </p>
+
+        <p><span id="inputauthors" class="selectivity-input"></span></p>
+        <p><span id="inputauthors_cat" class="selectivity-input"></span></p>
         <?php echo $this->Form->input('authorsHidden','hidden', array('inputValue'=>'testVal')); ?>
+        
         <br>
 
         <?php
@@ -210,8 +227,8 @@
         ?>
     <br>
 	<div class="actions">
-        <button  type="button" id = "test" >TEST</button>
 		<input id = "send" type="submit" class="btn primary" value="Envoyer">
+    <button type = "button" id="test">test</button>
 	</div>
 </form>
 
@@ -222,6 +239,9 @@
 <?php echo HTML::JS("plupload/plupload.flash"); ?>
 <?php echo HTML::JS("plupload/plupload.html5"); ?>
 <?php echo HTML::JS("plupload"); ?>
+
+<?php echo HTML::JS("browser/ajax"); ?>
+<?php echo HTML::JS("browser/browser"); ?>
 
 <script>
     $( document ).ready(function() {
@@ -271,25 +291,53 @@
         // console.log(selectItems);
         // console.log(selectItemsCat);
 
-        $('#form').on('submit',function(){
-            alert("TEST");
-            console.log($("#inputauthors").selectivity('data'));
-            $("#inputauthorsHidden").val(JSON.parse($("#inputauthors").selectivity('data')));
-            console.log($("#inputauthorsHidden").val());
-            alert("TEST");
-        }) ;
-
-
-        $("#test").on( "click", function() {
+        $('#form').on('submit',function(e){
             if(!authorCat){
                 $("#inputauthorsHidden").val(JSON.stringify($("#inputauthors").selectivity('data')));
-                    console.log($("#inputauthors").selectivity('data'));
+                console.log($("#inputauthors").selectivity('data'));
             } else {
                 $("#inputauthorsHidden").val(JSON.stringify($("#inputauthors_cat").selectivity('data')));
-                    console.log($("#inputauthors_cat").selectivity('data'));
+                console.log($("#inputauthors_cat").selectivity('data'));
             }
-            console.log($("#inputauthorsHidden").val());
+            // $("#inputfilesData").val(JSON.stringify(filesData));
+            console.log($("#inputfilesData").val());
+            alert("test");
+            return true;
         }) ;
+
+        $("#test").on('click',function(e){
+            e.preventDefault();
+            console.log($("#inputfilesData").val());
+            return false;
+        }) ;
+
+        $(".browser").hide();
+        $("#browseVid").on( "click", function() {
+          $(".browser").toggle();
+        });
+
+        function init(){
+          browser({
+            contentsDisplay:document.getElementById("dvContents"),
+            refreshButton:document.getElementById("btnrefresh"),
+            pathDisplay:document.getElementById("pPathDisplay"),
+            filter:document.getElementById("txtFilter"),
+            search:document.getElementById("txtsearch"),
+            openFolderOnSelect:true,
+            onSelect:function(item,params){
+              if(item.type=="folder"){
+                return true;
+              }else{
+                $("#inputvideo_server").val(item.path)
+              }
+            },
+            currentPath:"images"
+          });
+        }
+        init();
+        $("#txtFilter, #txtsearch").on( "keyup", function(){
+            init();
+        });
     });
 
 </script>

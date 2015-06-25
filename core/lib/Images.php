@@ -309,4 +309,14 @@ class Images{
       }
     }
 
+    static public function saveToBDD($file, $extension){
+      //save img in bdd as base64 blob
+      //save as img name (without extension) and img data
+    }
+
+    static public function getfromBDD($file, $path){
+      //get img from bdd by name
+      //pass path as argument to save retreived img
+    }
+
 }

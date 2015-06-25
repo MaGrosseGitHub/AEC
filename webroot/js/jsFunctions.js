@@ -33,6 +33,8 @@
 	        haystack.splice(found, 1);
 	        found = haystack.indexOf(needle);
 	    }
+
+	    return haystack;
 	}
 
     function ObjectValToArray($object, $val, $array, $isInArray){    	

@@ -157,14 +157,15 @@ class PostsController extends Controller{
 		if($this->request->data){
 			if($this->Post->validates($this->request->data)){
 				$this->request->data->type = 'post';
-				$this->request->data->slug = makeSlug($this->request->data->title_FR, 200);
+				$this->request->data->slug = makeSlug($this->request->data->title_EN, 200);
 				// $this->request->data->slug = url_slug($this->request->data->name, array( 'limit' => 200));
 				$this->request->data->user_id = $_SESSION['User']->login;
 				$this->request->data->publication = new DateTime($this->request->data->publication);
 				$this->request->data->publication = $this->request->data->publication->getTimestamp();
-				// $d = new DateTime();
-				// $d->setTimestamp($this->request->data->publication);
-				// $d->format('U = Y-m-d H:i:s');
+				$d = new DateTime();
+				$d->setTimestamp($this->request->data->publication);
+				$d->format('U = Y-m-d H:i:s');
+				$this->request->data->d = $d;
 				$this->request->data->created = time();
 
 				debug($this->request->data);
@@ -187,6 +188,12 @@ class PostsController extends Controller{
 			$this->request->data = $this->Post->findFirst(array(
 				'conditions' => array('id'=>$id)
 			));
+
+			//get img list and display it
+			//test delete from bdd function
+			//add video decoder
+			//add img save in bdd
+			//add possiblity to select default img
 		}
 		// On veut un sélecteur de catégorie donc on récup la liste des catégories
 		$this->loadModel('Category');
@@ -259,8 +266,8 @@ class PostsController extends Controller{
 				$html = '<div class="file"><img src="'.$v.'"/> '.basename($_FILES['file']['name']).'<div class="actions"><a href="delete_img/'.$fileId.'/'.basename($v).'" class="del">Supprimer</a></div> </div>';
 				$html = str_replace('"','\\"',$html);
 
-				$returnArray = array("error"=> false, "html" => $html, "imgData" => $imgData);
-				$returnArray = json_encode($returnArray);
+				// $returnArray = array("error"=> false, "html" => $html, "imgData" => $imgData);
+				// $returnArray = json_encode($returnArray);
 
 				// die($returnArray); 
 				die('{"error":false, "html": "'.$html.'", "imgData" : "'.$imgData.'"}');
@@ -271,23 +278,77 @@ class PostsController extends Controller{
 		die('{"error":true, "une erreur est survenu"}');	
 	}
 
-	function admin_delete_img($id, $file){
-		// unlink(WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS.$file);
-		// $imgInfo = pathinfo($file);
-		// $imgName = $imgInfo['basename'];
-		// $imgDir = $imgInfo['dirname'];
-		// $imgNameExt = str_replace(".".$imgInfo['extension'], "", $imgName);	
-		$imgDir = WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS;
-		// unlink($imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
-		// unlink(WEBROOT.DS.'img'.DS.$imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
-		// unlink(WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS.$file);
-		
+	function admin_delete_img(){
+		if($this->request->data && !empty($this->request->data)){
+			$this->loadModel('Post'); 
+			if(!isset($this->request->data->deleteAll) || (isset($this->request->data->deleteAll) && !$this->request->data->deleteAll)) {
+				$id = $this->request->data->id;
+				$file = $this->request->data->img;
+				$imgDir = WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS;
 
+				$imgInfo = pathinfo($imgDir.$file);
+				$imgName = $imgInfo['basename'];
+				$imgDir = $imgInfo['dirname'];
+				$imgNameExt = str_replace(".".$imgInfo['extension'], "", $imgName);	
 
-		//show existing imgs when editiong post
-		//add function to delete imgs
-		//also delete imgs from database
-		//correct css for imgs
+				unlink($imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
+				unlink($imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
+				unlink($imgDir.DS.$file);	
+
+				$this->request->data = $this->Post->findFirst(array(
+					'conditions' => array('id'=>$id)
+				));
+				$imgGroup = json_decode($this->request->data->images_id);
+				if(!empty($imgGroup)){
+					if(($key = array_search($file, $imgGroup)) !== false) {
+					    unset($imgGroup[$key]);
+					}
+
+					$this->request->data->images_id = $imgGroup;
+					$this->Post->save($this->request->data);
+					$cacheDir = Cache::POST.DS.$this->request->data->slug;
+					$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
+				}
+
+				
+				die('{"error":false, "html": "L\'image a bien été supprimée"}');
+			} else {
+				$id = $this->request->data->id;
+				if(file_exists("img/galerie/".$id)){
+					$files = glob("img/galerie/".$id."/*"); 
+					if(count($files) > 0){
+						foreach($files as $file){ 
+							if(is_file($file))
+								unlink($file);
+						}
+					}
+				}				
+				$this->request->data = $this->Post->findFirst(array(
+					'conditions' => array('id'=>$id)
+				));
+				if(!empty($this->request->data->images_id)){
+					$this->request->data->images_id = "";
+					$this->Post->save($this->request->data);
+					$cacheDir = Cache::POST.DS.$this->request->data->slug;
+					$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
+				}
+
+				die('{"error":true, "html": "Toutes les images ont bien été supprimées"}');
+			}
+		} else {
+				die('{"error":true, "html": "une erreur est survenue"}');
+		}
+	}
+
+	function admin_searchVid(){
+		if($this->request->data && !empty($this->request->data)){
+			$p=isset($this->request->data->path)?$this->request->data->path:"";
+			$f=isset($this->request->data->filter)?$this->request->data->filter:"";
+			$s=isset($this->request->data->s)?$this->request->data->s:"";
+
+			echo json_encode(searchDir("./vid/",$p,$f,$s,-1));
+			die();
+		}
 	}
 
 	/**
