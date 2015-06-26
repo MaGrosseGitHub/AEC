@@ -69,6 +69,8 @@
         </div>
         <div id="debug"></div>
     </div>
+    <br>
+    <br>
             
     <div id="thirdpart">
         <h3>Informations sur les auteurs du projet</h3>
@@ -100,6 +102,8 @@
 	</div>
 </form>
 
+<div id="urlCorrected" style = "display : none;"></div>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>  
@@ -115,6 +119,14 @@
     var filesData2 = '<?php echo $images_id; ?>';
     var elem = document.getElementById("inputimages_id");
     elem.value = filesData2;
+
+    url = window.location.href;
+    findEdit = "edit";
+    regex =  new RegExp('\\b' + findEdit + '\\b');
+    findEdit = url.search(regex);
+    url = url.substr(0, findEdit);
+    var urlDiv = document.getElementById("urlCorrected");
+    urlDiv.value = url;
 
     $( document ).ready(function() {
 

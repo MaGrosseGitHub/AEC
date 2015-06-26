@@ -165,8 +165,6 @@ class PostsController extends Controller{
 				$this->request->data->publication = new DateTime($this->request->data->publication);
 				$this->request->data->publication = $this->request->data->publication->getTimestamp();
 				$this->request->data->created = time();
-				
-				debug($this->request->data);
 
 				//video settings
 				$youtube = $this->DecodeVideo($this->request->data->video_youtube, "youtube");
@@ -202,8 +200,6 @@ class PostsController extends Controller{
 				'conditions' => array('id'=>$id)
 			));
 
-			debug($this->request->data);
-
 			if(!empty($this->request->data->videos_id)){
 				//decode and add video data
 				$videoData = json_decode($this->request->data->videos_id);
@@ -221,6 +217,7 @@ class PostsController extends Controller{
 				//decode and add images data
 				$imagesData = array();
 				foreach (json_decode($this->request->data->images_id) as $imgKey => $img) {
+					$img = str_replace("_180x135", "", $img);
 					array_push($imagesData, $img);
 				}
 				$d['imagesData'] = $imagesData;
@@ -299,7 +296,7 @@ class PostsController extends Controller{
 				$ext = substr($_FILES['file']['name'], -4);
 				$imageName = generateRandomString();
 				$image = $imgDir.$imageName.time().$ext;
-				$imgData = $imgDir.$imageName.time()."_180x135".$ext;
+				$imgData = $image;
 
 				move_uploaded_file($_FILES['file']['tmp_name'], $image);
 				$image = Images::convert($image, "jpg", true);
@@ -326,6 +323,7 @@ class PostsController extends Controller{
 			if(!isset($this->request->data->deleteAll) || (isset($this->request->data->deleteAll) && !$this->request->data->deleteAll)) {
 				$id = $this->request->data->id;
 				$file = $this->request->data->img;
+				$originFile = $file;
 				$imgDir = WEBROOT.DS.'img'.DS.'galerie'.DS.$id.DS;
 
 				$imgInfo = pathinfo($imgDir.$file);
@@ -342,16 +340,16 @@ class PostsController extends Controller{
 				));
 				$imgGroup = json_decode($this->request->data->images_id);
 				if(!empty($imgGroup)){
-					if(($key = array_search($file, $imgGroup)) !== false) {
+					if(($key = array_search('img/galerie/'.$id.'/'.$file, $imgGroup)) !== false) {
 					    unset($imgGroup[$key]);
+						$imgGroup = array_values($imgGroup);
 					}
 
-					$this->request->data->images_id = $imgGroup;
+					$this->request->data->images_id = json_encode($imgGroup);
 					$this->Post->save($this->request->data);
 					$cacheDir = Cache::POST.DS.$this->request->data->slug;
 					$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
 				}
-
 				
 				die('{"error":false, "html": "L\'image a bien été supprimée"}');
 			} else {

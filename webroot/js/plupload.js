@@ -16,7 +16,7 @@ $(function($){
 		containes: 'plupload',
 		browse_button: 'browse',
 		drop_element:"droparea",
-		url : 'process',
+		url : document.getElementById("urlCorrected").value+'process',
 		flash_swf_url:'js/plupload/plupload.flash.swf',
 		multipart : true,
 		urlstream_upload:true,
@@ -99,11 +99,11 @@ $(function($){
 			imgName = "img/galerie/"+imgName
 			filesData = removeFromArr(imgName, filesData);
 			$("#inputimages_id").val(JSON.stringify(filesData));
+			imgName = basename(elem.attr('href'));
 			imgName = imgName.replace("img/galerie/", "");
-			imgName = imgName.replace($("#inputid").val()+"/", "");
 			$.ajax({
 			  	method: "POST",
-			  	url: "delete_img/",
+			  	url: document.getElementById("urlCorrected").value+"delete_img/",
 			  	data: { id : $("#inputid").val() , img : imgName }
 			}).done(function(data){
 				console.log(data);
@@ -121,7 +121,7 @@ $(function($){
 		if(confirm('Voulez vous vraiment supprimer toutes les images ?')){
 			$.ajax({
 			  	method: "POST",
-			  	url: "delete_img/",
+			  	url: document.getElementById("urlCorrected").value+"delete_img/",
 			  	data: { id : $("#inputid").val() , img : "none", deleteAll : true }
 			}).done(function(){
 				$("#filelist").html("");

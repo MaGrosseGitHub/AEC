@@ -1,4 +1,4 @@
-browser = function(params){
+﻿browser = function(params){
 	if(params==null)params={};
 	if(params.contentsDisplay==null)params.contentsDisplay=document.body;
 	if(params.currentPath==null)params.currentPath="";
@@ -15,7 +15,7 @@ browser = function(params){
 		var a=new Ajax();
 		with (a){
 			Method="POST";
-			URL="searchVid";
+			URL=document.getElementById("urlCorrected").value+"searchVid";
 			Data="path="+params.currentPath+"&filter="+f+"&data="+params.data+"&s="+s;
 			ResponseFormat="json";
 			ResponseHandler=showFiles;
