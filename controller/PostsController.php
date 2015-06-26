@@ -112,7 +112,7 @@ class PostsController extends Controller{
 		$this->loadModel('Post');
 		$condition = array('type'=>'post'); 
 		$d['posts'] = $this->Post->find(array(
-			'fields'     => 'Post.id,Post.name,Post.online,Post.created,Post.category_id as catname',
+			'fields'     => 'Post.id,Post.title_FR,Post.online,Post.created,Post.category_id as catname',
 			'order' 	 => 'created DESC',
 			'conditions' => $condition,
 			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
@@ -156,29 +156,42 @@ class PostsController extends Controller{
 		$d['id'] = $id; 
 		if($this->request->data){
 			if($this->Post->validates($this->request->data)){
+				//general settings
 				$this->request->data->type = 'post';
 				$this->request->data->slug = makeSlug($this->request->data->title_EN, 200);
-				// $this->request->data->slug = url_slug($this->request->data->name, array( 'limit' => 200));
 				$this->request->data->user_id = $_SESSION['User']->login;
+
+				//date settings
 				$this->request->data->publication = new DateTime($this->request->data->publication);
 				$this->request->data->publication = $this->request->data->publication->getTimestamp();
-				$d = new DateTime();
-				$d->setTimestamp($this->request->data->publication);
-				$d->format('U = Y-m-d H:i:s');
-				$this->request->data->d = $d;
 				$this->request->data->created = time();
-
+				
 				debug($this->request->data);
-				die();
-				$preDir = "tmp/Post/";
-				if(Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$this->request->data->slug, 'imgName' => $this->request->data->slug, "convert" => true, "resize" => true))){
-					unlink($preDir.$this->request->data->slug."/".$this->request->data->slug.".jpg");
-				}
 
+				//video settings
+				$youtube = $this->DecodeVideo($this->request->data->video_youtube, "youtube");
+				$vimeo = $this->DecodeVideo($this->request->data->video_vimeo, "vimeo");
+				$server = Router::webroot("vid/".$this->request->data->video_server);
+				$videoData = array("youtube" => $youtube, "vimeo" => $vimeo, "server" => $server);
+				$this->request->data->videos_id = json_encode($videoData);
+				unset($this->request->data->video_youtube);
+				unset($this->request->data->video_vimeo);
+				unset($this->request->data->video_server);
+
+				// date timestamp to normal settings
+				// $d = new DateTime();
+				// $d->setTimestamp($this->request->data->publication);
+				// $d->format('U = Y-m-d H:i:s');
+				// $this->request->data->d = $d;
+				die();
+
+				$preDir = "tmp/Post/";
 				$this->Post->save($this->request->data);
+
 				$cacheDir = Cache::POST.DS.$this->request->data->slug;
 				$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
-				$this->Notification->setFlash('Le contenu a bien été modifié', 'success'); 
+
+				$this->Notification->setFlash('Le contenu a bien été modifié', 'success');
 				$this->redirect('admin/posts/index'); 
 			}else{
 				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
@@ -189,9 +202,34 @@ class PostsController extends Controller{
 				'conditions' => array('id'=>$id)
 			));
 
-			//get img list and display it
+			if(!empty($this->request->data->videos_id)){
+				//decode and add video data
+				$videoData = json_decode($this->request->data->videos_id);
+				$youtube = $videoData->youtube->imgInfo->link;
+				$vimeo = $videoData->vimeo->imgInfo->link;
+				$server = $videoData->server;
+				$server = substr($server, strpos($server, "vid/") + 4 ); //position of "vid/" plus length of "vid/" (4)
+
+				$this->request->data->video_youtube = $youtube;
+				$this->request->data->video_vimeo = $vimeo;
+				$this->request->data->video_server = $server;
+			}
+
+			if(!empty($this->request->data->images_id)){
+				//decode and add images data
+				$imagesData = array();
+				foreach (json_decode($this->request->data->images_id) as $imgKey => $img) {
+					array_push($imagesData, $img);
+				}
+				$d['imagesData'] = $imagesData;
+				$d['images_id'] = $this->request->data->images_id;
+				$this->request->data->images_id = "";
+			}
+
+			if(!empty($this->request->data->author_id))
+				$d['author_id'] = $this->request->data->author_id;
+
 			//test delete from bdd function
-			//add video decoder
 			//add img save in bdd
 			//add possiblity to select default img
 		}
@@ -254,7 +292,7 @@ class PostsController extends Controller{
 				$ext = substr($_FILES['file']['name'], -4);
 				$imageName = generateRandomString();
 				$image = $imgDir.$imageName.time().$ext;
-				$imgData = $image;
+				$imgData = $imgDir.$imageName.time()."_180x135".$ext;
 
 				move_uploaded_file($_FILES['file']['tmp_name'], $image);
 				$image = Images::convert($image, "jpg", true);
@@ -266,10 +304,6 @@ class PostsController extends Controller{
 				$html = '<div class="file"><img src="'.$v.'"/> '.basename($_FILES['file']['name']).'<div class="actions"><a href="delete_img/'.$fileId.'/'.basename($v).'" class="del">Supprimer</a></div> </div>';
 				$html = str_replace('"','\\"',$html);
 
-				// $returnArray = array("error"=> false, "html" => $html, "imgData" => $imgData);
-				// $returnArray = json_encode($returnArray);
-
-				// die($returnArray); 
 				die('{"error":false, "html": "'.$html.'", "imgData" : "'.$imgData.'"}');
 			} else {
 				die('{"error":true, "html": "Le fichier n\'est pas une image"}');
@@ -279,6 +313,7 @@ class PostsController extends Controller{
 	}
 
 	function admin_delete_img(){
+		die('{"error":false, "html": "L\'image a bien été supprimée"}');
 		if($this->request->data && !empty($this->request->data)){
 			$this->loadModel('Post'); 
 			if(!isset($this->request->data->deleteAll) || (isset($this->request->data->deleteAll) && !$this->request->data->deleteAll)) {
@@ -346,9 +381,85 @@ class PostsController extends Controller{
 			$f=isset($this->request->data->filter)?$this->request->data->filter:"";
 			$s=isset($this->request->data->s)?$this->request->data->s:"";
 
-			echo json_encode(searchDir("./vid/",$p,$f,$s,-1));
-			die();
+			die(json_encode(searchDir("./vid/",$p,$f,$s,-1)));
 		}
+	}
+
+	protected function DecodeVideo($url, $service){
+		if(!empty($url)) {
+			if($service == "youtube") {
+	          	// preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $link, $matches); 
+	          	$result = "";
+				if (stristr($url,'youtu.be/')){
+					preg_match('/(https:|http:|)(\/\/www\.|\/\/|)(.*?)\/(.{11})/i', $url, $final_ID); 
+					$result = $final_ID[4]; 
+				} else {
+					@preg_match('/(https:|http:|):(\/\/www\.|\/\/|)(.*?)\/(embed\/|watch.*?v=|)([a-z_A-Z0-9\-]{11})/i', $url, $IDD);
+					if(isset($IDD[5])) 
+						$result = $IDD[5]; 
+					else
+						return false;
+				}
+				return $this->GetVideoInfo($result, "youtube"); 
+			}
+			if($service == "vimeo") {
+				if(preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $url, $output_array)) {
+              		if(isset($output_array[5]))
+						return $this->GetVideoInfo($output_array[5], "vimeo"); 
+          		}
+			}
+		}
+	}
+
+	protected function GetVideoInfo ($url, $service){		
+
+		$d['video'] = $url;
+		$d['service'] = $service;
+
+		if($d['service'] != "youtube" && $d['service'] != "vimeo" && $d['service'] != "dailymotion")
+			return false;
+
+		if($d['service']== 'youtube')
+		{
+			$iframe = 'http://www.youtube.com/embed/'.$d['video'];
+			$link = "http://www.youtube.com/watch?v=".$d['video'];
+			$thumb = 'http://img.youtube.com/vi/'.$d['video'].'/0.jpg';
+			$thumb2 = 'http://img.youtube.com/vi/'.$d['video'].'/2.jpg';
+			$thumb3 = 'http://img.youtube.com/vi/'.$d['video'].'/3.jpg';
+		} elseif($d['service']=='vimeo') {
+			$iframe = 'http://player.vimeo.com/video/'.$d['video'];
+			$link = "https://vimeo.com/".$d['video'];
+			$ctx = stream_context_create(
+				array(
+					'http'=> array(
+				        'timeout' => 5, // 1 200 Seconds = 20 Minutes
+				    )
+				)
+			);
+			if(@file_get_contents("http://vimeo.com/api/v2/video/".$d['video'].".php", false, $ctx)) {
+				$hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".$d['video'].".php"));
+				$thumb = $hash[0]["thumbnail_medium"];				
+				$thumb2 = $hash[0]["thumbnail_large"];
+				$thumb3 = substr($hash[0]["thumbnail_large"],0,-7);
+			} else {
+				$thumb = Router::webroot("css/img/noPic.png");
+			}
+		} elseif($d['service']=='dailymotion') {
+			$iframe = 'http://www.dailymotion.com/embed/video/'.$d['video'];
+			$link = "http://www.dailymotion.com/video/".$d['video'];
+			$thumb = 'http://www.dailymotion.com/thumbnail/video/'.$d['video'];
+		}	
+
+		$d['imgInfo'] = new stdClass(); 
+		// $d['imgInfo']->id = $id;
+		// $d['imgInfo']->slug = $slug;
+		$d['imgInfo']->iframe = $iframe.'?autoplay=1';
+		$d['imgInfo']->link = $link;
+		$d['imgInfo']->thumb = $thumb;
+		$d['imgInfo']->thumb2 = $thumb2;
+		$d['imgInfo']->thumb3 = $thumb3;
+
+		return $d;
 	}
 
 	/**

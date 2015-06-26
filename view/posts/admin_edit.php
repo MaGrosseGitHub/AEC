@@ -1,148 +1,5 @@
-<style>
-    
-#plupload 
-{
-  font-family: Arial,Helvetica;
-  color: #3D3D3D; 
-  padding-top : 100px;
-  padding-right:20px;
-  /*height : 100%;*/
-  text-align: center;
-}
-  #plupload #droparea {
-    border: 4px dashed #999999;
-    height: 200px;
-    text-align: center;
-    font-size: 13px; }
-    #plupload #droparea p {
-      margin: 0;
-      padding: 60px 0 0 0;
-      font-weight: bold;
-      font-size: 20px; }
-    #plupload #droparea span {
-      display: block;
-      margin-bottom: 6px; }
-    #plupload #droparea.hover {
-      border-color: #83b4d8; }
-  #plupload #browse {
-    border: 1px solid #BBB;
-    text-decoration: none;
-    padding: 3px 8px;
-    color: #464646;
-    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
-    background-image: -webkit-linear-gradient(top, #ffffff, #f4f4f4);
-    background-image: -moz-linear-gradient(top, #ffffff, #f4f4f4);
-    background-image: -o-linear-gradient(top, #ffffff, #f4f4f4);
-    background-image: -ms-linear-gradient(top, #ffffff, #f4f4f4);
-    background-image: linear-gradient(top, #ffffff, #f4f4f4);
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -o-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -khtml-border-radius: 15px;
-    border-radius: 15px; }
-  /*#filelist {
-    margin-top: 10px; 
-    width : 100%;}*/
 
-    .file {
-      padding: 0 10px;
-      border: 1px solid #DFDFDF;
-      line-height: 70px;
-      margin-bottom: 10px;
-      display : inline-block;
-      width : 190px;
-      height : 130px;
-      }
-
-    .file img {
-      margin : 10px;
-      height : 50px;
-    }
-
-    .delete, .deleteImg, .addImg {
-      position : relative;
-      top : -100px;
-      left : 120px;
-      background: #FFF;
-    }
-
-    /*.addToAlbum{
-      position : relative;
-      top : -130px;
-      left : -70px;
-      background: #FFF;
-    }*/
-
-    .action, .imgName, .delete {
-      display : inline-block;
-    }
-
-    .imgName{   
-      position : relative;
-      top : -70px;  
-      left : 20px;
-      width : 120px;
-      height : 20px;
-      overflow: hidden;
-      background: #FFF;
-    }
-
-    .albumDiv{
-      background: #FF0;
-    }
-
-    .albumEmpty{
-      display: none
-    }
-
-    .progressbar {
-      position: absolute;
-      top: 25px;
-      right: 5px;
-      width: 150px;
-      height: 20px;
-      background-color: #abb2bc;
-      -moz-border-radius: 25px;
-      -webkit-border-radius: 25px;
-      -o-border-radius: 25px;
-      -ms-border-radius: 25px;
-      -khtml-border-radius: 25px;
-      border-radius: 25px;
-      -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
-      -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
-      -o-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
-      box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5); }
-    .progress {
-      position: absolute;
-      border: 1px solid #4c8932;
-      height: 18px;
-      width: 10%;
-      background: url(<?php echo HTML::getImg("progress.jpg", true, true); ?>) repeat;
-      -webkit-animation: progress 2s linear infinite;
-      -moz-border-radius: 25px;
-      -webkit-border-radius: 25px;
-      -o-border-radius: 25px;
-      -ms-border-radius: 25px;
-      -khtml-border-radius: 25px;
-      border-radius: 25px; }
-
-@-webkit-keyframes progress {
-  from {
-    background-position: 0 0; }
-
-  to {
-    background-position: 54px 0; } }
-
-.clear{
-  clear : both;
-}
-
-.selectivity-multiple-input-container{
-    background-color : #FFF;
-}
-
-</style>
+<?php echo HTML::CSS("View/Posts/admin_edit"); ?>
 <?php echo HTML::CSS("browser/browser"); ?>
 
 <div class="page-header">
@@ -151,7 +8,6 @@
 
 <form id = "form" action="<?php echo Router::url('cockpitInc/posts/edit/'.$id); ?>" method="post" enctype="multipart/form-data">
     <div id="firstPart">
-    <?php echo HTML::getImg("cache/post/test1/test1_150x100.jpg"); ?>
         <h3>Informations principales du projet</h3>
     	<?php 
             echo $this->Form->input('title_FR','Titre <span style = "color : red;">FR</span>');
@@ -166,11 +22,12 @@
             echo $this->Form->input('content_EN','Contenu <span style = "color : red;">EN</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
         ?>
     </div>
-    <div id="secondpart">
-            
+    <div id="secondpart">   
+
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
         <?php echo $this->Form->input('video_server','Vidéo correspandante sur le serveur <span style = "color : red;">Vimeo</span>'); ?>
+
         <button type="button" id="browseVid">Browse for video</button>
         <div class="browser">
           <p style = "display : none;" class="pfilter">filter files by type
@@ -185,7 +42,7 @@
           <div id="dvContents" class="dvContents">&nbsp;</div>
         </div>
 
-        <?php echo  $this->Form->input('filesData','hidden'); ?>
+        <?php echo  $this->Form->input('images_id','hidden'); ?>
         <div id="plupload">
             <div id="droparea">
                 <p>Drag & drop files here</p>
@@ -195,7 +52,14 @@
             </div>
               <button type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
             <div id="filelist">
-              
+              <?php 
+                if(isset($imagesData) && !empty($imagesData)){
+                  foreach ($imagesData as $imgKey => $img) {
+                    $html = '<div class="file"><img src="'.Router::webroot($img).'"/> '.substr(basename($img), 0, 10).'...<div class="actions"><a href="delete_img/'.$id.'/'.basename($img).'" class="del">Supprimer</a></div> </div>';        
+                    echo $html;
+                  }
+                }
+              ?>
             </div>
         </div>
         <div id="debug"></div>
@@ -213,7 +77,7 @@
 
         <p><span id="inputauthors" class="selectivity-input"></span></p>
         <p><span id="inputauthors_cat" class="selectivity-input"></span></p>
-        <?php echo $this->Form->input('authorsHidden','hidden', array('inputValue'=>'testVal')); ?>
+        <?php echo $this->Form->input('author_id','hidden'); ?>
         
         <br>
 
@@ -228,7 +92,6 @@
     <br>
 	<div class="actions">
 		<input id = "send" type="submit" class="btn primary" value="Envoyer">
-    <button type = "button" id="test">test</button>
 	</div>
 </form>
 
@@ -244,23 +107,23 @@
 <?php echo HTML::JS("browser/browser"); ?>
 
 <script>
+    var filesData2 = '<?php echo $images_id; ?>';
+    var elem = document.getElementById("inputimages_id");
+    elem.value = filesData2;
+
     $( document ).ready(function() {
-        // $("#inputauthors").hide();
-        // $("#inputauthors option").each(function()
-        // {
-        //     selectItems.push($(this).text());
-        // });
-        $("#inputauthors_cat").hide();
+
+        $("#inputauthors_cat").hide(500);
         var authorCat = false;
         $("#switchAuthors").on( "click", function() {
             if(!authorCat){
-                $("#inputauthors_cat").show();
-                $("#inputauthors").hide();
+                $("#inputauthors_cat").show(500);
+                $("#inputauthors").hide(500);
                 $(this).text("Voir tout les auteurs")
                 authorCat = true;
             } else {
                 $("#inputauthors_cat").hide();
-                $("#inputauthors").show();
+                $("#inputauthors").show(500);
                 $(this).text("Voir les auteurs par organizations")
                 authorCat = false;
             }
@@ -287,33 +150,25 @@
             searchInputPlaceholder: 'Type to search for authors'
         });
 
-        // console.log($("#inputauthorsHidden").val());
-        // console.log(selectItems);
-        // console.log(selectItemsCat);
+        authorsData = '<?php echo $author_id; ?>';
+        authorsData = JSON.parse(authorsData);
+        if( $.isArray(authorsData) && authorsData.length > 0) {
+          $("#inputauthors").selectivity('data', authorsData);
+          $("#inputauthors_cat").selectivity('data', authorsData);
+        }
 
         $('#form').on('submit',function(e){
             if(!authorCat){
-                $("#inputauthorsHidden").val(JSON.stringify($("#inputauthors").selectivity('data')));
-                console.log($("#inputauthors").selectivity('data'));
+                $("#inputauthor_id").val(JSON.stringify($("#inputauthors").selectivity('data')));
             } else {
-                $("#inputauthorsHidden").val(JSON.stringify($("#inputauthors_cat").selectivity('data')));
-                console.log($("#inputauthors_cat").selectivity('data'));
+                $("#inputauthor_id").val(JSON.stringify($("#inputauthors_cat").selectivity('data')));
             }
-            // $("#inputfilesData").val(JSON.stringify(filesData));
-            console.log($("#inputfilesData").val());
-            alert("test");
             return true;
-        }) ;
-
-        $("#test").on('click',function(e){
-            e.preventDefault();
-            console.log($("#inputfilesData").val());
-            return false;
         }) ;
 
         $(".browser").hide();
         $("#browseVid").on( "click", function() {
-          $(".browser").toggle();
+          $(".browser").toggle(500);
         });
 
         function init(){

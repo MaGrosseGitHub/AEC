@@ -18,7 +18,7 @@
 			<tr>
 				<td><?php echo $v->id; ?></td>
 				<td><span class="label <?php echo ($v->online==1)?'success':'error'; ?>"><?php echo ($v->online==1)?'En ligne':'Hors ligne'; ?></span></td>
-				<td><?php echo $v->name; ?></td>
+				<td><?php echo $v->title_FR; ?></td>
 				<td><?php echo date("d-m-Y",$v->created); ?></td>
 				<td><?php echo $v->catname; ?></td>
 				<td>

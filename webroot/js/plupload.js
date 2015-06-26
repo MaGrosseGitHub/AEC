@@ -2,7 +2,12 @@
 $(function($){
 		
 	var filesData = []; 
-	$("#inputfilesData").val(JSON.stringify(filesData));
+	var getimgData = $("#inputimages_id").val();
+	getimgData = JSON.parse(getimgData);
+	if( $.isArray(getimgData) && getimgData.length > 0) {
+		filesData = getimgData;
+	}
+	$("#inputimages_id").val(JSON.stringify(filesData));
 
 	var uploader = new plupload.Uploader({
 		runtimes : 'html5,flash',
@@ -69,7 +74,7 @@ $(function($){
 			$('#'+file.id).remove(); 
 		}else{
 			filesData.push(data.imgData); 
-			$("#inputfilesData").val(JSON.stringify(filesData));
+			$("#inputimages_id").val(JSON.stringify(filesData));
 			$('#'+file.id).replaceWith(data.html); 
 		}
 	});
@@ -91,13 +96,15 @@ $(function($){
 			var imgName = elem.attr('href').replace("delete_img/", "");
 			imgName = "img/galerie/"+imgName
 			filesData = removeFromArr(imgName, filesData);
-			$("#inputfilesData").val(JSON.stringify(filesData));
+			$("#inputimages_id").val(JSON.stringify(filesData));
 			imgName = imgName.replace("img/galerie/", "");
 			imgName = imgName.replace($("#inputid").val()+"/", "");
 			$.ajax({
 			  	method: "POST",
 			  	url: "delete_img/",
 			  	data: { id : $("#inputid").val() , img : imgName }
+			}).done(function(data){
+				console.log(data);
 			});
 			elem.parent().parent().slideUp(); 
 		}
@@ -108,6 +115,7 @@ $(function($){
 		e.preventDefault();
 		var elem = $(this);
 		filesData = [];
+		$("#inputimages_id").val(JSON.stringify(filesData));
 		if(confirm('Voulez vous vraiment supprimer toutes les images ?')){
 			$.ajax({
 			  	method: "POST",
