@@ -183,7 +183,7 @@ class PostsController extends Controller{
 				// $d->setTimestamp($this->request->data->publication);
 				// $d->format('U = Y-m-d H:i:s');
 				// $this->request->data->d = $d;
-				die();
+				// die();
 
 				$preDir = "tmp/Post/";
 				$this->Post->save($this->request->data);
@@ -201,6 +201,8 @@ class PostsController extends Controller{
 			$this->request->data = $this->Post->findFirst(array(
 				'conditions' => array('id'=>$id)
 			));
+
+			debug($this->request->data);
 
 			if(!empty($this->request->data->videos_id)){
 				//decode and add video data
@@ -224,10 +226,15 @@ class PostsController extends Controller{
 				$d['imagesData'] = $imagesData;
 				$d['images_id'] = $this->request->data->images_id;
 				$this->request->data->images_id = "";
+			} else {
+				$d['images_id'] = "";
 			}
 
 			if(!empty($this->request->data->author_id))
 				$d['author_id'] = $this->request->data->author_id;
+			else
+				$d['author_id'] = "";
+
 
 			//test delete from bdd function
 			//add img save in bdd
@@ -313,7 +320,7 @@ class PostsController extends Controller{
 	}
 
 	function admin_delete_img(){
-		die('{"error":false, "html": "L\'image a bien été supprimée"}');
+		// die('{"error":false, "html": "L\'image a bien été supprimée"}');
 		if($this->request->data && !empty($this->request->data)){
 			$this->loadModel('Post'); 
 			if(!isset($this->request->data->deleteAll) || (isset($this->request->data->deleteAll) && !$this->request->data->deleteAll)) {

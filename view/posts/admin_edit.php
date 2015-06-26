@@ -42,7 +42,7 @@
           <div id="dvContents" class="dvContents">&nbsp;</div>
         </div>
 
-        <?php echo  $this->Form->input('images_id','hidden'); ?>
+        <?php echo  $this->Form->input('images_id','hidden', array('inputValue'=> '')); ?>
         <div id="plupload">
             <div id="droparea">
                 <p>Drag & drop files here</p>
@@ -55,7 +55,12 @@
               <?php 
                 if(isset($imagesData) && !empty($imagesData)){
                   foreach ($imagesData as $imgKey => $img) {
-                    $html = '<div class="file"><img src="'.Router::webroot($img).'"/> '.substr(basename($img), 0, 10).'...<div class="actions"><a href="delete_img/'.$id.'/'.basename($img).'" class="del">Supprimer</a></div> </div>';        
+                    $html = '<div class="file">
+                              <img src="'.Router::webroot($img).'"/> '.substr(basename($img), 0, 10).'...
+                              <div class="actions">
+                                <a href="'.Router::url('admin/posts/delete_img/'.$id.'/'.basename($img)).'" class="del">Supprimer</a>
+                              </div> 
+                            </div>';        
                     echo $html;
                   }
                 }
@@ -77,7 +82,7 @@
 
         <p><span id="inputauthors" class="selectivity-input"></span></p>
         <p><span id="inputauthors_cat" class="selectivity-input"></span></p>
-        <?php echo $this->Form->input('author_id','hidden'); ?>
+        <?php echo $this->Form->input('author_id','hidden', array('inputValue'=> '')); ?>
         
         <br>
 
@@ -151,7 +156,9 @@
         });
 
         authorsData = '<?php echo $author_id; ?>';
-        authorsData = JSON.parse(authorsData);
+        if(authorsData != ""){
+          authorsData = JSON.parse(authorsData);
+        }
         if( $.isArray(authorsData) && authorsData.length > 0) {
           $("#inputauthors").selectivity('data', authorsData);
           $("#inputauthors_cat").selectivity('data', authorsData);

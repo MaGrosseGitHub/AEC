@@ -3,7 +3,9 @@ $(function($){
 		
 	var filesData = []; 
 	var getimgData = $("#inputimages_id").val();
-	getimgData = JSON.parse(getimgData);
+	if(getimgData != ""){
+		getimgData = JSON.parse(getimgData);
+	}
 	if( $.isArray(getimgData) && getimgData.length > 0) {
 		filesData = getimgData;
 	}
