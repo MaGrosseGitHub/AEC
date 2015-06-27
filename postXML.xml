@@ -1,0 +1,20 @@
+<section>
+	<post>
+		<title_FR></title_FR>
+		<title_EN></title_EN>
+		<content_FR></content_FR>
+		<content_EN></content_EN>
+		<publication></publication>
+		<category_id></category_id>
+		<organization_id></organization_id>
+	</post>
+	<post>
+		<title_FR></title_FR>
+		<title_EN></title_EN>
+		<content_FR></content_FR>
+		<content_EN></content_EN>
+		<publication></publication>
+		<category_id></category_id>
+		<organization_id></organization_id>
+	</post>
+</section>
