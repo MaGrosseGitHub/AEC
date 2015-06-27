@@ -61,6 +61,9 @@ class Model{
 						if(empty($data->$k)){
 							$errors[$k] = $v['message']; 
 						}
+					}elseif(is_array($v['rule'])){
+						if(!in_array($k, $v['rule']))
+							$errors[$k] = $v['message'];
 					}elseif(!preg_match('/^'.$v['rule'].'$/',$data->$k)){
 						$errors[$k] = $v['message'];
 					}

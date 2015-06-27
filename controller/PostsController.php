@@ -477,6 +477,31 @@ class PostsController extends Controller{
 		$this->redirect('admin/posts/index'); 
 	}
 
+	function admin_test(){
+		if($this->request->data && !empty($this->request->data) ){
+			debug($this->request->data);
+			debug($_FILES);
+
+			$imgDir = "img/galerie/test/";
+			if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
+
+			$ext = substr($_FILES['file']['name'], -4);
+			$imageName = generateRandomString();
+			$image = $imgDir.$imageName.time().$ext;
+
+			move_uploaded_file($_FILES['file']['tmp_name'], $image);
+			debug(pathinfo($image));
+			$imgData = Images::SetImgBDD($image);
+		} else {
+
+			$imgData = Images::GetImgBDD("img/galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg");
+			$d['img'] = "galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg";
+			$imgData = Images::GetImgBDD("img/galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg");
+			$d['img'] = "galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg";
+			$this->set($d);
+		}
+	}
+
 	/**
 	* Permet de lister les contenus
 	**/

@@ -34,13 +34,15 @@ class HTML{
 		return $newUrl;
 	}
 
-	static function getImg($url,$css = null,$custom = null, $options = null, $notExistImg = false){
+	static function getImg($url,$css = null,$custom = null, $options = null, $notExistImg = false, $customDir = false){
 		$distant = false;
 		trim($url,'/');
 		if($css)
 			$imgPath = "css/img/";
 		else
 			$imgPath = "img/";
+		if($customDir)
+			$imgPath = "";
 		if(!isset($options) && !empty($options)) {
 			$options = "";
 		}
@@ -63,6 +65,16 @@ class HTML{
 				} 
 				return $newUrl;
 			} else {
+				if(Images::GetImgBDD($newUrl)){					
+					$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
+					return $newUrl;
+				} else {
+					$newUrl = Router::webroot("css/img/noPic.png");
+					if(!$custom) {
+						$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
+					} 
+					return $newUrl;
+				}
 				return false;
 			}
 		}

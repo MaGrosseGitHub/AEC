@@ -74,10 +74,13 @@ class AuthorsController extends Controller{
 				'conditions' => array('Author.id'=>$id,'Author.type'=>'individual')
 			));
 
+			$d['imgPath'] = Cache::AUTHOR.'/'.$d['author']->slug.'/'.$d['author']->slug.'.jpg';
+
 			$cacheDir = Cache::AUTHOR.DS.$d['author']->slug;
 			$this->Cache->write($d['author']->slug, $d['author'], $cacheDir, true);
 		} else {
 			$d['author'] = $this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug, true);
+			$d['imgPath'] = Cache::AUTHOR.'/'.$d['author']->slug.'/'.$d['author']->slug.'.jpg';
 		}	
 		$this->SetHits(Cache::AUTHOR.DS.$d['author']->slug.DS.$d['author']->slug);
 

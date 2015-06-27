@@ -15,6 +15,7 @@
 						</small>
 					</h1>
 				</div>
+				<?php echo HTML::getImg($imgPath, null, null, null, false, true); ?>
 				<div class="newsContent">
 					<?php 
 						$bio = "bio_".strtoupper(Language::$curLang);
