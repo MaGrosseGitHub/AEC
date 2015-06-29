@@ -492,13 +492,54 @@ class PostsController extends Controller{
 			move_uploaded_file($_FILES['file']['tmp_name'], $image);
 			debug(pathinfo($image));
 			$imgData = Images::SetImgBDD($image);
+
+
 		} else {
 
-			$imgData = Images::GetImgBDD("img/galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg");
-			$d['img'] = "galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg";
-			$imgData = Images::GetImgBDD("img/galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg");
-			$d['img'] = "galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg";
-			$this->set($d);
+			// $imgData = Images::GetImgBDD("img/galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg");
+			// $d['img'] = "galerie/test/puDEg8ai2AUrmTfFjsc71435428485.jpg";
+			// $imgData = Images::GetImgBDD("img/galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg");
+			// $d['img'] = "galerie/test/nc6KJo7mhLPtQfXO4NBu1435428386.jpg";
+			// $this->set($d);
+			 
+			$email = "radouane.lahmidi@gmail.com";
+			$password = "neji-sama";
+			
+			$mega = new Mega_API();
+			$file = "img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg";
+			// debug($mega->login($email, $password));
+			debug($mega->upload($email, $password, $file));
+
+			// if(!file_exists("tmp/Mega/01/megasession")){
+				$mega = new MEGA();
+				$test = $mega->user_login_session($email, $password);
+				debug($test);
+
+			// 	debug($mega->client_stdClass, "stdclient");
+			// 	// $test2 = $mega->session_save($mega->client_stdClass);
+			// 	$test2 = $mega->session_save($mega);
+			// 	debug($test2, 'save session');
+
+			// 	debug($mega->u_k, "mega master key");
+
+			// 	$this->Cache->write("megasession", $test2, "tmp/Mega/01", true);	
+			// }else {
+				
+			// 	$mega = new MEGA();
+			// 	$session = $this->Cache->read("tmp/Mega/01/megasession", true);
+			// 	debug($session);
+			// 	$mega->create_from_session($session);
+			// }
+
+
+
+
+			// $file_info = $mega->public_file_info($ph, $key);
+			// debug($file_info);
+
+			// Print filename and size
+			// debug('Filename: ' . $file_info['at']['n']);
+			// debug('Size: ' . $file_info['s']);
 		}
 	}
 
