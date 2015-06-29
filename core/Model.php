@@ -250,6 +250,9 @@ class Model{
 		if($action == 'insert'){
 			$this->id = $this->db->lastInsertId(); 
 		}
+
+      	$cacheDir = Cache::DUMP.DS."BDD";
+      	$imgCtrl->Cache->write("LastMod", time(), $cacheDir, true);
 	}
 
 }

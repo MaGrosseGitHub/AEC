@@ -7,7 +7,7 @@ class Images{
     self::$pathToLib  = ROOT.DS.'core'.DS.'lib/imagine.phar';
   }
 
-  static public function convert($image, $format, $unlink = false, $watermark = false, $quality = 100, $watermarkImg = null, $watermarkOpacity = null){
+  static public function convert($image, $format = "jpg", $unlink = false, $watermark = false, $quality = 100, $watermarkImg = null, $watermarkOpacity = null){
     if(self::checkFormat($format)) {
       self::init();
       require_once self::$pathToLib;
@@ -333,7 +333,6 @@ class Images{
       } else {
         $image= file_get_contents($file);
       }
-
       $image= base64_encode($image);
 
       $result = array("name" => $fileName, "extension" => $extension, "image" =>$image);
@@ -352,6 +351,9 @@ class Images{
       else{
         $imgCtrl->ImgDump->save($result);
       }
+      $cacheDir = Cache::DUMP.DS."ImgDump";
+      $imgCtrl->Cache->write("LastModBDD", time(), $cacheDir, true);
+
       return true;
     } else {
       return false;
@@ -400,6 +402,35 @@ class Images{
     }
     else {
       return true;
+    }
+  }
+
+  static public function DeleteImg($file){
+    if(strpos(strtolower(mime_content_type($file)),'image') !== false){
+      if(file_exists($file)){
+        $fileData = pathinfo($file);
+        $fileName = $fileData['filename'];
+        $fileDir = $fileData['dirname'];
+        $extension = $fileData['extension'];
+
+        $imgCtrl = new Controller();
+        $imgCtrl->loadModel('ImgDump');
+        $imgBdd = $imgCtrl->ImgDump->findFirst(array(
+          'conditions' => array('name' => $fileName)
+        ));
+        if(!empty($imgBdd)){
+          $imgCtrl->ImgDump->delete($imgBdd->id);
+        }
+        unlink($file);
+        $cacheDir = Cache::DUMP.DS."ImgDump";
+        $imgCtrl->Cache->write("LastModBDD", time(), $cacheDir, true);
+
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      unlink($file);
     }
   }
 

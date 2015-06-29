@@ -2,10 +2,11 @@
 spl_autoload_register(function ($class) {
 
   $lib = LIB.DS . $class . '.php';
+  $libFiles = LIB.DS . $class . DS . $class .'.php';
   $config = CONF.DS . $class.'.php';
   $core = CORE.DS . $class . '.php';
 
-  $paths = array($core, $lib, $config);
+  $paths = array($core, $lib, $config, $libFiles);
   foreach ($paths as &$filename) {
     if(file_exists($filename))
         require_once($filename) ;

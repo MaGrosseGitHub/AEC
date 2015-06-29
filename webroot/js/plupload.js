@@ -70,6 +70,7 @@ $(function($){
 	uploader.bind('FileUploaded',function(up, file, response){
 		data = jQuery.trim(response);
 		data = jQuery.trim(response.response);
+		console.log(data);
 		data = JSON.parse(data);
 		if(data.error){
 			alert(data.message); 

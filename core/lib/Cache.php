@@ -6,6 +6,7 @@ class Cache{
 	public $buffer;		// Buffer (utilisé pour les méthodes start/end)
 
 	const POST = "tmp/Post";
+	const DUMP = "tmp/Dumps";
 	const AUTHOR = "tmp/Author";
 	const ORGANIZATION = "tmp/Organization";
 	const EVENT = "tmp/Event";
@@ -42,7 +43,8 @@ class Cache{
 		}
 
   		MakePath($dirname.'/'.$cachename, true);
-		return file_put_contents($dirname.'/'.$cachename, $content);
+		file_put_contents($dirname.'/'.$cachename, $content);
+		return touch($dirname.'/'.$cachename);
 	}
 
 	/**
