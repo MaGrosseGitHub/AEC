@@ -495,7 +495,7 @@ class PostsController extends Controller{
 
 
 		} else {
-			debug(QRCodeLib::GenerateQRCode());
+			QRCodeLib::GenerateQRCode();
 		}
 	}
 
