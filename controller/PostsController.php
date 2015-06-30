@@ -495,7 +495,21 @@ class PostsController extends Controller{
 
 
 		} else {
-			QRCodeLib::GenerateQRCode();
+			// QRCodeLib::GenerateQRCode();
+			try {
+				// debug($_SERVER);
+				// die('<img src ="http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg" />');
+				ob_start();
+				// echo '<p>test <br><img src ="http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg" /></p>';
+				echo '<div style="width : 300px; height : 300px;background-image: url(img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg)">test</div>';
+				$content = ob_get_clean();
+				$pdf = new HTML2PDF('p', 'A4', 'en');
+				$pdf->writeHTML($content);
+        		ob_clean();
+				$pdf->output('tmp/test.pdf', 'F');
+			} catch (HTML2PDF_exception $e) {
+				die($e);
+			}
 		}
 	}
 
