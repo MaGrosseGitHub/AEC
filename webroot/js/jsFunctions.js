@@ -254,7 +254,7 @@
 	 
 	    });
 	 
-	    return self;
+	    // return self;
 	};
 	 
 	$.fn.unwatch = function( id ) {
@@ -266,7 +266,7 @@
 	};
 
 	$.fn.valuechange = function(fn) {
-    return this.bind('valuechange', fn);
+    	return this.bind('valuechange', fn);
 	};
 	 
 	$.event.special.valuechange = {

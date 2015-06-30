@@ -480,22 +480,22 @@ class PostsController extends Controller{
 	function admin_test(){
 		if($this->request->data && !empty($this->request->data) ){
 			debug($this->request->data);
-			debug($_FILES);
+			// debug($_FILES);
 
-			$imgDir = "img/galerie/test/";
-			if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
+			// $imgDir = "img/galerie/test/";
+			// if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
 
-			$ext = substr($_FILES['file']['name'], -4);
-			$imageName = generateRandomString();
-			$image = $imgDir.$imageName.time().$ext;
+			// $ext = substr($_FILES['file']['name'], -4);
+			// $imageName = generateRandomString();
+			// $image = $imgDir.$imageName.time().$ext;
 
-			move_uploaded_file($_FILES['file']['tmp_name'], $image);
-			debug(pathinfo($image));
-			$imgData = Images::SetImgBDD($image);
+			// move_uploaded_file($_FILES['file']['tmp_name'], $image);
+			// debug(pathinfo($image));
+			// $imgData = Images::SetImgBDD($image);
 
 
 		} else {
-
+			debug(QRCodeLib::GenerateQRCode());
 		}
 	}
 

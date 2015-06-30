@@ -1,6 +1,6 @@
 ﻿<?php
 
-class Arr {
+class ArrayInsert {
 
     /**
      * Inserts values before specific key.
