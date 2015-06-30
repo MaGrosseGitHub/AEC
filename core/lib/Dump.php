@@ -7,6 +7,12 @@ class Dump{
 	public $excludeFromDump = array(); //user defined exclude
 	public $includeOnlyInDump = array(); //user defined include
 
+	const ALL = 0;
+	const IMG = 1;
+	const BASIC = 2;
+	const FILTERED = 3;
+	const CUSTOM = 5;
+
 	private $host;
 	private $dbb;
 	private $login;
@@ -14,13 +20,14 @@ class Dump{
 
 	private $dumpDirectory;
 	private $dumpfile;
+	private $dumpDirectories = array();
 
 	private $dumpController = NULL;
 	private $dumpModel = false;
 
 	private $dumpInstance;
 	private $dumpSettings;
-	private $exclude = ['imgdumps', 'events', 'mapinfos', 'maps', 'participates', 'posts', 'sites'];
+	private $exclude = ['imgdumps', 'events', 'mapinfos', 'maps', 'participates', 'sites'];
 	private $excludeOrigin = array();
 	private $include = array();
 	private $dumpZipType; //Mysqldump::GZIP, Mysqldump::BZIP2 or Mysqldump::NONE
@@ -28,6 +35,7 @@ class Dump{
 
 	private $tableList;
 	private $filteredTableList;
+	private $excludedTableList;
 
 
 	function __construct($controller, $params = array()){
@@ -48,23 +56,25 @@ class Dump{
 		
 		$this->GetTableLists();
 		$this->excludeOrigin = $this->exclude;
-		if(!isset($params['noExcludes']) || !$params['noExcludes'])
-			$this->dumpSettings = array('exclude-tables' => array()); // exclude-tables : Exclude these tables (array of table names)
+		// if(!isset($params['noExcludes']) || !$params['noExcludes'])
+		// 	$this->dumpSettings['exclude-tables'] = $this->excludedTableList; 
+		if(isset($params['noExcludes']) && $params['noExcludes']) // exclude-tables : Exclude these tables (array of table names)
+			if(isset($this->dumpSettings['exclude-tables']))
+				unset($this->dumpSettings['exclude-tables']);
 		if(isset($params['includes']) && $params['includes'])
-			$this->dumpSettings['include-tables'] = $this->include; //// include-tables : Only include these tables (array of table names)
+			$this->dumpSettings['include-tables'] = $this->include; // include-tables : Only include these tables (array of table names)
 
 		if(isset($params['zipType']) && !empty($params['zipType']) && in_array($params['zipType'], $this->availableZipTypes))
 			$this->dumpZipType = $params['zipType'];
 		else
 			$this->dumpZipType = Mysqldump::GZIP;
-		if(!isset($params['compress']) || !$params['compress'])
+		if(!isset($params['compress']) || (isset($params['compress']) && isset($params['compress'])
 			$this->dumpSettings['compress'] = $this->dumpZipType;
 
-		$this->dumpDirectory = Cache::DUMP."/"; //date + database name file/then dbb
+		$this->dumpDirectory = Cache::DUMP."/";
 		MakePath($this->dumpDirectory);
 		$this->dumpfile = $this->dbb;
-		$this->dumpfile = $this->FormatFileName($this->dumpfile);
-
+		$this->AssignDumpDirectories();
 		// $this->dumpInstance = new Mysqldump($dbb, $login, $password, $host, $dumpSettings);
 	}
 
@@ -79,12 +89,14 @@ class Dump{
 	}
 
 	private function GetTableLists(){
-		$this->tableList = $this->GetListOfTables();
+		$this->tableList = $this->GetListOfALLTables();
 		$this->include =  array_unique(array_merge($this->include,$this->includeOnlyInDump), SORT_REGULAR);
-		$this->filteredTableList = $this->GetFilteredList();
+		$filterResult = $this->GetFilteredLists();
+		$this->filteredTableList = $filterResult[0];
+		$this->excludedTableList = $filterResult[1];
 	}
 
-	private function GetListOfTables(){
+	private function GetListOfALLTables(){
 		$this->LaunchController();
 		$alltables = $this->dumpController->ImgDump->db->query("SHOW TABLES",PDO::FETCH_NUM);
 
@@ -95,18 +107,21 @@ class Dump{
 		return $tableList;
 	}
 
-	private function GetFilteredList(){
+	private function GetFilteredLists(){
 		$this->LaunchController();
 		$alltables = $this->dumpController->ImgDump->db->query("SHOW TABLES",PDO::FETCH_NUM);
 
 		$filters = array_unique(array_merge($this->exclude,$this->excludeFromDump), SORT_REGULAR);
 
-		$tableList = array();
+		$tableListFiltered = array();
+		$tableListExcluded = array();
 		while($result =$alltables->fetch()){
 			if(!in_array($result[0], $filters))
-				array_push($tableList, $result[0]);
+				array_push($tableListFiltered, $result[0]);
+			else
+				array_push($tableListExcluded, $result[0]);
 		}
-		return $tableList;
+		return array($tableListFiltered,$tableListExcluded);
 	}
 
 	private function FormatFileName($name){
@@ -114,17 +129,42 @@ class Dump{
 		return $date.'_'.$name.'.sql';
 	}
 
-	private function GetFileModTime($file){
+	private function GetFileModTime($file, $create = false){
 		if (file_exists($file)) {
 		    return filemtime($file);
 		} else {
-			return false;
+			if($create){
+				$this->CreateFileMod($file);
+				$this->GetFileModTime($file);
+			} else
+				return false;
 		}
 	}
 
-	private function DumpBDD($dumpSettings, $dumpDir, $file = ""){
+	private function CreateFileMod($file){
+		if (!file_exists($file)) {
+			$fileInfo = pathinfo($file);
+      		$this->dumpController->Cache->write($fileInfo['basename'], time(), $fileInfo['dirname'], true);
+		    return true;
+		} else {
+			return true;
+		}
+	}
+
+	private function AssignDumpDirectories(){
+		$this->dumpDirectories[Dump::ALL] = $this->dumpDirectory."All".DS;
+		$this->dumpDirectories[Dump::IMG] = $this->dumpDirectory."ImgDump".DS;
+		$this->dumpDirectories[Dump::FILTERED] = $this->dumpDirectory."Regular".DS;
+		$this->dumpDirectories[Dump::BASIC] = $this->dumpDirectory."Regular".DS;
+		$this->dumpDirectories[Dump::CUSTOM] = $this->dumpDirectory."Custom".DS;
+	}
+
+	private function DumpBDDInternal($dumpSettings, $dumpDir, $file = ""){
 
         $this->dumpInstance = new Mysqldump($this->dbb, $this->login, $this->password, $this->host, 'mysql', $dumpSettings);
+        $fileInfo = pathinfo($dumpDir);
+        if(!file_exists($fileInfo['dirname']))
+        	MakePath($fileInfo['dirname']);
 
         try {
 			if($file != "")
@@ -133,92 +173,93 @@ class Dump{
 			$this->dumpInstance->start($dumpDir);   
 			return true;     	
         } catch (Exception $e){
-        	debug($e);
 			$this->dumpController->Notification->setFlash($e, 'error'); 
 			return false;
         }
 	}
 
-	public function DumpDBBAll($file = ""){
-		$settings = array('compress' => $this->dumpZipType);
-		$dir = $this->dumpDirectory."All".DS;
-		if($this->DumpBDD($settings, $dir.$this->dumpfile, $file)){
-      		$this->dumpController->Cache->write("LastModDump", time(), $dir, true);
+	public function DumpBDD($type, $file = "", $settings = array()){
+		switch ($type) {
+			case Dump::ALL:
+				$addeName = "_ALL";
+				$settingsBDD = array('compress' => $this->dumpZipType);
+				break;
+
+			case Dump::IMG:
+				$addeName = "_IMG";
+				$settingsBDD = array('include-tables' => ['imgdumps'], 'compress' => $this->dumpZipType);
+				break;
+
+			case Dump::FILTERED:
+				$addeName = "_FILTERED";
+				$settingsBDD = array('exclude-tables' => $this->excludeOrigin, 'compress' => $this->dumpZipType);
+				break;
+
+			case Dump::BASIC:
+				$addeName = "_BASIC";
+				$settingsBDD = $this->dumpSettings;
+				break;
+
+			case Dump::CUSTOM:
+				$addeName = "_CUSTOM";
+				if(isset($settings) && empty($settings))
+					$settingsBDD = $settings;
+				else
+					$settingsBDD = $this->dumpSettings;
+				break;
+			
+			default:
+				return false;
+				break;
+		}
+		$fileName = $this->FormatFileName($this->dumpfile.$addeName);
+		if($this->DumpBDDInternal($settingsBDD, $this->dumpDirectories[$type].$fileName, $file)){
+      		$this->dumpController->Cache->write("LastModDump", time(), $this->dumpDirectories[$type], true);
       		return true;
 		} else 
 			return false;
-	}
+	}	
+	
+	public function DumpLastModified($type, $file = "", $settings = array()){
+		$lastMoBDD = $this->GetFileModTime($this->dumpDirectories[$type]."LastModBDD", true);
+		$lastMoDump = $this->GetFileModTime($this->dumpDirectories[$type]."LastModDump", true);
 
-	public function DumpImgDBB($file = ""){
-		$settings = array('include-tables' => ['imgdumps'], 'compress' => $this->dumpZipType);
-		$dir = $this->dumpDirectory."ImgDump".DS;
-		if($this->DumpBDD($settings, $dir.$this->dumpfile, $file)){
-      		$this->dumpController->Cache->write("LastModDump", time(), $dir, true);
-      		return true;
-		} else 
-			return false;
-	}
-
-	public function DumpFiltered($file = ""){
-		$settings = array('exclude-tables' => $this->excludeOrigin, 'compress' => $this->dumpZipType);
-		$dir = $this->dumpDirectory."Regular".DS;
-		if($this->DumpBDD($settings, $dir.$this->dumpfile, $file)){
-      		$this->dumpController->Cache->write("LastModDump", time(), $dir, true);
-      		return true;
-		} else 
-			return false;
-	}
-
-	public function DumpDefault($file = ""){
-		$settings = $this->dumpSettings;
-		$dir = $this->dumpDirectory."Regular".DS;
-		if($this->DumpBDD($settings, $dir.$this->dumpfile, $file)){
-      		$this->dumpController->Cache->write("LastModDump", time(), $dir, true);
-      		return true;
-		} else 
-			return false;
-	}
-
-	public function DumpCustom($file = "", $settings){
-		$dir = $this->dumpDirectory."Custom".DS;
-		if($this->DumpBDD($settings, $dir.$this->dumpfile, $file)){
-      		$this->dumpController->Cache->write("LastModDump", time(), $dir, true);
-      		return true;
-		} else 
-			return false;
-	}
-
-	public function DumpLastModified($file = ""){
-		// $lastMoImgBDD = $this->GetFileModTime($this->dumpDirectory."ImgDump".DS."LastModBDD");
-		// $lastMoImgDump = $this->GetFileModTime($this->dumpDirectory."ImgDump".DS."LastModDump");
-
-		// if((!$lastMoImgBDD && !$lastMoImgDump)){
-		// 	return $this->DumpImgDBB($file);
-		// } else if($lastMoImgBDD && $lastMoImgDump){
-		// 	if($lastMoImgBDD > $lastMoImgDump)
-		// 		return $this->DumpImgDBB($file);
-		// 	else 
-		// 		return false;
-		// } else {
-		// 	return $this->DumpImgDBB($file);
-		// }
-
-		$lastMoImgBDD = $this->GetFileModTime($this->dumpDirectory."Regular/LastModBDD");
-		$lastMoImgDump = $this->GetFileModTime($this->dumpDirectory."Regular/LastModDump");
-
-		debug($lastMoImgBDD, $this->dumpDirectory."Regular".DS."LastModBDD");
-		debug($lastMoImgDump, $this->dumpDirectory."Regular".DS."LastModDump");
-
-		if((!$lastMoImgBDD && !$lastMoImgDump)){
-			return $this->DumpDefault($file);
-		} else if($lastMoImgBDD && $lastMoImgDump){
-			if($lastMoImgBDD > $lastMoImgDump)
-				return $this->DumpDefault($file);
+		if((!$lastMoBDD && !$lastMoDump)){
+			return $this->DumpBDD($type, $file, $settings);
+		} else if($lastMoBDD && $lastMoDump){
+			if($lastMoBDD > $lastMoDump)
+				return $this->DumpBDD($type, $file, $settings);
 			else 
 				return false;
 		} else {
-			return $this->DumpDefault($file);
+			return $this->DumpBDD($type, $file, $settings);
 		}
+	}
+
+	public function DumpListBasic($list = array(), $function){
+		foreach ($list as $task => $taskInfo) {
+			$type = $taskInfo['type'];
+			if(isset($taskInfo['file']))
+				$file = $taskInfo['file'];
+			else
+				$file = "";
+			if(isset($taskInfo['settings']))
+				$settings = $taskInfo['settings'];
+			else
+				$settings = array();
+
+			$this->$function($type, $file, $settings);
+		}
+	}
+	
+	public function DumpList($list = array()){
+		$function = 'DumpBDD';
+		$this->DumpListBasic($list, $function);
+	}
+
+	public function DumpLastModifiedList($list = array()){
+		$function = 'DumpLastModified';
+		$this->DumpListBasic($list, $function);
 	}
 
 } ?>

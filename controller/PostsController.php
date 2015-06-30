@@ -149,7 +149,6 @@ class PostsController extends Controller{
 					foreach($files as $file){ 
 						if(is_file($file))
 							Images::DeleteImg($file);
-							// unlink($file);
 					}
 				}
 			}
@@ -332,9 +331,9 @@ class PostsController extends Controller{
 				$imgDir = $imgInfo['dirname'];
 				$imgNameExt = str_replace(".".$imgInfo['extension'], "", $imgName);	
 
-				unlink($imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
-				unlink($imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
-				unlink($imgDir.DS.$file);	
+				Images::DeleteImg($imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
+				Images::DeleteImg($imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
+				Images::DeleteImg($imgDir.DS.$file);
 
 				$this->request->data = $this->Post->findFirst(array(
 					'conditions' => array('id'=>$id)
@@ -360,7 +359,7 @@ class PostsController extends Controller{
 					if(count($files) > 0){
 						foreach($files as $file){ 
 							if(is_file($file))
-								unlink($file);
+								Images::DeleteImg($file);
 						}
 					}
 				}				
@@ -496,10 +495,7 @@ class PostsController extends Controller{
 
 
 		} else {
-			$filename = "tmp/Author/dfhdfhhbj/dfhdfhhbj.jpg";
-			debug(date ("F d Y H:i:s.", filemtime($filename)));
-			$dump = new Dump($this);
-			$dump->DumpLastModified();
+
 		}
 	}
 
@@ -513,6 +509,10 @@ class PostsController extends Controller{
 		$this->set($d);
 	}
 
-
+	function admin_dump(){
+		$dump = new Dump($this);
+		$dumpList = array(array('type' => Dump::IMG), array('type' => DUMP::FILTERED));
+		$dump->DumpLastModifiedList($dumpList);
+	}
       
 }

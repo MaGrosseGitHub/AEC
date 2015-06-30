@@ -12,6 +12,18 @@ class Conf{
 		)
 	);
 
+	static $FTPs = array(
+		'default' => array(
+			'host'		=> '193.54.159.131',
+			'login'		=> 'etuATI2015',
+			'password'	=> 'gJNz37'
+		),
+		'dropbox' => array(
+			'email'		=> 'rad.l@live.fr',
+			'password'	=> 'neji-sama00DB'
+		)
+	);
+
 	static $disqusAccount = 'scribble999656';
 
 

@@ -311,13 +311,13 @@ class MediasController extends Controller{
 	}
 
 	private function deleteImg($file, $id, $album = null){
-		unlink(WEBROOT.DS.'img'.DS.$file);
+		Images::DeleteImg(WEBROOT.DS.'img'.DS.$file);
 		$imgInfo = pathinfo($file);
 		$imgName = $imgInfo['basename'];
 		$imgDir = $imgInfo['dirname'];
 		$imgNameExt = str_replace(".".$imgInfo['extension'], "", $imgName);		
-		unlink(WEBROOT.DS.'img'.DS.$imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
-		unlink(WEBROOT.DS.'img'.DS.$imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
+		Images::DeleteImg(WEBROOT.DS.'img'.DS.$imgDir.DS."grayscale_".$imgNameExt."_180x135.".$imgInfo['extension']);
+		Images::DeleteImg(WEBROOT.DS.'img'.DS.$imgDir.DS.$imgNameExt."_180x135.".$imgInfo['extension']);
 		$this->Media->delete($id);
 
 		if(!empty($album)){
