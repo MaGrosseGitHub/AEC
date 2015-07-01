@@ -252,7 +252,8 @@ class Model{
 		}
 
       	$cacheDir = Cache::DUMP.DS."BDD";
-      	$imgCtrl->Cache->write("LastMod", time(), $cacheDir, true);
+      	$ctrl = new Controller;
+      	$ctrl->Cache->write("LastMod", time(), $cacheDir, true);
 	}
 
 }

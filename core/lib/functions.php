@@ -514,3 +514,19 @@ function searchDir($base_dir="./",$p="",$f="", $s = "",$allowed_depth=-1){
   $p=(strlen($p)<= strlen($base_dir))?$p="":substr($p,strlen($base_dir));
   return array("contents"=>$contents,"currentPath"=>$p);
 }
+
+function DeleteDirectoryContent($dir){
+  if(file_exists($dir)){
+    $files = glob($dir."/*"); 
+    if(count($files) > 0){
+      foreach($files as $file){ 
+        if(is_file($file))
+          unlink($file);
+      }
+    }
+  }
+}
+
+function stringToColorCode($color) {
+  return dechex(hexdec(str_replace('#', '', $color)));
+}

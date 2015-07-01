@@ -165,8 +165,8 @@
         }
         
         public static function save($content, $filename_path)
-        {       
-            try {  
+        {           
+            try {
                 $handle = fopen($filename_path, "w");
                 fwrite($handle, $content);
                 fclose($handle);

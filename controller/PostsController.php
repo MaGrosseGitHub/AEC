@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 class PostsController extends Controller{
 	
 	/**
@@ -189,7 +189,10 @@ class PostsController extends Controller{
 				$cacheDir = Cache::POST.DS.$this->request->data->slug;
 				$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
 
+				$link = "http://".$_SERVER['SERVER_NAME']."/".Router::url("posts/view/id:{$this->request->data->id}/slug:{$this->request->data->slug}");
+				QRCodeLib::GenerateQRCodes($link, Cache::POST.DS.$this->request->data->slug.DS.$this->request->data->slug);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success');
+				ob_clean();
 				$this->redirect('admin/posts/index'); 
 			}else{
 				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
@@ -495,21 +498,7 @@ class PostsController extends Controller{
 
 
 		} else {
-			// QRCodeLib::GenerateQRCode();
-			try {
-				// debug($_SERVER);
-				// die('<img src ="http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg" />');
-				ob_start();
-				// echo '<p>test <br><img src ="http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg" /></p>';
-				echo '<div style="width : 300px; height : 300px;background-image: url(img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg)">test</div>';
-				$content = ob_get_clean();
-				$pdf = new HTML2PDF('p', 'A4', 'en');
-				$pdf->writeHTML($content);
-        		ob_clean();
-				$pdf->output('tmp/test.pdf', 'F');
-			} catch (HTML2PDF_exception $e) {
-				die($e);
-			}
+			// QRCodeLib::GenerateQRCodes("http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg", "img/galerie/test/16");
 		}
 	}
 

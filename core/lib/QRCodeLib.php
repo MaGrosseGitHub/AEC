@@ -2,65 +2,157 @@
 class QRCodeLib{
 
 	private static $pathToLib;
+	private static $qrDir;
+	private static $qrSize = 510;
+	private static $qrLogo = "img/logo/logo.png";
 
 	static protected function init() {
     	self::$pathToLib  = LIB.DS."phpqrcode/qrlib.php";
       	require_once self::$pathToLib;
   	}
 
-	public static function GenerateQRCode(){
-      	self::init();
-      	$test = realpath("img/galerie/test/");
+	private static function AddLogo($QR, $logo = ''){
+		if(empty($logo))
+			$logo = self::$qrLogo;
+		$dir = $QR;;
+		if($logo !== FALSE){
+			$logo = imagecreatefrompng($logo);
+			imagealphablending( $logo, false );
+			imagesavealpha( $logo, true );
+			$QR = imagecreatefrompng($QR); 
+			imagealphablending( $QR, false );
+			imagesavealpha( $QR, true );
 
-      	$dataText = "http://localhost/AEC/webroot/cockpit/posts/test/";
-	    $svgTagId   = 'id-of-svg';
-	    $saveToFile = '203_demo.svg';
-	    
-      	$tests = $test."\\svgqr.svg";
-      	// debug($test);
-	    // it is saved to file but also returned from function
-	 //    QRcode::svg($dataText, $svgTagId, "img/galerie/test/".$saveToFile, QR_ECLEVEL_H, 300, 0, true);
-
-  //     	// $testp = $test."/test2.png";
-		// QRcode::png($dataText, $test."/test2.png", "H", 10, 5, false, 0x000, 0xc0392b);
-		// QRcode::png($dataText, $test."/test3.png", "H", 10, 5, false, 0xc0392b, 0x000);
-		// QRcode::png($dataText, $test."/test4.png", "H", 10, 5, false, 0xFFFFFF, 0xc0392b);
-
-		// $tempDir = EXAMPLE_TMP_SERVERPATH;
-	    
-	    // it is saved to file but also returned from function
-	    // $svgCode = QRcode::svg($dataText, $tests);
-	    // debug(strlen($svgCode));
-	    QRcode::svg($dataText, $test."\\svgqr1.svg", QR_ECLEVEL_H, 300, 5, false, 0x000, 0xc0392b);
-	    QRcode::svg($dataText, $test."\\svgqr2.svg", QR_ECLEVEL_H, 300, 5, false, 0xc0392b, 0x000);
-	    QRcode::svg($dataText, $test."\\svgqr3.svg", QR_ECLEVEL_H, 300, 5, false, 0xFFFFFF, 0xc0392b);
-	    // $svgCodeFromFile = file_get_contents($tests);
-
-	    // // tag output
-	    // echo $svgCodeFromFile;
-	    // echo '<br/>';
-	    
-	    // // we print code
-	    // echo '<span style="font-family: monospace, Courier, Courier New;font-size: 8pt">';
-	    // echo self::xml_highlight($svgCodeFromFile);
-	    // echo '</span>';
+			$QR_width = imagesx($QR);
+			$QR_height = imagesy($QR);
+			
+			$logo_width = imagesx($logo);
+			$logo_height = imagesy($logo);
+			
+			// Scale logo to fit in the QR Code
+			$logo_qr_width = $QR_width/2.5;
+			$scale = $logo_width/$logo_qr_width;
+			$logo_qr_height = $logo_height/$scale;
+			
+			imagecopyresampled($QR, $logo, $QR_width/3.25, $QR_height/2.5, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+		}
+		imagepng($QR, $dir);
+		imagedestroy($QR);
 	}
 
-	    
-    // taken from: http://php.net/manual/en/function.highlight-string.php by: Dobromir Velev
-    static function xml_highlight($s){
-        $s = preg_replace("|<([^/?])(.*)\s(.*)>|isU", "[1]<[2]\\1\\2[/2] [5]\\3[/5]>[/1]", $s);
-        $s = preg_replace("|</(.*)>|isU", "[1]</[2]\\1[/2]>[/1]", $s);
-        $s = preg_replace("|<\?(.*)\?>|isU","[3]<?\\1?>[/3]", $s);
-        $s = preg_replace("|\=\"(.*)\"|isU", "[6]=[/6][4]\"\\1\"[/4]",$s);
-        $s = htmlspecialchars($s);
-        $s = str_replace("\t","&nbsp;&nbsp;",$s);
-        $s = str_replace(" ","&nbsp;",$s);
-        $replace = array(1=>'0000FF', 2=>'0000FF', 3=>'800000', 4=>'00AA00', 5=>'FF0000', 6=>'0000FF');
-        foreach($replace as $k=>$v) {
-            $s = preg_replace("|\[".$k."\](.*)\[/".$k."\]|isU", "<font color=\"#".$v."\">\\1</font>", $s);
-        }
-        return nl2br($s);
-    }
+	public static function GenerateQRCodes($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = ''){
+		// QRCodeLib::QRPng($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath);
+		QRCodeLib::QRPdf($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath, false); //Also Generates PNGs
+		QRCodeLib::QRSvg($link, $dir, $foreground, $background);
+	}
+
+	public static function QRPng($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = ''){
+      	self::init();
+      	$pathInfo = pathinfo($dir);
+      	$qrName = $pathInfo['basename'];
+      	$pathRelativ = $pathInfo['dirname'];
+      	$qrPath = realpath($pathInfo['dirname']);
+      	$foreground = stringToColorCode($foreground);
+      	$background = stringToColorCode($background);
+
+      	$qrList = array(
+      					array('name' => 'BlackandRed', 'foreground' => 0x000, 'background' => 0xc0392b, 'transparent' => false),
+      					array('name' => 'RedandBlack', 'foreground' => 0xc0392b, 'background' => 0x000, 'transparent' => false),
+      					array('name' => 'WhiteandRed', 'foreground' => 0xFFFFFF, 'background' => 0xc0392b, 'transparent' => false),
+      					array('name' => 'WhiteandBlack', 'foreground' => 0xFFFFFF, 'background' => 0x000, 'transparent' => false),
+      					array('name' => 'transparentAndRed', 'foreground' => 0xFFFFFF, 'background' => 0xc0392b, 'transparent' => true),
+      					array('name' => 'transparentAndBlack', 'foreground' => 0xFFFFFF, 'background' => 0x000, 'transparent' => true),
+      					array('name' => 'transparentAndWhite', 'foreground' => 0xFFFFFF, 'background' => 0xFFFFFF, 'transparent' => true),
+      					array('name' => 'Custom', 'foreground' => $foreground, 'background' => $background, 'transparent' => $transparent)
+      				);
+
+      	$qrPath .="/QR PNG/";
+      	if(!file_exists($qrPath))
+      		MakePath($qrPath);
+
+		$qrcodes = array();
+      	foreach ($qrList as $qrsettings => $options) {
+			$qr = QRcode::png($link, $qrPath."/".$qrName."_".$options['name'].".png", QR_ECLEVEL_H, 10, 5, false, $options['foreground'], $options['background'], $options['transparent']);
+			if($addLogo){
+				if(empty($qr))
+					$qr = $qrPath."/".$qrName."_".$options['name'].".png";
+				if(!empty($logoPath))
+					self::AddLogo($qr, $logoPath);
+				else
+					self::AddLogo($qr);
+			}
+			array_push($qrcodes, $pathRelativ."/QR PNG/".$qrName."_".$options['name'].".png");
+      	}
+      	$zip = new ZipLib();
+      	$zip->compress($qrPath, $pathRelativ);
+
+      	return $qrcodes;
+	}
+
+	public static function QRSvg($link, $dir, $foreground = 0x000, $background = 0xFFFFFF){
+      	self::init();
+      	$pathInfo = pathinfo($dir);
+      	$qrName = $pathInfo['basename'];
+      	$pathRelativ = $pathInfo['dirname'];
+      	$qrPath = realpath($pathInfo['dirname']);
+      	$foreground = stringToColorCode($foreground);
+      	$background = stringToColorCode($background);
+
+      	$qrList = array(
+      					array('name' => 'BlackandRed', 'foreground' => 0x000, 'background' => 0xc0392b),
+      					array('name' => 'RedandBlack', 'foreground' => 0xc0392b, 'background' => 0x000),
+      					array('name' => 'WhiteandRed', 'foreground' => 0xFFFFFF, 'background' => 0xc0392b),
+      					array('name' => 'WhiteandBlack', 'foreground' => 0xFFFFFF, 'background' => 0x000),
+      					array('name' => 'Custom', 'foreground' => $foreground, 'background' => $background)
+      				);
+
+      	$qrPath .="/QR SVG/";
+      	if(!file_exists($qrPath))
+      		MakePath($qrPath);
+
+		$qrcodes = array();
+      	foreach ($qrList as $qrsettings => $options) {
+			$qr = QRcode::svg($link, $qrPath.$qrName."_".$options['name'].".svg", QR_ECLEVEL_H, self::$qrSize, 5, false, $options['foreground'], $options['background']);
+			array_push($qrcodes, $pathRelativ."/QR SVG/".$qrName."_".$options['name'].".png");
+		}
+      	$zip = new ZipLib();
+      	$zip->compress($qrPath, $pathRelativ);
+
+      	return $qrcodes;
+	}
+
+	public static function QRPdf($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = '', $deletePngAfter = true){
+		$qrList = QRCodeLib::QRPng($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath);
+
+      	foreach ($qrList as $qr) {
+      		$fileInfo = pathinfo($qr);
+      		$filename = $fileInfo['dirname'].'/'.$fileInfo['filename'].'.pdf';
+      		$filename = str_replace("PNG", "PDF", $filename);
+      		if(!file_exists(pathinfo($filename)['dirname']))
+      			MakePath($filename, true);
+			try {
+					ob_start();
+					echo '<img style="width: 100%;" src="'.$qr.'" alt="QRCode">';
+					// // echo '<div style="width : '.getimagesize("img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg")[0].'px; height : '.getimagesize("img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg")[1].'px;background-image: url(img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg)">test</div>';
+					$content = ob_get_clean();
+					echo $content;
+					$pdf = new HTML2PDF('p', 'A4', 'en');
+					$pdf->writeHTML($content);
+	        		ob_clean();
+					$pdf->output($filename, 'F');
+			} catch (HTML2PDF_exception $e) {
+				// die($e);
+			}
+		}
+      	$zip = new ZipLib();
+      	$zipDest = str_replace("QR PDF", "", pathinfo($filename)['dirname']);
+      	$zip->compress(pathinfo($filename)['dirname'], $zipDest);
+
+		if($deletePngAfter){
+			DeleteDirectoryContent($fileInfo['dirname']);
+			rmdir($fileInfo['dirname']);
+			unlink($fileInfo['dirname'].'.zip');
+		}
+	}
 }
 ?>
