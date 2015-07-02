@@ -8,7 +8,7 @@
     </head>
     <body> 
 
-      <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+      <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" style = "display : none;">
         <!-- <div class="navbar navbar-fixed-top" role="navigation" style="position:static">  -->
         <div class="container"> 
           <div class="navbar-header">

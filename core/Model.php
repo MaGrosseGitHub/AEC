@@ -61,6 +61,10 @@ class Model{
 						if(empty($data->$k)){
 							$errors[$k] = $v['message']; 
 						}
+					}elseif($v['rule'] == 'email'){
+						if(!filter_var($data->$k, FILTER_VALIDATE_EMAIL)){
+							$errors[$k] = $v['message']; 
+						}
 					}elseif(is_array($v['rule'])){
 						if(!in_array($k, $v['rule']))
 							$errors[$k] = $v['message'];
@@ -150,7 +154,7 @@ class Model{
 	/**
 	* Alias permettant de retrouver le premier enregistrement
 	**/
-	public function findFirst($req){
+	public function findFirst($req = ""){
 		return current($this->find($req)); 
 	}
 

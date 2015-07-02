@@ -183,7 +183,7 @@ class PostsController extends Controller{
 				// $this->request->data->d = $d;
 				// die();
 
-				$preDir = "tmp/Post/";
+				// $preDir = "tmp/Post/";
 				$this->Post->save($this->request->data);
 
 				$cacheDir = Cache::POST.DS.$this->request->data->slug;

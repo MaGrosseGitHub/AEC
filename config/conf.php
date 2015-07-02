@@ -46,6 +46,10 @@ Router::connect('blog/*','posts/*');
 //authors
 Router::connect('authors/view/:slug-:id','authors/view/id:([0-9]+)/slug:([a-z0-9\-]+)');
 
+//Contact
+Router::connect('contact/','contact/index');
+Router::connect('cockpit/contact/','cockpit/contact/index');
+
 //media
 Router::connect('medias/','medias/index');
 Router::connect('lookFor_medias','lookFor/medias');
@@ -61,7 +65,6 @@ Router::connect('lookFor_event/*','lookFor/events/event/*');
 
 //maps
 Router::connect('maps/','maps/index');
-Router::connect('contact/','contact/index');
 Router::connect('page/:slug-:id','pages/view/id:([0-9]+)/slug:([a-z0-9\-]+)');
 
 //admin

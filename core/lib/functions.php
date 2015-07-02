@@ -343,9 +343,11 @@ function randomColor ($lightColor = true, $minVal = 0, $maxVal = 255)
 
     // Return a hex colour ID string
     return sprintf('#%02X%02X%02X', $r, $g, $b);
-
 }
 
+function randomColorHex (){
+  return '#' . strtoupper(dechex(rand(0,10000000)));
+}
 
 function InsertAfter($arr, $keyToFind, $addArray){
     $keys = array_keys($arr);
