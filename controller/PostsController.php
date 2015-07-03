@@ -516,6 +516,8 @@ class PostsController extends Controller{
 		$dump = new Dump($this);
 		$dumpList = array(array('type' => Dump::IMG), array('type' => DUMP::FILTERED));
 		$dump->DumpLastModifiedList($dumpList);
+
+		//Send to ftp and or dropbox
 	}
       
 }
