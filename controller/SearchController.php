@@ -2,7 +2,7 @@
 class SearchController extends Controller{	
 
 	protected function SearchInBdd($keyWord, $options = array()){
-		debug('<br><br><br><br><br><br>');
+		// debug('<br><br><br><br><br><br>');
 		$searchResults = array();
 		$availableResults = array();
 		$contentArray = ['content_FR', 'content_EN', 'description', 'bio_FR', 'bio_EN'];
@@ -15,12 +15,12 @@ class SearchController extends Controller{
 						'Post' => [
 							['title_FR', 'title_EN', 'content_FR', 'content_EN'], 
 							'created', 
-							['id', 'online', 'type', 'category_id', 'organization_id', 'author_id', 'slug', 'created']
+							['id', 'online', 'type', 'category_id', 'organization_id', 'author_id', 'slug', 'created', 'user_id']
 						],
 						'Author' => [
 							['firstName', 'lastName', 'bio_EN', 'bio_FR'], 
 							'created', 
-							['id', 'bio_FR', 'bio_EN', 'website', 'type', 'organization']
+							['id', 'bio_FR', 'bio_EN', 'website', 'type', 'organization', 'slug']
 						]
 					)
 				);
@@ -38,40 +38,35 @@ class SearchController extends Controller{
 				$cond = array();
 
 				$fields = $row;
-				// foreach ($row as $rowKey => $column) {
-
-				// 	foreach ($keyWord as $wordkey => $word) {
-				// 		if(!in_array($column, $contentArray))	
-				// 			$word = "%$word%";
-				// 		else
-				// 			$word = "% $word %";
-				// 		$cond[] = $column.' LIKE "'.$word.'"';
-				// 	}
-
-				// 	if(count($options['searchIn'][$bdd]) >= 3 && in_array($column, $contentArray)){ //if column is in omit array : delete it
-				// 		unset($fields[$rowKey]);
-				// 	}
-				// }
-				$condTemp = array();
 				foreach ($row as $rowKey => $column) {
 					foreach ($keyWord as $wordkey => $word) {
-						$cond = array_merge($cond, $this->getLevenshtein1($word));
-					}
-
-					foreach ($cond as $condKey => $condVal) {
-						$condTemp[] = "(".$column." LIKE '%".$condVal."%')";
+						if(!in_array($column, $contentArray))	
+							$word = "%$word%";
+						else
+							$word = "% $word %";
+						$cond[] = $column.' LIKE "'.$word.'"';
 					}
 
 					if(count($options['searchIn'][$bdd]) >= 3 && in_array($column, $contentArray)){ //if column is in omit array : delete it
 						unset($fields[$rowKey]);
 					}
 				}
-				$cond = $condTemp;
+				// $condTemp = array();
+				// foreach ($row as $rowKey => $column) {
+				// 	foreach ($keyWord as $wordkey => $word) {
+				// 		$cond = array_merge($cond, $this->getLevenshtein1($word));
+				// 	}
 
-				// foreach ($cond as $condKey => $condVal) {
-				// 	$cond[$condKey] = $column.' LIKE '.$condVal;
+				// 	foreach ($cond as $condKey => $condVal) {
+				// 		$condTemp[] = "(".$column." LIKE '%".$condVal."%')";
+				// 	}
+
+				// 	if(count($options['searchIn'][$bdd]) >= 3 && in_array($column, $contentArray)){ //if column is in omit array : delete it
+				// 		unset($fields[$rowKey]);
+				// 	}
 				// }
-				// debug($cond);
+				// $cond = $condTemp;
+
 				$condition = implode(' OR ',$cond);
 
 				if($bdd == "Post"){
@@ -92,7 +87,7 @@ class SearchController extends Controller{
 
 				// debug($bddConditions);
 				$results = $this->$bdd->find($bddConditions);
-				debug($results);
+				// debug($results);
 
 				// if($bdd == "Media"){
 
@@ -293,7 +288,7 @@ class SearchController extends Controller{
 
 	public function preview($keyWord, $options = array()){
 		$d['searchResults'] = $this->SearchInBdd($keyWord, array('preview' => true));
-		debug($d['searchResults']);
+		// debug($d['searchResults']);
 		
 		$this->set($d);
 	}
