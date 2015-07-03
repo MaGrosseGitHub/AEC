@@ -4,7 +4,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
       <title><?php echo isset($GLOBALS['title_for_layout'])?$GLOBALS['title_for_layout']:'AEC'; ?></title> 
       <?php require CORE.DS.'cssIncludes.php'; ?>
-      <?php require CORE.DS.'jsIncludes.php'; ?>
+      <?php require CORE.DS.'jsIncludes.php'; ?>      
     </head>
     <body> 
 
@@ -28,15 +28,16 @@
                     <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->title_FR; ?>"><?php echo $p->title_FR; ?></a></li> 
                 <?php endforeach; ?>
                 <li><a href="<?php echo Router::url('posts/index'); ?>">Actualité</a></li>
-                <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li>
-                <li><a href="<?php echo Router::url('medias/index'); ?>">Galerie</a></li>
-                <li><a href="<?php echo Router::url('maps/index'); ?>">Maps</a></li>
+                <!-- <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li> -->
+                <!-- <li><a href="<?php echo Router::url('medias/index'); ?>">Galerie</a></li> -->
+                <!-- <li><a href="<?php echo Router::url('maps/index'); ?>">Maps</a></li> -->
                 <li><a href="<?php echo Router::url('contact/index'); ?>">Contact</a></li>
                 <li><a href="<?php echo Router::url('cockpit/'); ?>">Admin</a></li>
                 <li><a class = "logout" href="<?php echo Router::url('lookFor/users/logout'); ?>">Se déconnecter</a></li>
               </ul>
               <div id="searchInput">
-                <?php echo $this->Form->input('search','search'); ?>
+                <div id="searchDiv"> <?php echo $this->Form->input('search',''); ?>
+                <div id="searchResults"></div>
                 <!-- <select name="searchFilter" id="searchFilter">
                   <option value="all">all</option>
                   <option value="media">Media</option>
@@ -44,7 +45,7 @@
                   <option value="event">Events</option>
                   <option value="maps">Maps</option>
                   <option value="user">users</option>
-                </select>  -->              
+                </select>  -->    </div>          
               </div>
           </nav>
         </div> 

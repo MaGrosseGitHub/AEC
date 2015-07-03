@@ -197,13 +197,13 @@
 			// pathname = window.location.href.replace(pathname,""); 
 			// var lookFor = pathname+"/lookFor"+pathnameController+"/weather/"+$markerLocation+"/"+$markerIdBdd;
 			// lookFor = lookFor.replace("#","");
-
 			$.ajax({
 				type: 'GET',
-				url: window.location.origin+'/POO3/webroot/lookFor/search/preview/'+searchFilter+'/'+data,
+				url: window.location.origin+'/AEC/webroot/lookFor/search/preview/'+data,
 				success: function (response) {
 					// console.log(response);
 					$('#searchResults').html(response);
+					console.log(response);
 				},
 				error: function (e) {
 					console.log(e.message);
