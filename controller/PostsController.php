@@ -496,8 +496,8 @@ class PostsController extends Controller{
 			// debug(pathinfo($image));
 			// $imgData = Images::SetImgBDD($image);
 
-
 		} else {
+			Comments::RSS($this);
 			// QRCodeLib::GenerateQRCodes("http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg", "img/galerie/test/16");
 			// $this->redirect('admin/posts/index'); 
 		}
