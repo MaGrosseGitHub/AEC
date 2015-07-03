@@ -76,6 +76,14 @@ class PostsController extends Controller{
 
 			$cacheDir = Cache::POST.DS.$slug;
 			$this->Cache->write($slug, $d['post'], $cacheDir, true);
+
+				// date timestamp to normal settings
+				// $d = new DateTime();
+				// $d->setTimestamp($this->request->data->publication);
+				// $d->format('U = Y-m-d H:i:s');
+				// $this->request->data->d = $d;
+				// die();
+
 		} else {
 			$d['post'] = $this->Cache->read(Cache::POST.DS.$slug.DS.$slug, true);
 		}	
@@ -175,14 +183,6 @@ class PostsController extends Controller{
 				unset($this->request->data->video_youtube);
 				unset($this->request->data->video_vimeo);
 				unset($this->request->data->video_server);
-
-				// date timestamp to normal settings
-				// $d = new DateTime();
-				// $d->setTimestamp($this->request->data->publication);
-				// $d->format('U = Y-m-d H:i:s');
-				// $this->request->data->d = $d;
-				// die();
-
 				// $preDir = "tmp/Post/";
 				$this->Post->save($this->request->data);
 
