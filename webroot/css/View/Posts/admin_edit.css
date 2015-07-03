@@ -1,14 +1,8 @@
-﻿#plupload 
-{
+﻿#plupload {
   font-family: Arial,Helvetica;
-  color: #3D3D3D; 
-  padding-top : 100px;
-  padding-right:20px;
-  /*height : 100%;*/
-  text-align: center;
-}
+  color: #AAA; }
   #plupload #droparea {
-    border: 4px dashed #999999;
+    border: 4px dashed #ddd;
     height: 200px;
     text-align: center;
     font-size: 13px; }
@@ -39,62 +33,26 @@
     -ms-border-radius: 15px;
     -khtml-border-radius: 15px;
     border-radius: 15px; }
-  /*#filelist {
-    margin-top: 10px; 
-    width : 100%;}*/
-
-    .file {
+  #plupload #filelist {
+    margin-top: 10px; }
+    #plupload #filelist .file {
       padding: 0 10px;
       border: 1px solid #DFDFDF;
+      height: 70px;
       line-height: 70px;
       margin-bottom: 10px;
-      display : inline-block;
-      width : 190px;
-      height : 130px;
-      }
-
-    .file img {
-      margin : 10px;
-      height : 50px;
-    }
-
-    .delete, .deleteImg, .addImg {
-      position : relative;
-      top : -100px;
-      left : 120px;
-      background: #FFF;
-    }
-
-    /*.addToAlbum{
-      position : relative;
-      top : -130px;
-      left : -70px;
-      background: #FFF;
-    }*/
-
-    .action, .imgName, .delete {
-      display : inline-block;
-    }
-
-    .imgName{   
-      position : relative;
-      top : -70px;  
-      left : 20px;
-      width : 120px;
-      height : 20px;
-      overflow: hidden;
-      background: #FFF;
-    }
-
-    .albumDiv{
-      background: #FF0;
-    }
-
-    .albumEmpty{
-      display: none
-    }
-
-    .progressbar {
+      position: relative; }
+    #plupload #filelist img {
+      margin-right: 10px;
+      height: 55px;
+      vertical-align: middle; }
+    #plupload #filelist .actions {
+      position: absolute;
+      top: 0px;
+      right: 5px; }
+    #plupload #filelist .del {
+      color: #FF0000; }
+    #plupload #filelist .progressbar {
       position: absolute;
       top: 25px;
       right: 5px;
@@ -111,21 +69,49 @@
       -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
       -o-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
       box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5); }
-    .progress {
+    #plupload #filelist .progress {
       position: absolute;
       border: 1px solid #4c8932;
       height: 18px;
       width: 10%;
-      background: url(<?php echo HTML::getImg("progress.jpg", true, true); ?>) repeat;
+      background: url(progress.jpg) repeat;
       -webkit-animation: progress 2s linear infinite;
       -moz-border-radius: 25px;
       -webkit-border-radius: 25px;
       -o-border-radius: 25px;
       -ms-border-radius: 25px;
       -khtml-border-radius: 25px;
-      border-radius: 25px; }
+      border-radius: 25px; 
+    }
 
 @-webkit-keyframes progress {
+  from {
+    background-position: 0 0; }
+
+  to {
+    background-position: 54px 0; } }
+
+.clear{
+  clear : both;
+}@-moz-keyframes progress {
+  from {
+    background-position: 0 0; }
+
+  to {
+    background-position: 54px 0; } }
+
+.clear{
+  clear : both;
+}@-o-keyframes progress {
+  from {
+    background-position: 0 0; }
+
+  to {
+    background-position: 54px 0; } }
+
+.clear{
+  clear : both;
+}@-keyframes progress {
   from {
     background-position: 0 0; }
 

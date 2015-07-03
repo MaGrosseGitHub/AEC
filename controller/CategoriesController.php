@@ -34,11 +34,12 @@ class CategoriesController extends Controller{
 		
 		if($this->request->data){
 			if($this->Category->validates($this->request->data)){
+				$this->request->data->slug =  makeSlug($this->request->data->name_EN, 50);
 				$this->Category->save($this->request->data);
-				$this->Session->setFlash('La catégorie a bien été modifié'); 
+				$this->Notification->setFlash('La catégorie a bien été modifié'); 
 				$this->redirect('admin/categories/index'); 
 			}else{
-				$this->Session->setFlash('Merci de corriger vos informations','error'); 
+				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
 			}
 			
 		}elseif($id){
@@ -56,7 +57,7 @@ class CategoriesController extends Controller{
 	function admin_delete($id){
 		$this->loadModel('Category');
 		$this->Category->delete($id);
-		$this->Session->setFlash('Le contenu a bien été supprimé'); 
+		$this->Notification->setFlash('Le contenu a bien été supprimé'); 
 		$this->redirect('admin/categories/index'); 
 	}
 

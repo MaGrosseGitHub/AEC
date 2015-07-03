@@ -24,28 +24,34 @@
           <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
               <ul class="nav navbar-nav"> 
                 <?php $pagesMenu = $this->request('Pages','getMenu'); ?>
-                <?php foreach($pagesMenu as $p): ?>
-                    <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->title_FR; ?>"><?php echo $p->title_FR; ?></a></li> 
-                <?php endforeach; ?>
-                <li><a href="<?php echo Router::url('posts/index'); ?>">Actualité</a></li>
-                <!-- <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li> -->
-                <!-- <li><a href="<?php echo Router::url('medias/index'); ?>">Galerie</a></li> -->
-                <!-- <li><a href="<?php echo Router::url('maps/index'); ?>">Maps</a></li> -->
-                <li><a href="<?php echo Router::url('contact/index'); ?>">Contact</a></li>
-                <li><a href="<?php echo Router::url('cockpit/'); ?>">Admin</a></li>
-                <li><a class = "logout" href="<?php echo Router::url('lookFor/users/logout'); ?>">Se déconnecter</a></li>
+                <?php if(Language::$curLang == "fr") : ?>
+                  <?php foreach($pagesMenu as $p): ?>
+                      <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->title_FR; ?>"><?php echo $p->title_FR; ?></a></li> 
+                  <?php endforeach; ?>
+                  <li><a href="<?php echo Router::url('posts/index'); ?>">Actualité</a></li>
+                  <!-- <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li> -->
+                  <!-- <li><a href="<?php echo Router::url('medias/index'); ?>">Galerie</a></li> -->
+                  <!-- <li><a href="<?php echo Router::url('maps/index'); ?>">Maps</a></li> -->
+                  <li><a href="<?php echo Router::url('contact/index'); ?>">Contact</a></li>
+                  <li><a href="<?php echo Router::url('cockpit/'); ?>">Admin</a></li>
+                  <li><a class = "logout" href="<?php echo Router::url('lookFor/users/logout'); ?>">Se déconnecter</a></li>
+                <?php else : ?>
+                  <?php foreach($pagesMenu as $p): ?>
+                      <li><a href="<?php echo Router::url('pages/view/id:'.$p->id.'/slug:'.$p->slug); ?>" title="<?php echo $p->title_EN; ?>"><?php echo $p->title_FR; ?></a></li> 
+                  <?php endforeach; ?>
+                  <li><a href="<?php echo Router::url('posts/index'); ?>">NEWS</a></li>
+                  <!-- <li><a href="<?php echo Router::url('events/index'); ?>">Events</a></li> -->
+                  <!-- <li><a href="<?php echo Router::url('medias/index'); ?>">Galerie</a></li> -->
+                  <!-- <li><a href="<?php echo Router::url('maps/index'); ?>">Maps</a></li> -->
+                  <li><a href="<?php echo Router::url('contact/index'); ?>">Contact</a></li>
+                  <li><a href="<?php echo Router::url('cockpit/'); ?>">Admin</a></li>
+                  <li><a class = "logout" href="<?php echo Router::url('lookFor/users/logout'); ?>">Se déconnecter</a></li>
+                <?php endif; ?>
               </ul>
               <div id="searchInput">
                 <div id="searchDiv"> <?php echo $this->Form->input('search',''); ?>
-                <div id="searchResults"></div>
-                <!-- <select name="searchFilter" id="searchFilter">
-                  <option value="all">all</option>
-                  <option value="media">Media</option>
-                  <option value="post">Posts</option>
-                  <option value="event">Events</option>
-                  <option value="maps">Maps</option>
-                  <option value="user">users</option>
-                </select>  -->    </div>          
+                  <div id="searchResults"></div>
+                </div>          
               </div>
           </nav>
         </div> 

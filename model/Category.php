@@ -6,11 +6,11 @@ class Category extends Model{
 	var $validate = array(
 		'name' => array(
 			'rule' => 'notEmpty',
-			'message' => 'Vous devez préciser un titre'
+			'message' => 'Vous devez préciser un titre FR'
 		),
-		'slug' => array(
-			'rule' => '([a-z0-9\-]+)',
-			'message' => "L'url n'est pas valide"
+		'name_EN' => array(
+			'rule' => 'notEmpty',
+			'message' => "Vous devez préciser un titre EN"
 		)
 	);
 

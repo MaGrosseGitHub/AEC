@@ -120,7 +120,7 @@ class PostsController extends Controller{
 		$this->loadModel('Post');
 		$condition = array('type'=>'post'); 
 		$d['posts'] = $this->Post->find(array(
-			'fields'     => 'Post.id,Post.title_FR,Post.online,Post.created,Post.category_id as catname',
+			'fields'     => 'Post.id,Post.title_FR,Post.online,Post.created,Post.category_id as catname, Post.slug',
 			'order' 	 => 'created DESC',
 			'conditions' => $condition,
 			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
@@ -192,7 +192,7 @@ class PostsController extends Controller{
 				$link = "http://".$_SERVER['SERVER_NAME']."/".Router::url("posts/view/id:{$this->request->data->id}/slug:{$this->request->data->slug}");
 				QRCodeLib::GenerateQRCodes($link, Cache::POST.DS.$this->request->data->slug.DS.$this->request->data->slug);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success');
-				ob_clean();
+				// ob_clean();
 				$this->redirect('admin/posts/index'); 
 			}else{
 				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
@@ -499,6 +499,7 @@ class PostsController extends Controller{
 
 		} else {
 			// QRCodeLib::GenerateQRCodes("http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg", "img/galerie/test/16");
+			// $this->redirect('admin/posts/index'); 
 		}
 	}
 
@@ -518,6 +519,7 @@ class PostsController extends Controller{
 		$dump->DumpLastModifiedList($dumpList);
 
 		//Send to ftp and or dropbox
+		$this->redirect('admin/posts/index'); 
 	}
       
 }

@@ -125,8 +125,7 @@ class OrganizationsController extends Controller{
 		if($this->request->data){
 			if($this->Author->validates($this->request->data)){
 				$this->request->data->type = 'organization';
-				$this->request->data->lastName = $this->request->data->firstName;
-				$slug = makeSlug($this->request->data->firstName.$this->request->data->lastName);
+				$slug = makeSlug($this->request->data->firstName.$this->request->data->firstName);
 				$this->request->data->slug = $slug;
 
 				$preDir = "tmp/Organization/";

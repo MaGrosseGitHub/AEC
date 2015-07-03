@@ -7,10 +7,10 @@
     <fieldset>
     	<?php 
         $this->Form->addAsterisk = true;
-        echo $this->Form->input('firstName','Nom', array('required'=> true));
+        echo $this->Form->input('firstName','Acronyme', array('required'=> true));
+        echo $this->Form->input('lastName','Nom complet', array('required'=> true));
         echo $this->Form->input('file','Photo',array('type'=>'fileImg'));
         echo $this->Form->input('website','Site web', array('type'=>'url'));
-        echo $this->Form->input('lastName','hidden', array('inputValue'=>"value"));
         // echo $this->Form->input('category_id','Catégorie',array('options' => $categories, 'class'=>'selectpicker', 'listInvert' => true));
         // echo $this->Form->input('content','Contenu',array('type'=>'textarea','class'=>'xxlarge wysiwyg validate[required,funcCall[checkTextArea]]','rows'=>5));
         echo $this->Form->input('bio_FR','Bio <span style = "color : red;">FR</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5), array('required'=> true));

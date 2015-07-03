@@ -42,11 +42,19 @@ class QRCodeLib{
 
 	public static function GenerateQRCodes($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = ''){
 		// QRCodeLib::QRPng($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath);
-		QRCodeLib::QRPdf($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath, false); //Also Generates PNGs
-		QRCodeLib::QRSvg($link, $dir, $foreground, $background);
+		// debug(pathinfo($dir));
+		QRCodeLib::QRPdf($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath, false, false); //Also Generates PNGs
+		QRCodeLib::QRSvg($link, $dir, $foreground, $background, false);
+		MakePath(pathinfo($dir)['dirname'].'/QR CODES/');
+		rename(pathinfo($dir)['dirname'].DS.'QR PNG/', pathinfo($dir)['dirname'].'/QR CODES/'.'QR PNG/');
+		rename(pathinfo($dir)['dirname'].DS.'QR SVG/', pathinfo($dir)['dirname'].'/QR CODES/'.'QR SVG/');
+		rename(pathinfo($dir)['dirname'].DS.'QR PDF/', pathinfo($dir)['dirname'].'/QR CODES/'.'QR PDF/');
+		$zip = new ZipLib();
+		$zip->compress(pathinfo($dir)['dirname'].'/QR CODES/', pathinfo($dir)['dirname']);
+		rrmdir(pathinfo($dir)['dirname'].'/QR CODES/');
 	}
 
-	public static function QRPng($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = ''){
+	public static function QRPng($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = '', $compress = true){
       	self::init();
       	$pathInfo = pathinfo($dir);
       	$qrName = $pathInfo['basename'];
@@ -83,13 +91,15 @@ class QRCodeLib{
 			}
 			array_push($qrcodes, $pathRelativ."/QR PNG/".$qrName."_".$options['name'].".png");
       	}
-      	$zip = new ZipLib();
-      	$zip->compress($qrPath, $pathRelativ);
+		if($compress){
+	      	$zip = new ZipLib();
+	      	$zip->compress($qrPath, $pathRelativ);			
+		}
 
       	return $qrcodes;
 	}
 
-	public static function QRSvg($link, $dir, $foreground = 0x000, $background = 0xFFFFFF){
+	public static function QRSvg($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $compress = true){
       	self::init();
       	$pathInfo = pathinfo($dir);
       	$qrName = $pathInfo['basename'];
@@ -115,14 +125,16 @@ class QRCodeLib{
 			$qr = QRcode::svg($link, $qrPath.$qrName."_".$options['name'].".svg", QR_ECLEVEL_H, self::$qrSize, 5, false, $options['foreground'], $options['background']);
 			array_push($qrcodes, $pathRelativ."/QR SVG/".$qrName."_".$options['name'].".png");
 		}
-      	$zip = new ZipLib();
-      	$zip->compress($qrPath, $pathRelativ);
+		if($compress){
+	      	$zip = new ZipLib();
+	      	$zip->compress($qrPath, $pathRelativ);			
+		}
 
       	return $qrcodes;
 	}
 
-	public static function QRPdf($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = '', $deletePngAfter = true){
-		$qrList = QRCodeLib::QRPng($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath);
+	public static function QRPdf($link, $dir, $foreground = 0x000, $background = 0xFFFFFF, $transparent = false, $addLogo = 'true', $logoPath = '', $deletePngAfter = true, $compress = true){
+		$qrList = QRCodeLib::QRPng($link, $dir, $foreground, $background, $transparent, $addLogo, $logoPath, $compress);
 
       	foreach ($qrList as $qr) {
       		$fileInfo = pathinfo($qr);
@@ -144,9 +156,12 @@ class QRCodeLib{
 				// die($e);
 			}
 		}
-      	$zip = new ZipLib();
-      	$zipDest = str_replace("QR PDF", "", pathinfo($filename)['dirname']);
-      	$zip->compress(pathinfo($filename)['dirname'], $zipDest);
+		ob_clean();
+		if($compress){
+	      	$zip = new ZipLib();
+	      	$zipDest = str_replace("QR PDF", "", pathinfo($filename)['dirname']);
+	      	$zip->compress(pathinfo($filename)['dirname'], $zipDest);			
+		}
 
 		if($deletePngAfter){
 			DeleteDirectoryContent($fileInfo['dirname']);

@@ -68,7 +68,7 @@ class Dump{
 			$this->dumpZipType = $params['zipType'];
 		else
 			$this->dumpZipType = Mysqldump::GZIP;
-		if(!isset($params['compress']) || (isset($params['compress']) && isset($params['compress'])
+		if(!isset($params['compress']) || (isset($params['compress']) && $params['compress']))
 			$this->dumpSettings['compress'] = $this->dumpZipType;
 
 		$this->dumpDirectory = Cache::DUMP."/";
