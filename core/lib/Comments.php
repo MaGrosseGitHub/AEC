@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 
 class Comments{
 
@@ -17,12 +17,12 @@ class Comments{
 		$this->slug = isset($comments['slug']) ? $comments['slug'] : '';
 		$this->id = isset($comments['id']) ? $comments['id'] : '';
 		
-		echo $this->NbComments($NbCommentsElem);
+		// echo $this->NbComments($NbCommentsElem);
 		if(!$OnlyNbComments){
 			$shareOptions = $this->Share($share['url'],$share['text'],$share['shorten'],$share['options'], $share['separation']);
 			echo $shareOptions;
-			$commentsScript = $this->addComments();
-			echo $commentsScript;
+			// $commentsScript = $this->addComments();
+			// echo $commentsScript;
 		}
 	}
 
@@ -131,6 +131,45 @@ class Comments{
 	    </script>";
 
 	    return $script;
+	}
+
+	public static function RSS($ctrl){
+		ob_clean();
+		header('Content-Type: text/xml');
+		echo '<?xml version="1.0" encoding="UTF-8"?>
+			<rss version="2.0">
+			<channel>
+			<title>My Website Name</title>
+			<description>A description of the feed</description>
+			<link>The URL to the website</link>';
+
+			$ctrl->loadModel('Post');
+			$condition = array('online' => 1,'type'=>'post', 'social_online'=>1);
+			$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id'];
+			$fields = implode(",", $fields);
+			$options = array(
+				'conditions' => $condition,
+				'fields' => $fields,
+				'order'      => 'created DESC'
+			);
+
+			$posts = $ctrl->Post->find($options);
+
+			foreach ($posts as $k => $v){	      
+			    echo '
+			       <item>
+			          <title>'.$v->title_FR.'</title>
+			          <description><![CDATA[
+			          '.$v->content_FR.'
+			          ]]></description>
+			          <link>http://www.mysite.com/article.php?id='.$v->id.$v->slug.'</link>
+			          <pubDate>'.date("Y-m-d", time()).' GMT</pubDate>
+			      </item>';
+			}
+
+		echo '</channel>
+			</rss>';
+		die();
 	}
 }
 ?>

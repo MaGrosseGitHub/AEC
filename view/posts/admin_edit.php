@@ -8,7 +8,8 @@
 
 <form id = "form" action="<?php echo Router::url('cockpitInc/posts/edit/'.$id); ?>" method="post" enctype="multipart/form-data">
     <div id="firstPart">
-        <h3>Informations principales du projet</h3>
+        <h3>Informations principales du projet</h3> 
+        <hr align = "left" size = "1" style = "border-color : #3d3d3d; width : 70%; ">
     	<?php 
             echo $this->Form->input('title_FR','Titre <span style = "color : red;">FR</span>');
             echo $this->Form->input('title_EN','Titre <span style = "color : red;">EN</span>');
@@ -20,9 +21,16 @@
             // echo $this->Form->input('content','Contenu',array('type'=>'textarea','class'=>'xxlarge wysiwyg validate[required,funcCall[checkTextArea]]','rows'=>5));
             echo $this->Form->input('content_FR','Contenu <span style = "color : red;">FR</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
             echo $this->Form->input('content_EN','Contenu <span style = "color : red;">EN</span>',array('type'=>'textarea','class'=>'redactor','rows'=>5));
+            
+            $floors = array('RDC',1,2,3);
+            echo $this->Form->input('floors','Etages',array('options' => $floors, 'class'=>'selectpicker', 'listInvert' => true));
         ?>
     </div>
-    <div id="secondpart">   
+    <div id="secondpart"> 
+        <br>  
+        <br>  
+        <h3>Images et vidéos</h3>
+         <hr align = "left" size = "1" style = "border-color : #3d3d3d; width : 70%; ">
 
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
@@ -73,7 +81,10 @@
     <br>
             
     <div id="thirdpart">
+        <br>  
+        <br>  
         <h3>Informations sur les auteurs du projet</h3>
+         <hr align = "left" size = "1" style = "border-color : #3d3d3d; width : 70%; ">
         <?php 
             echo $this->Form->input('organization_id','Organisation',array('options' => $organizations, 'class'=>'selectpicker', 'listInvert' => true, 'required'=> true));
         ?>

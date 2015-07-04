@@ -4,32 +4,36 @@ class AuthorsController extends Controller{
 	/**
 	* Blog, liste les articles
 	**/
-	function index($user = null){
+	function index(){
 		$perPage = 5; 
-		if(isset($user) && !empty($user))
-			$perPage = 1000;
 
-		$this->loadModel('Post');
+		$this->loadModel('Author');
 		if(!isset($user) || empty($user))
-			$condition = array('online' => 1,'type'=>'post'); 
-		elseif(isset($user) && !empty($user))
-			$condition = array('online' => 1,'type'=>'post', 'user_id'=>$user);
-		$fields = ['id', 'name', 'created', 'online', 'type', 'slug', 'user_id', 'category_id'];
-		$fields = implode(",", $fields).', LEFT(content, 500) as content';
+			$condition = array('type'=>'individual'); 
+		$fields = ['id', 'firstName', 'lastName', 'organization', 'slug'];
+		$fields = implode(",", $fields);
 		// SELECT LEFT(field name, 40) FROM table name WHERE condition for first 40 and 
 		// SELECT RIGHT(field name, 40) FROM table name WHERE condition for last 40
 		$options = array(
 			'conditions' => $condition,
 			'fields' => $fields,
-			'order'      => 'created DESC',
+			'order'      => 'organization',
 			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
 		);
-		$d['posts'] = $this->Post->find($options);
+		$d['authors'] = $this->Author->find($options);
+		debug('<br><br><br><br><br><br>');
 
-		$d['total'] = $this->Post->findCount($condition); 
+		$organizationAuthor = array();
+		foreach($d['authors'] as $aEntry) {
+		    $organizationAuthor[strtolower($aEntry->organization)][] = $aEntry;
+		}
+		$d['authors'] = $organizationAuthor;
+		debug($d['authors']);
+
+		$d['total'] = $this->Author->findCount($condition); 
 		$d['page'] = ceil($d['total'] / $perPage);
 		$d['curPage'] = $this->request->page;
-		$d["title_for_layout"] = "Index";
+		$d["title_for_layout"] = "Authors Index";
 
 		$this->set($d);
 	}

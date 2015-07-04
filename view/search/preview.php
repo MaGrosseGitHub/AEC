@@ -58,7 +58,7 @@
 
 </style>
 
-<div id="searchresults" class = "row col-md-3" style = "position : fixed;">
+<div id="searchresults" class = "row col-md-3">
 	<?php 
 		if(array_key_exists('EMPTY', $searchResults) &&  $searchResults['EMPTY']){
 			echo "Pas de resultats";

@@ -182,12 +182,10 @@
 		return false;
 	});
 
-	$("#inputsearch").keyup(function() {
+	$("#inputsearch").keyup(function(e) {
 		var search = $(this).val();
 		var data = search;
 		data = data.replace(' ', '+');
-
-		var searchFilter = $('#searchFilter').val();
 
 		if(search.length >= 3){
 			console.log(data);
@@ -212,6 +210,14 @@
 		} else if(search.length == 0){
 			$('#searchResults').html("");
 		}
+
+	    if(e.keyCode == 13)
+	    {
+	        $(this).trigger("enterKey");
+	    }
+	});
+	$('#inputsearch').bind("enterKey",function(e){
+		alert("test");
 	});
 
 });

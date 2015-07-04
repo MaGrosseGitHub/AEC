@@ -396,24 +396,28 @@ function forceHTTPS(){
   }
 }
 
-function fuzzySearch(){
+function fuzzySearch($needle, $haystack){
   // input misspelled word
-    $input = 'crot';
+    $input = $needle;
 
     // array of words to check against
-    $words  = array('apple','pineapple','banana','orange',
-                    'radish','carrot','pea','bean','potato');
+    // $words  = array('apple','pineapple','banana','orange','radish','carrot','pea','bean','potato');
+    $words  = $haystack;
 
     // no shortest distance found, yet
     $shortest = -1;
-
-    // loop through words to find the closest
+    $result = array();
     foreach ($words as $word) {
 
         // calculate the distance between the input word,
         // and the current word
         $lev = levenshtein($input, $word);
-        echo $lev.' ==> '.$word.'<br>';
+        $result[sprintf("%04d", $lev).'-'.$word] = $word;
+        // if(!isset($result[$word]))
+        //   $result[$word] = sprintf("%04d", $lev);
+        // else
+        //   $result[$word.array_count_values($word)] = sprintf("%04d", $lev);
+        // debug(sprintf("%04d", $lev).' ==> '.$word.'<br>');
 
         // check for an exact match
         if ($lev == 0) {
@@ -434,13 +438,85 @@ function fuzzySearch(){
             $shortest = $lev;
         }
     }
+    ksort($result);
+    return $result;
+}
 
-    echo "Input word: $input\n";
-    if ($shortest == 0) {
-        echo "Exact match found: $closest\n";
-    } else {
-        echo "Did you mean: $closest?\n";
+function fuzzySearchComplete($needle, $haystack){
+  // input misspelled word
+    $input = $needle;
+
+    // array of words to check against
+    // $words  = array('apple','pineapple','banana','orange','radish','carrot','pea','bean','potato');
+    $words  = $haystack;
+
+    // no shortest distance found, yet
+    $shortest = -1;
+
+    $keywords = explode(" ", $needle);
+    // loop through words to find the closest
+    $results = array();
+    foreach ($keywords as $wordk => $wordToCheck) {
+      $result = array();
+      foreach ($words as $word) {
+
+          // calculate the distance between the input word,
+          // and the current word
+          $lev = levenshtein($wordToCheck, $word);
+          // $result[sprintf("%04d", $lev).'-'.$word] = $word;
+          if(!isset($result[sprintf("%04d", $lev).'-'.$word]))
+            $result[sprintf("%04d", $lev).'-'.$word] = $word;
+          else
+            $result[sprintf("%04d", $lev).'-'.$word.count(array_keys($result, sprintf("%04d", $lev).'-'.$word, true))] = $word;
+          // debug(sprintf("%04d", $lev).' ==> '.$word.'<br>');
+
+          // check for an exact match
+          if ($lev == 0) {
+
+              // closest word is this one (exact match)
+              $closest = $word;
+              $shortest = 0;
+
+              // break out of the loop; we've found an exact match
+              break;
+          }
+
+          // if this distance is less than the next found shortest
+          // distance, OR if a next shortest word has not yet been found
+          if ($lev <= $shortest || $shortest < 0) {
+              // set the closest match, and shortest distance
+              $closest  = $word;
+              $shortest = $lev;
+          }
+      }
+      ksort($result);
+      $results[] = $result;
     }
+
+    $resultsIndex = array();
+    foreach ($results as $resArr => $resultVals) {
+      foreach ($resultVals as $wordIndex=> $wordRes) {
+        if(!isset($resultsIndex[explode("-", $wordIndex)[1]]))
+          $resultsIndex[explode("-", $wordIndex)[1]] = array(array_search($wordIndex, array_keys($resultVals)), $wordIndex);
+        else{
+          $resultsIndex[explode("-", $wordIndex)[1]] += array(array_search($wordIndex, array_keys($resultVals)), $wordIndex);
+          // if(isset($resultsIndex[$wordRes]) && $resultsIndex[$wordRes][1] == $wordIndex)
+          //   $resultsIndex[$wordRes][0] += array_search($wordIndex, array_keys($resultVals));
+          // else
+          //   $resultsIndex[$wordRes] = array_search($wordIndex, array_keys($resultVals));
+        }
+        // debug($resultsIndex[$wordRes], $wordIndex);
+      }
+    }
+    asort($resultsIndex);
+    debug($resultsIndex);
+    // debug( "Input word: $input\n");
+    // if ($shortest == 0) {
+    //     debug("Exact match found: $closest\n");
+    // } else {
+    //     debug("Did you mean: $closest?\n");
+    // }
+    return $results;
 }
 
 //search directory and return list of files (can also search specific files or extensions)
@@ -528,6 +604,19 @@ function DeleteDirectoryContent($dir){
     }
   }
 }
+
+function rrmdir($dir) { 
+   if (is_dir($dir)) { 
+     $objects = scandir($dir); 
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object); 
+       } 
+     } 
+     reset($objects); 
+     rmdir($dir); 
+   } 
+ }
 
 function stringToColorCode($color) {
   return dechex(hexdec(str_replace('#', '', $color)));

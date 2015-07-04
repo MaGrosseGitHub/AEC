@@ -18,9 +18,9 @@ class SearchController extends Controller{
 							['id', 'online', 'type', 'category_id', 'organization_id', 'author_id', 'slug', 'created', 'user_id']
 						],
 						'Author' => [
-							['firstName', 'lastName', 'bio_EN', 'bio_FR'], 
+							['firstName', 'lastName', 'bio_EN', 'bio_FR', 'organization'], 
 							'created', 
-							['id', 'bio_FR', 'bio_EN', 'website', 'type', 'organization', 'slug']
+							['id', 'website', 'type', 'organization', 'slug']
 						]
 					)
 				);
@@ -28,6 +28,8 @@ class SearchController extends Controller{
 			$options['searchIn'] = array_merge($optionsDefault['searchIn'], $options['searchIn']);
 		$options = array_merge($optionsDefault, $options);
 
+		$LevenshteinArr = array();
+		$keywordOrigin = $keyWord;
 		$keyWord = explode("+", $keyWord);
 		foreach ($options['searchIn'] as $bdd => $row) {
 			$row = $row[0];
@@ -51,6 +53,8 @@ class SearchController extends Controller{
 						unset($fields[$rowKey]);
 					}
 				}
+
+				//Fuzzy search (getLevenshteinSql function)
 				// $condTemp = array();
 				// foreach ($row as $rowKey => $column) {
 				// 	foreach ($keyWord as $wordkey => $word) {
@@ -87,95 +91,7 @@ class SearchController extends Controller{
 
 				// debug($bddConditions);
 				$results = $this->$bdd->find($bddConditions);
-				// debug($results);
-
-				// if($bdd == "Media"){
-
-				// 	$mediaUsers = array();
-				// 	$mediaSearchResults = array();
-				// 	$limitMedia = 4;
-				// 	foreach ($results as $resultKey => $result) {
-				// 		if (!array_key_exists($result->user, $mediaUsers)) {
-				// 			$mediaUsers[$result->user]['nbImgs'] = 1;
-				// 			$mediaUsers[$result->user]['date'] = $result->date;
-				// 			$mediaUsers[$result->user]['id'] = $result->id;
-				// 			$mediaUsers[$result->user]['searchId'] = $result->date.'-Media-'.$result->id;
-				// 			$mediaUsers[$result->user]['user'] = $result->user;
-				// 			$mediaSearchResults[$result->user][] = $result;
-				// 			if($result->type == "album"){
-				// 				$mediaUsers[$result->user]['onlyAlbums'] = true;
-				// 			} else {
-				// 				$mediaUsers[$result->user]['onlyAlbums'] = false;
-				// 			}
-
-				// 			$countCond = "(((type = 'img' AND album = '') OR (type = 'album' AND album != '')) AND post_id IS NULL AND user = '".mysql_real_escape_string($result->user)."' )";
-				// 			$mediaSearchResults[$result->user]['userCount'] = $this->Media->findCount($countCond); 
-
-				// 			$searchResults[$mediaUsers[$result->user]['searchId']] = $mediaSearchResults;
-				// 		} else if(array_key_exists($result->user, $mediaUsers) && ($mediaUsers[$result->user]['nbImgs'] < $limitMedia || $mediaUsers[$result->user]['onlyAlbums']) ){
-				// 			$mediaUsers[$result->user]['nbImgs']++;
-				// 			if($result->date > $mediaUsers[$result->user]['date']) {
-				// 				$mediaUsers[$result->user]['date'] = $result->date;
-				// 				$mediaUsers[$result->user]['id'] = $result->id;
-
-				// 				$mediaSearchResults[$result->user][] = $result;
-
-				// 				unset($searchResults[$mediaUsers[$result->user]['searchId']]);
-				// 				$mediaUsers[$result->user]['searchId'] = $result->date.'-Media-'.$result->id;
-				// 				$searchResults[$mediaUsers[$result->user]['searchId']] = $mediaSearchResults;
-				// 			} else {
-				// 				$mediaSearchResults[$result->user][] = $result;
-
-				// 				unset($searchResults[$mediaUsers[$result->user]['searchId']]);
-				// 				$searchResults[$mediaUsers[$result->user]['searchId']] = $mediaSearchResults;
-				// 			}
-				// 			if($result->type != "album"){
-				// 				$mediaUsers[$result->user]['onlyAlbums'] = false;
-				// 			} 
-				// 		}
-				// 	}
-
-				// 	foreach ($mediaUsers as $mediaUser => $userMediaInfo) {
-				// 		if($userMediaInfo['onlyAlbums'] && $userMediaInfo['nbImgs'] >= 1){
-				// 			unset($searchResults[$userMediaInfo['searchId']]);
-				// 			foreach ($mediaSearchResults[$mediaUser] as $mediaKey => $userMediaArray) {
-				// 				if(is_array($userMediaArray) || is_object($userMediaArray)){
-				// 					$albumName = $userMediaArray->date.'-Media-'.$userMediaArray->id;
-				// 					$searchResults[$albumName] = $userMediaArray;
-				// 				}
-				// 			}
-				// 		}
-				// 	}
-				// }
-
-				// if($bdd == "MapInfo" && !empty($results)){
-				// 	$mapResults = array();	
-				// 	foreach ($results as $resultKey => $result) {	
-				// 		$this->loadModel('Map');
-				// 		$mapResults  = $this->Map->findFirst(array(
-				// 			'conditions' => array('id'=>$result->maps_id)
-				// 		)); 
-				// 		if($mapResults->event == "club"){
-				// 			$mapResults->event = 'user';
-				// 		} elseif($mapResults->event == "event"){
-				// 			$mapResults->auteur = $mapResults->club;
-				// 			unset($mapResults->club);
-				// 			$mapResults->titre = $mapResults->title;
-				// 			$mapResults->slug = makeSlug($mapResults->titre, 200);
-				// 			unset($mapResults->title);
-				// 			$mapResults->description = $mapResults->content;
-				// 			unset($mapResults->content);
-				// 			$mapResults->toDate = $mapResults->date;
-				// 		}
-
-				// 		$resultArrayKey = $mapResults->date.'-'.ucfirst($mapResults->event).'-'.$mapResults->id_event;
-				// 		if (!array_key_exists($resultArrayKey, $searchResults)) {
-				// 			$mapResults->id = $mapResults->id_event;
-				// 			$searchResults[$resultArrayKey] = $mapResults;
-				// 		}
-				// 	}
-				// }
-				
+				// debug($results);				
 
 				if(!empty($results)){
 					foreach ($results as $resultKey => $result) {
@@ -186,27 +102,97 @@ class SearchController extends Controller{
 						else
 							$resultArrayKey = $bdd.'-'.$result->id;
 						$searchResults[$resultArrayKey] = $result;
+						$resultLev = array();
+						if($options['preview']){
+							foreach ($result as $resType => $resVal) {
+								if(in_array($resType, $options['searchIn'][$bdd][0]) && !empty($resVal))
+									$resultLev[$resType] = $resVal;
+							}
+							$LevenshteinArr[$resultArrayKey] = $resultLev;
+						}
 					}
 					array_push($availableResults, $bdd);
 				}
 			}
 		}
 
-		mb_internal_encoding('UTF-8'); 
-		// debug($this->mysql_fuzzy_regex("test prenom ati"), "mysql_fuzzy_regex");
-		// debug($this->rlike("test prenom ati"), 'rlike');
-		// debug($this->getLevenshtein1("test prenom ati"), 'getLevenshtein1');
+		// debug($this->mysql_fuzzy_regex($keywordOrigin), "mysql_fuzzy_regex");
+		// debug($this->rlike($keywordOrigin), 'rlike');
+		// debug($this->getLevenshteinSql($keywordOrigin), 'getLevenshteinSql');
+		
+		// debug($LevenshteinArr);
+		// debug($this->getLevenshteinArray($keywordOrigin, $LevenshteinArr));
+		if($options['preview']){
+			$LevenshteinResults = $this->getLevenshteinArray($keywordOrigin, $LevenshteinArr);
+			$searchResults = $this->rearrangeResults($searchResults, $LevenshteinResults);
+		}
+		$results = array();
+		// debug(fuzzySearch(implode(" ", $keyWord), $LevenshteinArr));
+		// debug(fuzzySearchComplete(implode(" ", $keyWord), $LevenshteinArr));
+		
+		// debug($searchResults);
 		if(empty($searchResults)){
 			$searchResults['EMPTY'] = true;
 		}
 
-		ksort($searchResults);
-		$searchResults = array_reverse($searchResults, "FUZZY");
-
+		if(!$options['preview']){
+			ksort($searchResults);
+			$searchResults = array_reverse($searchResults, "FUZZY");
+		}
 		return $searchResults; 
 	}
 
-	function getLevenshtein1($word)
+	public function index($keyWord, $options = array()){
+		$d['searchResults'] = $this->SearchInBdd($keyWord, $options);
+		// debug($d['searchResults']);
+
+		$this->set($d);
+	}
+
+	public function preview($keyWord, $options = array()){
+		$d['searchResults'] = $this->SearchInBdd($keyWord, array('preview' => true));
+		// debug($d['searchResults']);
+		
+		$this->set($d);
+	}
+
+
+
+	function getLevenshteinArray($str, $array, $wordPosition = true){
+		$keywords = explode("+", $str);
+		$results = array();
+		$wordCount = 0.5;
+		foreach ($keywords as $keyind => $keyword) {
+			foreach ($array as $key => $value) {
+				foreach ($value as $field => $fieldVal) {
+					$divider = 1;
+					if($wordPosition) //wordPosition will make the search based on the position of each word, the first one being the most important and the last one being the last important
+						$wordCount*2;
+					if(!isset($results[$key]))
+						$results[$key] = levenshtein($keyword, $fieldVal)/$wordCount*2;
+					else
+						$results[$key] += levenshtein($keyword, $fieldVal)/$wordCount*2;
+				}
+			}
+			$wordCount++;
+		}
+		asort($results);
+		return $results;
+	}
+
+	function rearrangeResults(Array $array, Array $orderArray){
+	    $ordered = array();
+	    foreach($orderArray as $key => $value) {
+	    	// debug($key);
+	        if(array_key_exists($key,$array)) {
+	            $ordered[$key] = $array[$key];
+	            unset($array[$key]);
+	        }
+	    }
+    	return $ordered + $array;
+	}
+
+	function getLevenshteinSql($word)
 	{
 	    $words = array();
 	    for ($i = 0; $i < strlen($word); $i++) {
@@ -266,7 +252,8 @@ class SearchController extends Controller{
 	}
 
 
-	function mysql_fuzzy_regex($str) { 	
+	function mysql_fuzzy_regex($str) { 			
+		mb_internal_encoding('UTF-8'); 
 		$len=mb_strlen($str); 	$qstr=[]; 	
 		for ($i=0; $i < $len; $i++) 
 			$qstr[$i]=preg_quote(mb_substr($str, $i, 1)); 	 	
@@ -277,20 +264,6 @@ class SearchController extends Controller{
 				$reg.=$x==$i ?'([[:alnum:]]'.$qstr[$x].'|[[:alnum:]]?)' :$qstr[$x]; 	
 		} 	
 		return $reg.')[[:>:]]'; 
-	}
-
-	public function index($keyWord, $options = array()){
-		$d['searchResults'] = $this->SearchInBdd($keyWord, $options);
-		debug($d['searchResults']);
-
-		$this->set($d);
-	}
-
-	public function preview($keyWord, $options = array()){
-		$d['searchResults'] = $this->SearchInBdd($keyWord, array('preview' => true));
-		// debug($d['searchResults']);
-		
-		$this->set($d);
 	}
 
 }

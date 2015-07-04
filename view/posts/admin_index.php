@@ -1,8 +1,19 @@
+<style>
+	.label.success {
+		color : #2ecc71;
+	}
+
+	.label.error {
+		color : #e74c3c;
+	}
+
+</style>
+
+<a href = "<?php echo Router::url('admin/posts/dump/'); ?>" class = "btn-primary">Dump Database</a>
 <div class="page-header">
 	<h1><?php echo $total; ?> Articles</h1>
 </div>
-
-<table>
+<table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -24,6 +35,9 @@
 				<td>
 					<a href="<?php echo Router::url('admin/posts/edit/'.$v->id); ?>">Editer</a>
 					<a onclick="return confirm('Voulez vous vraiment supprimer ce contenu'); " href="<?php echo Router::url('admin/posts/delete/'.$v->id); ?>">Supprimer</a>
+					<?php if(file_exists(Cache::POST.DS.$v->slug.DS.'QR CODES.zip')) : ?>
+						<a href="<?php echo Router::webroot(Cache::POST."/".$v->slug.'/QR CODES.zip'); ?>">QR Codes</a>
+					<?php endif; ?>
 				</td>
 			</tr>
 		<?php endforeach ?>
