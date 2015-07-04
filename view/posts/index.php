@@ -1,6 +1,6 @@
 ﻿<!-- <title>TEST de title</title> -->
 <?php echo HTML::CSS("View/Posts/index"); ?>
-<div class="row-fluid">
+<div class="row">
 <div id="view"></div>
   <!-- <div id="myModal"></div> -->
   <div class="actu col-md-12">
@@ -15,22 +15,83 @@
         <section class="grid3d vertical" id="grid3d">
           <div class="grid-wrap">
             <div class="grid">
-              <figure><img src="img/posts/1.jpg" alt="img01"/></figure>
-              <figure><img src="img/posts/5.jpg" alt="img05"/></figure>
-              <figure><img src="img/posts/8.jpg" alt="img08"/></figure>
-              <figure><img src="img/posts/2.jpg" alt="img02"/></figure>
-              <figure><img src="img/posts/4.jpg" alt="img04"/></figure>
-              <figure><img src="img/posts/3.jpg" alt="img03"/></figure>
-              <figure><img src="img/posts/9.jpg" alt="img09"/></figure>
-              <figure><img src="img/posts/6.jpg" alt="img06"/></figure>
-              <figure><img src="img/posts/7.jpg" alt="img07"/></figure>
+            <ul class="trucmuche cs-style-4">
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/1.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/2.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/3.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/4.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/5.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              
+            </ul>
+              <!-- <figure><?php  //echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php // echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php  //echo HTML::getImg("posts/7.jpg"); ?></figure> -->
             </div>
           </div><!-- /grid-wrap -->
           <div class="content">
-            <div>
-              <div class="dummy-img"></div>
-              <p class="dummy-text">The only people for me are the mad ones, the ones who are mad to live, mad to talk, mad to be saved, desirous of everything at the same time, the ones who never yawn or say a commonplace thing, but burn, burn, burn like fabulous yellow roman candles exploding like spiders across the stars.</p>
-              <p class="dummy-text">The only people for me are the mad ones, the ones who are mad to live, mad to talk, mad to be saved, desirous of everything at the same time, the ones who never yawn or say a commonplace thing, but burn, burn, burn like fabulous yellow roman candles exploding like spiders across the stars.</p>
+            <div data-url = "<?php echo Router::url("lookFor/posts/view/id:39/slug:lorem-ipsum"); ?>">
+              <p class="dummy-text"></p>            
             </div>
             <div>
               <div class="dummy-img"></div>
@@ -127,6 +188,26 @@
 <script type="text/javascript">
   $(document).ready(function() {
     new grid3D( document.getElementById( 'grid3d' ) );
+
+    $(window).resize(function() {
+      // This will execute whenever the window is resized
+      // $(window).height(); // New height
+      // $(window).width(); // New width
+      changeGridOrientation();
+    });
+
+    changeGridOrientation();
+    function changeGridOrientation(){      
+      if($(window).width() < 770){
+        if($("#grid3d").hasClass("vertical")){
+          $("#grid3d").removeClass("vertical").addClass("horizontal")
+        }
+      } else {
+        if($("#grid3d").hasClass("horizontal")){
+          $("#grid3d").removeClass("horizontal").addClass("vertical")
+        }
+      }
+    }
 
     // $.ias({
     //     container : '.posts',

@@ -504,6 +504,10 @@ class PostsController extends Controller{
 		}
 	}
 
+	function RSS(){
+		Comments::RSS($this);
+	}
+
 	/**
 	* Permet de lister les contenus
 	**/

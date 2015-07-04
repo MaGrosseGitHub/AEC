@@ -144,7 +144,7 @@ class Comments{
 			<link>The URL to the website</link>';
 
 			$ctrl->loadModel('Post');
-			$condition = array('online' => 1,'type'=>'post', 'social_online'=>1);
+			$condition = array('online' => 1,'type'=>'post', 'social_online'=>0);
 			$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id'];
 			$fields = implode(",", $fields);
 			$options = array(

@@ -1,4 +1,5 @@
 ﻿<?php $title_for_layout = "Galerie"; ?>
+<?php echo HTML::CSS("component"); ?>
 <!--
 <style>
     .file:hover {
