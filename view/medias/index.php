@@ -1806,10 +1806,10 @@
       }
     };
 
+    Page.init();
   })();
 </script>
 <script>
-    Page.init();
 </script>
 
   

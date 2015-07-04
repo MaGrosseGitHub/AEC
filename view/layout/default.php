@@ -8,8 +8,8 @@
     </head>
     <body> 
 
-      <!-- <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" style = "display : none;"> -->
-      <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" >
+      <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" style = "display : none;">
+      <!-- <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner" > -->
         <!-- <div class="navbar navbar-fixed-top" role="navigation" style="position:static">  -->
         <div class="container"> 
           <div class="navbar-header">
@@ -51,6 +51,7 @@
         </div> 
       </header>
       <div class="container" style="padding-top:80px;" id = "container">
+      <!-- <div> -->
         <?php $this->Notification->flash(); ?>
         <div id="loader"> <?php echo HTML::getImg('loading.gif',true, false, 'style = "opacity : 1;"'); ?> </div>
         <div id="loaderWhite"> <?php echo HTML::getImg('loaderWhite.gif',true, false, 'style = "opacity : 1;"'); ?> </div>

@@ -14,8 +14,9 @@ class PostsController extends Controller{
 			$condition = array('online' => 1,'type'=>'post'); 
 		elseif(isset($user) && !empty($user))
 			$condition = array('online' => 1,'type'=>'post', 'user_id'=>$user);
-		$fields = ['id', 'title_FR', 'created', 'online', 'type', 'slug', 'user_id', 'category_id'];
-		$fields = implode(",", $fields).', LEFT(content_FR, 500) as content';
+		$fields = ['id', 'title_FR', 'created', 'slug', 'category_id'];
+		// $fields = implode(",", $fields).', LEFT(content_FR, 500) as content';
+		$fields = implode(",", $fields);
 		// SELECT LEFT(field name, 40) FROM table name WHERE condition for first 40 and 
 		// SELECT RIGHT(field name, 40) FROM table name WHERE condition for last 40
 		$options = array(

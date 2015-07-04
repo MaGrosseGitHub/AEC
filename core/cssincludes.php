@@ -2,8 +2,9 @@
     <!-- <link rel="stylesheet" href="//getbootstrap.com/2.3.2/assets/css/bootstrap.css"> -->
     <?php 
 
-    echo HTML::CSS("normalize"); 
-    echo HTML::CSS("component"); 
+    // echo HTML::CSS("normalize"); 
+    echo HTML::CSS("normalize_update"); 
+    // echo HTML::CSS("component"); //CSS used by the medias page
     echo HTML::CSS("Flick/Flick");
 
     ?>
