@@ -36,7 +36,7 @@
     echo HTML::JS("//code.jquery.com/jquery-migrate-1.2.1.min.js");
     // echo HTML::JS("//code.jquery.com/ui/1.10.3/jquery-ui.js");
     echo HTML::JS("//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js");
-    echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.3/modernizr.min.js");
+    echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js");
     echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js");
 
     // echo HTML::JS("jquery/jquery.min");   
@@ -66,7 +66,7 @@
     echo HTML::JS("datepicker-fr");  //**  
     echo HTML::JS("redactor/langs/fr");  //** 
     echo HTML::JS("redactor/redactor");   //**
-    // echo HTML::JS("filter");
+    echo HTML::JS("filter");
     echo HTML::JS("toucheffects");
     // echo HTML::JS("jquery.stringToSlug.min");
     ?>  

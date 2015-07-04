@@ -2,6 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr"> 
     <head> 
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+      <meta name="viewport" content="width=device-width, initial-scale=1"> 
+      <meta name="description" content="Paris 8 Ars Electronica Campus Exhibition" />
+      <meta name="keywords" content="Paris 8 Ars Electronica Campus Exhibition" />
+      <meta name="author" content="Paris 8 AEC" />
+      <link rel="shortcut icon" href="../favicon.ico">
       <title><?php echo isset($GLOBALS['title_for_layout'])?$GLOBALS['title_for_layout']:'AEC'; ?></title> 
       <?php require CORE.DS.'cssIncludes.php'; ?>
       <?php require CORE.DS.'jsIncludes.php'; ?>      

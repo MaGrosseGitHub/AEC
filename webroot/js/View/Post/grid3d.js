@@ -50,6 +50,14 @@
 		this._initEvents();
 	};
 
+	Modernizr.addTest('pointerevents', function(){
+		var element = document.createElement('x');
+		element.style.cssText = 'pointer-events:auto';
+		return element.style.pointerEvents === 'auto';
+	});
+
+	console.log(Modernizr.pointerevents);
+
 	grid3D.prototype._initEvents = function() {
 		var self = this;
 		
