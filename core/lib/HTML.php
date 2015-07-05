@@ -37,6 +37,7 @@ class HTML{
 	static function getImg($url,$css = null,$custom = null, $options = null, $notExistImg = false, $customDir = false){
 		$distant = false;
 		trim($url,'/');
+		$filename = pathinfo($url)['filename'];
 		if($css)
 			$imgPath = "css/img/";
 		else
@@ -46,6 +47,7 @@ class HTML{
 		if(!isset($options) && !empty($options)) {
 			$options = "";
 		}
+		$options .='alt = "'.$filename.'"';
 		if(!preg_match("#^http|https#", $url) || !preg_match("#//#", $url))
 			$newUrl = Router::webroot($imgPath.$url);
 		else {
