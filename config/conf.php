@@ -3,8 +3,20 @@ class Conf{
 	
 	static $debug = 1; 
 
-	static $databases = array(
+	static $databases = array(,
 		'default' => array(
+			'host'		=> 'localhost',
+			'database'	=> 'tuto',
+			'login'		=> 'root',
+			'password'	=> ''
+		),
+		'server' => array(
+			'host'		=> 'mysql.infra.up8',
+			'database'	=> 'labo_ati_linz2015',
+			'login'		=> 'atiLinz',
+			'password'	=> '20015!LinZatI'
+		),
+		'wamp' => array(
 			'host'		=> 'localhost',
 			'database'	=> 'tuto',
 			'login'		=> 'root',
