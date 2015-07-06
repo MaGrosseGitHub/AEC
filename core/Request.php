@@ -14,6 +14,7 @@ class Request{
 	  	}
 		$this->url = isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:'/'; 
 		$this->url = str_replace($this->replaceInUrl, "", $this->url);
+		$this->url = str_replace("webroot", "", $this->url);
 
 		// Si on a une page dans l'url on la rentre dans $this->page
 		if(isset($_GET['page'])){

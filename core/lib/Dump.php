@@ -37,6 +37,11 @@ class Dump{
 	private $filteredTableList;
 	private $excludedTableList;
 
+	//if !checkPrecise then the check for last time the BDD was modified for "all" "custom" "filtered" and "basic" tasks 
+	//will be done by checking the lastmodbdd file in the unpreciseDir variable
+	public $checkPrecise = false; 
+	public $unpreciseDir = "tmp/Dumps/BDD";
+
 
 	function __construct($controller, $params = array()){
 		$this->dumpController = $controller;
@@ -70,6 +75,8 @@ class Dump{
 			$this->dumpZipType = Mysqldump::GZIP;
 		if(!isset($params['compress']) || (isset($params['compress']) && $params['compress']))
 			$this->dumpSettings['compress'] = $this->dumpZipType;
+
+		$unpreciseDir = Cache::DUMP."/BDD/";
 
 		$this->dumpDirectory = Cache::DUMP."/";
 		MakePath($this->dumpDirectory);
@@ -221,7 +228,13 @@ class Dump{
 	}	
 	
 	public function DumpLastModified($type, $file = "", $settings = array()){
-		$lastMoBDD = $this->GetFileModTime($this->dumpDirectories[$type]."LastModBDD", true);
+		if($this->checkPrecise || $type == Dump::IMG)
+			$lastMoBDD = $this->GetFileModTime($this->dumpDirectories[$type]."LastModBDD", true);
+		else {
+			$lastMoBDD = $this->GetFileModTime($this->unpreciseDir.DS."LastModBDD", true);
+			MakePath($this->dumpDirectories[$type]);
+			copy($this->unpreciseDir.DS."LastModBDD", $this->dumpDirectories[$type]."LastModBDD");
+		}
 		$lastMoDump = $this->GetFileModTime($this->dumpDirectories[$type]."LastModDump", true);
 
 		if((!$lastMoBDD && !$lastMoDump)){
@@ -230,7 +243,7 @@ class Dump{
 			if($lastMoBDD > $lastMoDump)
 				return $this->DumpBDD($type, $file, $settings);
 			else 
-				return false;
+				return true;
 		} else {
 			return $this->DumpBDD($type, $file, $settings);
 		}
@@ -248,7 +261,10 @@ class Dump{
 			else
 				$settings = array();
 
-			$this->$function($type, $file, $settings);
+			$result = $this->$function($type, $file, $settings);
+			$notifText = "Dump ".$type.' ';
+			$notifText .= ($result)?'réussi':'échoué';
+			$this->dumpController->Notification->setFlash($notifText, ($result)?'success':'error');
 		}
 	}
 	

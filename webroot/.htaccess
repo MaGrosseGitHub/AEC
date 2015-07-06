@@ -6,9 +6,9 @@
 	# RewriteRule ^(.*)$ - [env=askapache:%2]
 
 	# # HTTPS -----------------------------------------------------------------------------------
-	RewriteEngine On
-	RewriteCond %{HTTPS} !=on
-	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	# RewriteEngine On
+	# RewriteCond %{HTTPS} !=on
+	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 	# # END HTTPS -------------------------------------------------------------------------------
 
 	# Adaptive-Images -----------------------------------------------------------------------------------

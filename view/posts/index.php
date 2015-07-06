@@ -78,15 +78,51 @@
               </li>
               
             </ul>
-              <!-- <figure><?php  //echo HTML::getImg("posts/1.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/5.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/8.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/2.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/4.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/3.jpg"); ?></figure>
-              <figure><?php // echo HTML::getImg("posts/9.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/6.jpg"); ?></figure>
-              <figure><?php  //echo HTML::getImg("posts/7.jpg"); ?></figure> -->
+              <!-- <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/7.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/7.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/7.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/7.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/5.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/8.jpg"); ?></figure>
+              <figure><?php  echo HTML::getImg("posts/2.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/4.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/3.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/9.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/6.jpg"); ?></figure>
+              <figure><?php echo HTML::getImg("posts/7.jpg"); ?></figure> -->
             </div>
           </div><!-- /grid-wrap -->
           <div class="content">

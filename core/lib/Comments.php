@@ -133,7 +133,7 @@ class Comments{
 	    return $script;
 	}
 
-	public static function RSS($ctrl){
+	public static function RSS($ctrl, $data){
 		ob_clean();
 		header('Content-Type: text/xml');
 		echo '<?xml version="1.0" encoding="UTF-8"?>
@@ -142,29 +142,34 @@ class Comments{
 			<title>My Website Name</title>
 			<description>A description of the feed</description>
 			<link>The URL to the website</link>';
-
-			$ctrl->loadModel('Post');
-			$condition = array('online' => 1,'type'=>'post', 'social_online'=>0);
-			$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id'];
-			$fields = implode(",", $fields);
-			$options = array(
-				'conditions' => $condition,
-				'fields' => $fields,
-				'order'      => 'created DESC'
-			);
-
-			$posts = $ctrl->Post->find($options);
-
-			foreach ($posts as $k => $v){	      
-			    echo '
-			       <item>
-			          <title>'.$v->title_FR.'</title>
-			          <description><![CDATA[
-			          '.$v->content_FR.'
-			          ]]></description>
-			          <link>http://www.mysite.com/article.php?id='.$v->id.$v->slug.'</link>
-			          <pubDate>'.date("Y-m-d", time()).' GMT</pubDate>
-			      </item>';
+			foreach ($data['stream'] as $k => $v){	      
+				echo '
+				<item>
+					<title>'.$v->$data['fields']['title'].'</title>
+					<description><![CDATA[
+					'.$v->$data['fields']['description'].'
+					]]></description>';
+					if(!is_array($data['fields']['link']))
+						if(isset($v->$data['fields']['link']))
+							echo '<link>'.Router::url($v->$data['fields']['link']).'</link>';
+						else
+							echo '<link>'.Router::url($data['fields']['link']).'</link>';
+						// echo '<link>http://www.mysite.com/article.php?id='.$link.'</link>';
+					else {
+						$link = "";
+						foreach ($data['fields']['link'] as $field => $fValue) {
+							if(isset($v->$fValue))
+								$link .= $v->$fValue;
+							else
+								$link .= $fValue;
+						}
+						echo '<link>'.$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].Router::url($link).'</link>';
+					}
+					if(!is_array($data['fields']['pubDate']))
+						echo '<pubDate>'.$v->$data['fields']['pubDate'].' GMT</pubDate>';
+					else
+						echo '<pubDate>'.date($data['fields']['pubDate']['format'], $v->$data['fields']['pubDate']['field']).' GMT</pubDate>';
+				echo '</item>';
 			}
 
 		echo '</channel>

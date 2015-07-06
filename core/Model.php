@@ -257,7 +257,7 @@ class Model{
 
       	$cacheDir = Cache::DUMP.DS."BDD";
       	$ctrl = new Controller;
-      	$ctrl->Cache->write("LastMod", time(), $cacheDir, true);
+      	$ctrl->Cache->write("LastModBDD", time(), $cacheDir, true);
 	}
 
 }

@@ -51,7 +51,7 @@ body {
 
 .grid figure,
 .grid .placeholder {
-	width: 340px;
+	width: 300px;
 	height: 300px;
 }
 
@@ -315,7 +315,7 @@ p.dummy-text:nth-child(3) {
 }
 
 .dummy-img {
-	height: 400px;
+	height: 300px;
 	background-color: #ddd;
 	margin: 30px auto;
 }
@@ -377,7 +377,7 @@ p.dummy-text:nth-child(3) {
 }
 
 .trucmuche {
-	padding: 20px 20px 100px 20px;
+	/*padding: 20px 20px 100px 20px;*/
 	max-width: 1300px;
 	margin: 0 auto;
 	list-style: none;
@@ -386,7 +386,7 @@ p.dummy-text:nth-child(3) {
 
 .trucmuche li {
 	display: inline-block;
-	width: 340px;
+	width: 300px;
 	margin: 0;
 	padding: 20px;
 	text-align: left;
@@ -516,3 +516,276 @@ p.dummy-text:nth-child(3) {
 }
 
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+
+.tructruc-wrap {
+	clear: both;
+	margin: 0 auto;
+	padding: 0;
+	max-width: 1260px;
+}
+
+.tructruc {
+	margin: 30px auto;
+	padding: 0;
+	list-style: none;
+	min-height: 500px;
+}
+
+.js .tructruc {
+	background: url(../img/loading.gif) no-repeat 50% 100px;
+}
+
+.js .tructruc.loaded {
+	background: none;
+}
+
+.tructruc li {
+	display: inline-block;
+	overflow: hidden;
+	width: 314px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.js .tructruc li {
+	display: none;
+	float: left;
+}
+
+.js .tructruc.loaded li {
+	display: block;
+}
+
+/* Title box */
+.title-box h2 {
+	display: block;
+	margin: 7px;
+	padding: 20px;
+	background: #2E3444;
+	color: #D3EEE2;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 300;
+}
+
+.title-box h2 a {
+	display: block;
+	font-weight: 900;
+}
+
+.title-box h2 a:hover {
+	color: #D3EEE2;
+}
+
+/* Anchor and image */
+.tructruc li > a,
+.tructruc li img {
+	display: block;
+	outline: none;
+	border: none;
+}
+
+.tructruc li > a {
+	position: relative;
+	overflow: hidden;
+	margin: 7px;
+}
+
+/* Curtain element */
+.tructruc .curtain {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	background: #96cdc8;
+}
+
+.tructruc.swipe-right .curtain {
+	-webkit-transform: translate3d(-100%,0,0);
+	transform: translate3d(-100%,0,0);
+}
+
+.tructruc.swipe-down .curtain {
+	-webkit-transform: translate3d(0,-100%,0);
+	transform: translate3d(0,-100%,0);
+}
+
+.tructruc.swipe-rotate .curtain {
+	width: 200%;
+	height: 200%;
+	-webkit-transform: rotate3d(0,0,1,90deg);
+	transform: rotate3d(0,0,1,90deg);
+	-webkit-transform-origin: top left;
+	transform-origin: top left;
+}
+
+/* Shadow */
+.tructruc .curtain::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,1);
+	content: '';
+}
+
+.tructruc.swipe-right .curtain::after,
+.tructruc.swipe-rotate .curtain::after {
+	left: -100%;
+}
+
+.tructruc.swipe-down .curtain::after {
+	top: -100%;
+}
+
+/* Title */
+.tructruc li h3 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	padding: 20px;
+	width: 100%;
+	background: #2E3444;
+	color: #D3EEE2;
+	text-align: right;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 800;
+	font-size: 1em;
+	-webkit-transition: -webkit-transform 0.2s, color 0.2s;
+	transition: transform 0.2s, color 0.2s;
+}
+
+/* Pseudo element for hover effect */
+.tructruc li > a::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100.5%;
+	height: 100.5%;
+	border: 0px solid transparent;
+	background: rgba(0,0,0,0);
+	content: '';
+	-webkit-transition: border-width 0.2s, border-color 0.2s;
+	transition: border-width 0.2s, border-color 0.2s;
+}
+
+/* Hover effects */
+.tructruc li.shown:hover h3 {
+	color: #fff;
+	-webkit-transform: translate3d(0,-30px,0);
+	transform: translate3d(0,-30px,0);
+}
+
+.tructruc li.shown:hover > a::before {
+	border-width: 14px;
+	border-color: #2E3444;
+}
+
+/* Animations */
+
+/* Swipe right */
+.tructruc.swipe-right li.animate .curtain {
+	-webkit-animation: swipeRight 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: swipeRight 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes swipeRight {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: translate3d(0,0,0); }
+	100% { -webkit-transform: translate3d(100%,0,0); }
+}
+
+@keyframes swipeRight {
+	0% {}
+	50%, 60% { -webkit-transform: translate3d(0,0,0); transform: translate(0); }
+	100% { -webkit-transform: translate3d(100%,0,0); transform: translate3d(100%,0,0); }
+} 
+
+/* Swipe down */
+.tructruc.swipe-down li.animate .curtain {
+	-webkit-animation: swipeDown 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: swipeDown 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes swipeDown {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: translate3d(0,0,0); }
+	100% { -webkit-transform: translate3d(0,100%,0); }
+}
+
+@keyframes swipeDown {
+	0% {}
+	50%, 60% { -webkit-transform: translate(0); transform: translate(0); }
+	100% { transform: translate3d(0,100%,0); transform: translate3d(0,100%,0); }
+}
+
+/* Swipe rotate */
+.tructruc.swipe-rotate li.animate .curtain {
+	-webkit-animation: swipeRotate 0.5s ease forwards;
+	animation: swipeRotate 0.5s ease forwards;
+}
+
+@-webkit-keyframes swipeRotate {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: rotate3d(0,0,1,0deg); }
+	100% { -webkit-transform: rotate3d(0,0,1,-90deg); }
+}
+
+@keyframes swipeRotate {
+	0% {}
+	50%, 60% { -webkit-transform: rotate3d(0,0,1,0deg); transform: rotate3d(0,0,1,0deg); }
+	100% { -webkit-transform: rotate3d(0,0,1,-90deg); transform: rotate3d(0,0,1,-90deg); }
+}
+
+/* Shadow */
+.tructruc li.animate .curtain::after {
+	-webkit-animation: fadeOut 0.5s ease forwards;
+	animation: fadeOut 0.5s ease forwards;
+	-webkit-animation-delay: inherit;
+	animation-delay: inherit;
+}
+
+@-webkit-keyframes fadeOut {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+	0% {}
+	50%, 60% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+/* Hide image and title and show at half time */
+.js .tructruc li img,
+.js .tructruc li h3 {
+	visibility: hidden;
+}
+
+.tructruc li.animate img,
+.tructruc li.animate h3 {
+	-webkit-animation: showMe 0.5s step-end forwards;
+	animation: showMe 0.5s step-end forwards;
+}
+
+@-webkit-keyframes showMe {
+	from { visibility: hidden; }
+	60%, 100% { visibility: visible; }
+}
+
+@keyframes showMe {
+	from { visibility: hidden; }
+	60%, 100% { visibility: visible; }
+}
+
+.tructruc li.shown img,
+.tructruc li.shown h3 {
+	visibility: visible;
+}

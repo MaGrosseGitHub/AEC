@@ -504,8 +504,45 @@ class PostsController extends Controller{
 		}
 	}
 
-	function RSS(){
-		Comments::RSS($this);
+	function RSS($share = false){
+		$this->loadModel('Post');
+		if($share)
+			$share = 1;
+		else
+			$share = 0;
+		$condition = array('online' => 1,'type'=>'post', 'social_online'=>$share);
+		$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id', 'created'];
+		$fields = implode(",", $fields);
+		$options = array(
+			'conditions' => $condition,
+			'fields' => $fields,
+			'order'      => 'created DESC'
+		);
+
+		$posts = $this->Post->find($options);
+		$data = array(
+			'stream' => $posts, 
+			'fields' => array(
+				'title' => 'title_FR', 
+				'description'=>'content_FR', 
+				'link' => array(
+					"posts/view/id:",
+					"id",
+					"/slug:",
+					"slug"
+					)
+				,
+				'pubDate' => array(
+					'field' => 'created',
+					'format' => 'Y-m-d h:i'
+					)
+				)
+			);
+		Comments::RSS($this, $data);
+	}
+
+	function RSS_Share(){
+		$this->RSS(true);
 	}
 
 	/**
