@@ -1,0 +1,61 @@
+
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+body, html { font-size: 100%; padding: 0; margin: 0;}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+
+body {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	color: #eaeaea;
+	background: #2c3e50;
+}
+
+a {
+	color: #b4c7da;
+	text-decoration: none;
+}
+
+a:hover,
+a:active {
+	color: #fff;
+}
+
+/* Main Content */
+.main {
+	max-width: 69em;
+}
+
+.column {
+	float: left;
+	width: 50%;
+	padding: 0 2em;
+	min-height: 300px;
+	position: relative;
+}
+
+.column:nth-child(2) {
+	box-shadow: -1px 0 0 rgba(0,0,0,0.1);
+}
+
+.column p {
+	font-weight: 300;
+	font-size: 2em;
+	padding: 0;
+	margin: 0;
+	text-align: right;
+	line-height: 1.5;
+}
+
+.column a {
+	border: 3px solid #b4c7da;
+	padding: 0 15px;
+	display: inline-block;
+	margin: 20px 0;
+}
+
+.column a:hover {
+	border-color: #fff;
+}
+

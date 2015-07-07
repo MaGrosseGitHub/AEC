@@ -1,0 +1,797 @@
+@font-face {
+	font-family: 'fontawesome';
+	src:url('./fonts/fontawesome/fontawesome.eot?-v92fkb');
+	src:url('./fonts/fontawesome/fontawesome.eot?#iefix-v92fkb') format('embedded-opentype'),
+		url('./fonts/fontawesome/fontawesome.woff?-v92fkb') format('woff'),
+		url('./fonts/fontawesome/fontawesome.ttf?-v92fkb') format('truetype'),
+		url('./fonts/fontawesome/fontawesome.svg?-v92fkb#fontawesome') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Blokk';
+	src: url('./fonts/blokk/BLOKKRegular.eot');
+	src: url('./fonts/blokk/BLOKKRegular.eot?#iefix') format('embedded-opentype'),
+		 url('./fonts/blokk/BLOKKRegular.woff') format('woff'),
+		 url('./fonts/blokk/BLOKKRegular.svg#BLOKKRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	position: relative;
+}
+
+.noscroll {
+	overflow: hidden;
+}
+
+.grid-wrap {
+	margin: 10px auto 0;
+	max-width: 1090px;
+	width: 100%;
+	padding: 0;
+	-webkit-perspective: 1500px;
+	perspective: 1500px;
+}
+
+.grid {
+	position: relative;
+	-webkit-transition: all 0.5s cubic-bezier(0,0,0.25,1);
+	transition: all 0.5s cubic-bezier(0,0,0.25,1);
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.view-full .grid {
+	-webkit-transform: translateZ(-1500px);
+	transform: translateZ(-1500px);
+}
+
+.grid ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.grid li,
+.grid .placeholder {
+	width: 260px;
+	height: 240px;
+}
+
+.grid li {
+	margin: 10px;
+	display: inline-block;
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.grid li.active {
+	opacity: 0;
+}
+
+.grid .placeholder {
+	pointer-events: none;
+	position: absolute;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-transition: all 0.5s ease-out;
+	transition: all 0.5s ease-out;
+}
+
+.placeholder > div {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.placeholder .front img {
+	width: 100%;
+	height: 100%;
+}
+
+.placeholder .back {
+	background: white;
+	-webkit-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+
+.view-full .placeholder {
+	-webkit-transition: all 0.5s 0.1s cubic-bezier(0,0,0.25,1);
+	transition: all 0.5s 0.1s cubic-bezier(0,0,0.25,1);
+}
+
+.vertical .view-full .placeholder {
+	-webkit-transform: translateZ(1500px) rotateX(-179.9deg);
+	transform: translateZ(1500px) rotateX(-179.9deg); /* FF, Chrome, can we agree on one direction, pleeease? */
+}
+
+.horizontal .view-full .placeholder {
+	-webkit-transform: translateZ(1500px) rotateY(-179.9deg);
+	transform: translateZ(1500px) rotateY(-179.9deg);
+}
+
+.grid figure img {
+	display: block;
+	width: 100%;
+}
+
+.content,
+.loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	pointer-events: none; /* Careful, does not work in IE < 11 http://caniuse.com/#search=pointer-events */
+}
+
+.content {
+	overflow-y: scroll;
+	height: 0; /* What seems to be the problem, officer? Well, we have a second scroll bar in Chrome! */
+	background: #fff;
+	visibility: hidden;
+	z-index: 400;
+	-webkit-overflow-scrolling: touch;
+}
+
+.loading {
+	opacity: 0;
+	z-index: 1;
+	background: transparent url(./preloader.gif) no-repeat center center;
+	-webkit-transform: scale(0.5);
+	transform: scale(0.5);
+	-webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+	transition: opacity 0.5s, transform 0.5s;
+}
+
+.loading.show {
+	opacity: 1;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+.content.show {
+	height: auto;
+	pointer-events: auto;
+	visibility: visible;
+}
+
+.content > div {
+	z-index: 10;
+	position: absolute;
+	top: 50;
+	width: 100%;
+	overflow: hidden;
+	height: 0;
+	opacity: 0;
+	background: #fff;
+}
+
+.content > div.show {
+	height: auto;
+	opacity: 1;	
+	-webkit-transition: opacity 0.6s;
+	transition: opacity 0.6s;
+}
+
+.icon:before {
+	font-family: 'fontawesome';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.close-content {
+	position: fixed;
+	z-index: 1000;
+	top: 50;
+	right: 10px;
+	font-size: 1.6em;
+	color: #aaa;
+	cursor: pointer;
+	pointer-events: none;
+	padding: 1em;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.close-content:hover {
+	color: #999;
+}
+
+.content > div.show ~ .close-content {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.close-content:before {
+	content: "\e602";
+}
+
+.close-contentParent {
+	position: fixed;
+	z-index: 1100;
+	top: 50;
+	right: 10px;
+	font-size: 1.6em;
+	color: #aaa;
+	cursor: pointer;
+	pointer-events: none;
+	padding: 1em;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+.close-content2 {
+	position: absolute;
+	z-index: 1100;
+	right: 10px;
+	font-size: 1.6em;
+	color: #aaa;
+	cursor: pointer;
+	pointer-events: none;
+	padding: 1em;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.content > div.show .close-contentParent {
+	opacity: 1;
+	pointer-events: auto;
+}
+.content > div.show .close-content2 {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.close-content2:before {
+	content: "\e602";	
+}
+
+.close-content2:hover {
+	color: #999;
+}
+
+/* Dummy content */
+
+.dummy-img,
+.dummy-text {
+	max-width: 1090px;
+	width: 90%;
+	opacity: 0;
+	-webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
+	transition: opacity 0.5s, transform 0.5s;
+}
+
+.vertical .dummy-img,
+.vertical .dummy-text {
+	-webkit-transform: translateY(100px);
+	transform: translateY(100px);
+}
+
+.horizontal .dummy-img,
+.horizontal .dummy-text {
+	-webkit-transform: translateX(-100px);
+	transform: translateX(-100px);
+}
+
+.content > div.show .dummy-img,
+.content > div.show .dummy-text {
+	opacity: 1;
+}
+
+.vertical .content > div.show .dummy-img,
+.vertical .content > div.show .dummy-text {
+	-webkit-transform: translateY(0);
+	transform: translateY(0);
+}
+
+.horizontal .content > div.show .dummy-img,
+.horizontal .content > div.show .dummy-text {
+	-webkit-transform: translateX(0);
+	transform: translateX(0);
+}
+
+p.dummy-text:nth-child(2) {
+	-webkit-transition-delay: 0.1s;
+	transition-delay: 0.1s;
+}
+
+p.dummy-text:nth-child(3) {
+	-webkit-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+}
+
+.dummy-img {
+	height: 300px;
+	background-color: #ddd;
+	margin: 30px auto;
+}
+
+.dummy-text {
+	text-align: left;
+	margin: 0 auto;
+	padding: 10px 0;
+	color: #3d3d3d;
+	font-size: 1em;
+	/*font-family: 'Blokk', Arial, serif;*/
+}
+
+.dummy-text:last-child {
+	padding-bottom: 100px;
+}
+
+/* Simple fallback */
+/* if any of these are not supported, a simple fallback will be shown */
+.no-pointerevents .content,
+.no-csstransforms3d .content,
+.no-csstransitions .content,
+.no-pointerevents .content > div,
+.no-csstransforms3d .content > div,
+.no-csstransitions .content > div,
+.no-pointerevents .close-content,
+.no-csstransforms3d .close-content,
+.no-csstransitions .close-content {
+	opacity: 1;
+	visibility: visible;
+	display: none;
+	height: auto;
+}
+
+.no-pointerevents .show .close-content,
+.no-csstransforms3d .show .close-content,
+.no-csstransition .show .close-content,
+.no-pointerevents div.show,
+.no-csstransforms3d div.show,
+.no-csstransitions div.show,
+.no-csstransitions .dummy-img,
+.no-csstransitions .dummy-text,
+.no-csstransforms3d .dummy-img,
+.no-csstransforms3d .dummy-text, 
+.no-pointerevents .dummy-img,
+.no-pointerevents .dummy-text {
+	display: block !important;
+	opacity: 1;
+}
+
+@media screen and (max-width: 1000px) {
+
+	.grid li,
+	.grid .placeholder {
+		width: 240px;
+		height: 212px;
+	}
+
+}
+
+.trucmuche {
+	/*padding: 20px 20px 100px 20px;*/
+	max-width: 1300px;
+	margin: 0 auto;
+	list-style: none;
+	text-align: center;
+}
+
+.trucmuche li {
+	display: inline-block;
+	/*width: 300px;*/
+	margin: 0;
+	padding: 0px 10px;
+	text-align: left;
+	position: relative;
+}
+
+.trucmuche figure {
+	margin: 0;
+	position: relative;
+}
+
+.trucmuche figure img {
+	max-width: 100%;
+	display: block;
+	position: relative;
+}
+
+.trucmuche figcaption {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 20px;
+	background: #2c3f52;
+	color: #ed4e6e;
+}
+
+.trucmuche figcaption h3 {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+}
+
+.trucmuche figcaption span:before {
+	content: 'by ';
+}
+
+.trucmuche figcaption a {
+	text-align: center;
+	padding: 5px 10px;
+	border-radius: 2px;
+	display: inline-block;
+	background: #ed4e6e;
+	color: #fff;
+}
+
+/* Individual Caption Styles */
+
+
+
+/* Caption Style 4 */
+.cs-style-4 li {
+	-webkit-perspective: 1700px;
+	-moz-perspective: 1700px;
+	perspective: 1700px;
+	-webkit-perspective-origin: 0 50%;
+	-moz-perspective-origin: 0 50%;
+	perspective-origin: 0 50%;
+}
+
+.cs-style-4 figure {
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.cs-style-4 figure > div {
+	overflow: hidden;
+}
+
+.cs-style-4 figure img {
+	-webkit-transition: -webkit-transform 0.4s;
+	-moz-transition: -moz-transform 0.4s;
+	transition: transform 0.4s;
+}
+
+.no-touch .cs-style-4 figure:hover img,
+.cs-style-4 figure.cs-hover img {
+	-webkit-transform: translateX(25%);
+	-moz-transform: translateX(25%);
+	-ms-transform: translateX(25%);
+	transform: translateX(25%);
+}
+
+.cs-style-4 figcaption {
+	height: 100%;
+	width: 50%;
+	opacity: 0;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
+	transform-origin: 0 0;
+	-webkit-transform: rotateY(-90deg);
+	-moz-transform: rotateY(-90deg);
+	transform: rotateY(-90deg);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+	transition: transform 0.4s, opacity 0.1s 0.3s;
+}
+
+.no-touch .cs-style-4 figure:hover figcaption,
+.cs-style-4 figure.cs-hover figcaption {
+	opacity: 1;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+	transform: rotateY(0deg);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s;
+	transition: transform 0.4s, opacity 0.1s;
+}
+
+.cs-style-4 figcaption a {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+@media screen and (max-width: 31.5em) {
+	.trucmuche {
+		padding: 10px 10px 100px 10px;
+	}
+	.trucmuche li {
+		width: 100%;
+		min-width: 300px;
+	}
+}
+
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+
+.tructruc-wrap {
+	clear: both;
+	margin: 0 auto;
+	padding: 0;
+	max-width: 1260px;
+}
+
+.tructruc {
+	margin: 30px auto;
+	padding: 0;
+	list-style: none;
+	min-height: 500px;
+}
+
+.js .tructruc {
+	background: url(../img/loading.gif) no-repeat 50% 100px;
+}
+
+.js .tructruc.loaded {
+	background: none;
+}
+
+.tructruc li {
+	display: inline-block;
+	overflow: hidden;
+	width: 314px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.js .tructruc li {
+	display: none;
+	float: left;
+}
+
+.js .tructruc.loaded li {
+	display: block;
+}
+
+/* Title box */
+.title-box h2 {
+	display: block;
+	margin: 7px;
+	padding: 20px;
+	background: #2E3444;
+	color: #D3EEE2;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 300;
+}
+
+.title-box h2 a {
+	display: block;
+	font-weight: 900;
+}
+
+.title-box h2 a:hover {
+	color: #D3EEE2;
+}
+
+/* Anchor and image */
+.tructruc li > a,
+.tructruc li img {
+	display: block;
+	outline: none;
+	border: none;
+}
+
+.tructruc li > a {
+	position: relative;
+	overflow: hidden;
+	margin: 7px;
+}
+
+/* Curtain element */
+.tructruc .curtain {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	background: #96cdc8;
+}
+
+.tructruc.swipe-right .curtain {
+	-webkit-transform: translate3d(-100%,0,0);
+	transform: translate3d(-100%,0,0);
+}
+
+.tructruc.swipe-down .curtain {
+	-webkit-transform: translate3d(0,-100%,0);
+	transform: translate3d(0,-100%,0);
+}
+
+.tructruc.swipe-rotate .curtain {
+	width: 200%;
+	height: 200%;
+	-webkit-transform: rotate3d(0,0,1,90deg);
+	transform: rotate3d(0,0,1,90deg);
+	-webkit-transform-origin: top left;
+	transform-origin: top left;
+}
+
+/* Shadow */
+.tructruc .curtain::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,1);
+	content: '';
+}
+
+.tructruc.swipe-right .curtain::after,
+.tructruc.swipe-rotate .curtain::after {
+	left: -100%;
+}
+
+.tructruc.swipe-down .curtain::after {
+	top: -100%;
+}
+
+/* Title */
+.tructruc li h3 {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	padding: 20px;
+	width: 100%;
+	background: #2E3444;
+	color: #D3EEE2;
+	text-align: right;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 800;
+	font-size: 1em;
+	-webkit-transition: -webkit-transform 0.2s, color 0.2s;
+	transition: transform 0.2s, color 0.2s;
+}
+
+/* Pseudo element for hover effect */
+.tructruc li > a::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100.5%;
+	height: 100.5%;
+	border: 0px solid transparent;
+	background: rgba(0,0,0,0);
+	content: '';
+	-webkit-transition: border-width 0.2s, border-color 0.2s;
+	transition: border-width 0.2s, border-color 0.2s;
+}
+
+/* Hover effects */
+.tructruc li.shown:hover h3 {
+	color: #fff;
+	-webkit-transform: translate3d(0,-30px,0);
+	transform: translate3d(0,-30px,0);
+}
+
+.tructruc li.shown:hover > a::before {
+	border-width: 14px;
+	border-color: #2E3444;
+}
+
+/* Animations */
+
+/* Swipe right */
+.tructruc.swipe-right li.animate .curtain {
+	-webkit-animation: swipeRight 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: swipeRight 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes swipeRight {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: translate3d(0,0,0); }
+	100% { -webkit-transform: translate3d(100%,0,0); }
+}
+
+@keyframes swipeRight {
+	0% {}
+	50%, 60% { -webkit-transform: translate3d(0,0,0); transform: translate(0); }
+	100% { -webkit-transform: translate3d(100%,0,0); transform: translate3d(100%,0,0); }
+} 
+
+/* Swipe down */
+.tructruc.swipe-down li.animate .curtain {
+	-webkit-animation: swipeDown 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+	animation: swipeDown 0.5s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+
+@-webkit-keyframes swipeDown {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: translate3d(0,0,0); }
+	100% { -webkit-transform: translate3d(0,100%,0); }
+}
+
+@keyframes swipeDown {
+	0% {}
+	50%, 60% { -webkit-transform: translate(0); transform: translate(0); }
+	100% { transform: translate3d(0,100%,0); transform: translate3d(0,100%,0); }
+}
+
+/* Swipe rotate */
+.tructruc.swipe-rotate li.animate .curtain {
+	-webkit-animation: swipeRotate 0.5s ease forwards;
+	animation: swipeRotate 0.5s ease forwards;
+}
+
+@-webkit-keyframes swipeRotate {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { -webkit-transform: rotate3d(0,0,1,0deg); }
+	100% { -webkit-transform: rotate3d(0,0,1,-90deg); }
+}
+
+@keyframes swipeRotate {
+	0% {}
+	50%, 60% { -webkit-transform: rotate3d(0,0,1,0deg); transform: rotate3d(0,0,1,0deg); }
+	100% { -webkit-transform: rotate3d(0,0,1,-90deg); transform: rotate3d(0,0,1,-90deg); }
+}
+
+/* Shadow */
+.tructruc li.animate .curtain::after {
+	-webkit-animation: fadeOut 0.5s ease forwards;
+	animation: fadeOut 0.5s ease forwards;
+	-webkit-animation-delay: inherit;
+	animation-delay: inherit;
+}
+
+@-webkit-keyframes fadeOut {
+	0% {} /* fixes Chrome 35.0.1916.114 issue (easing breaks) */
+	50%, 60% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+	0% {}
+	50%, 60% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+/* Hide image and title and show at half time */
+.js .tructruc li img,
+.js .tructruc li h3 {
+	visibility: hidden;
+}
+
+.tructruc li.animate img,
+.tructruc li.animate h3 {
+	-webkit-animation: showMe 0.5s step-end forwards;
+	animation: showMe 0.5s step-end forwards;
+}
+
+@-webkit-keyframes showMe {
+	from { visibility: hidden; }
+	60%, 100% { visibility: visible; }
+}
+
+@keyframes showMe {
+	from { visibility: hidden; }
+	60%, 100% { visibility: visible; }
+}
+
+.tructruc li.shown img,
+.tructruc li.shown h3 {
+	visibility: visible;
+}

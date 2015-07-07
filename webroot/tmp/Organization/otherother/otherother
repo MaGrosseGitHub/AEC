@@ -1,0 +1,5 @@
+O:8:"stdClass":8:{s:9:"firstName";s:5:"Other";s:7:"website";s:24:"http://www.localhost.fr/";s:8:"lastName";s:5:"Other";s:6:"bio_FR";s:16:"
+<p>other</p>
+";s:6:"bio_EN";s:16:"
+<p>other</p>
+";s:2:"id";s:0:"";s:4:"type";s:12:"organization";s:4:"slug";s:10:"otherother";}

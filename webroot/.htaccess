@@ -1,0 +1,117 @@
+<IfModule mod_rewrite.c>
+	# Allow from all
+	# Options All
+	# AllowOverride All
+	# RewriteCond %{SERVER_PORT}s ^(443(s)|[0-9]+s)$
+	# RewriteRule ^(.*)$ - [env=askapache:%2]
+
+	# # HTTPS -----------------------------------------------------------------------------------
+	# RewriteEngine On
+	# RewriteCond %{HTTPS} !=on
+	# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	# # END HTTPS -------------------------------------------------------------------------------
+
+	# Adaptive-Images -----------------------------------------------------------------------------------
+
+ 	Options +FollowSymlinks
+
+	# Add any directories you wish to omit from the Adaptive-Images process on a new line, as follows:
+	# RewriteCond %{REQUEST_URI} !ignore-this-directory
+	# RewriteCond %{REQUEST_URI} !and-ignore-this-directory-too
+
+	RewriteCond %{REQUEST_URI} !assets
+	# don't apply the AI behaviour to images inside AI's cache folder:
+	RewriteCond %{REQUEST_URI} !ai-cache
+	# Send any GIF, JPG, or PNG request that IS NOT stored inside one of the above directories
+	# to adaptive-images.php so we can select appropriately sized versions
+	RewriteRule \.(?:jpe?g|gif|png)$ adaptive-images.php
+	# RewriteRule .(?:jpe?g|gif|png)$ test.jpg
+
+	# END Adaptive-Images -------------------------------------------------------------------------------
+	
+ #    Options +FollowSymlinks
+
+ #    # Start the rewrite engine
+ #    RewriteEngine On
+ #    RewriteBase /
+    
+	# #############################################################################################################
+	# # REDIRECT ANY DIRECT IMAGE REQUEST TO A CACHED VERSION
+	# #
+	# # You may add files or directories that shouldn't be touched by squeezr like this:
+	# #
+	# #    RewriteCond %{REQUEST_URI} !path/to/some/file-or-directory
+	# #
+	# # Please refer to the mod_rewrite documentation at http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html for
+	# # further possibilities and instructions.
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# RewriteCond %{REQUEST_FILENAME} -f
+	# RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
+	# RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
+	# RewriteCond %{HTTP_COOKIE} squeezr.images=(\d+px) [NC]
+	# RewriteRule ^(.+)(\.(?:jpe?g|gif|png))$ squeezr/cache/$1-%1$2 [NC,E=BREAKPOINT:%1,L]
+	# #RewriteRule .(\.(?:jpe?g|gif|png))$ test.jpg
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# # Please make sure that you set this path     ^^^     to the squeezr root directory that is also specified
+	# # for the SQUEEZR_ROOT constant in the common engine configuration (SQUEEZR_ROOT/conf/common.php). If you
+	# # apply the default setup for squeezr (i.e. put everything into a directory named "squeezr" under your
+	# # website's document root), then you shouldn't have to change anything.
+	# #############################################################################################################
+	    
+	    
+	# #############################################################################################################
+	# # REDIRECT ANY DIRECT CSS REQUEST TO A CACHED VERSION
+	# #
+	# # See above for some hints about excluding files or directories from the squeezr processing
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# RewriteCond %{REQUEST_FILENAME} -f
+	# RewriteCond %{ENV:REDIRECT_BREAKPOINT} !\d+px
+	# RewriteCond %{QUERY_STRING} !^([^&]*&)*squeezr=(0|false|no)
+	# RewriteCond %{HTTP_COOKIE} squeezr.css=(\d+x\d+@\d+(?:\.\d+)?) [NC]
+	# # RewriteRule ^(.+)\.css$ squeezr/cache/$1-%1.css [NC,E=BREAKPOINT:%1,L]
+	# RewriteRule ^(.+)\.css$ squeezr/cache/$1-%1.css [NC,E=BREAKPOINT:%1,L]
+	# # ~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	# # See above for hints on      ^^^     this path.
+	# #############################################################################################################
+
+	
+
+
+	RewriteRule ^index\.php$ - [L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule (.*) index.php/$1 [L]
+
+
+</IfModule>
+
+# #############################################################################################################
+# # Additional stuff for improving your website's delivery performance
+# #############################################################################################################
+
+# # Deflating for text files (not required for squeezr, but recommended anyway)
+# <IfModule mod_deflate.c>
+#     AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript text/json text/x-json text/x-json-stream application/x-javascript application/json application/x-json application/x-json-stream application/.*xml.* multipart/x-json-stream multipart/x-mixed-replace image/svg+xml
+# </IfModule>
+
+# # Various expiration headers for proper file caching (not required for squeezr, but recommended anyway)
+# <IfModule mod_expires.c>
+
+#     ExpiresActive on
+    
+#     # Images
+#     ExpiresByType image/gif "access plus 35 days"
+#     ExpiresByType image/png "access plus 35 days"
+#     ExpiresByType image/jpg "access plus 35 days"
+#     ExpiresByType image/jpeg "access plus 35 days"
+    
+#     # Text based files
+#     ExpiresByType text/css "access plus 35 days"
+#     ExpiresByType text/xml "access plus 35 days"
+#     ExpiresByType text/javascript "access plus 35 days"
+#     ExpiresByType application/x-shockwave-flash "access plus 35 days"
+    
+#     # Default expiration
+#     ExpiresDefault "access plus 1 days"
+
+# </IfModule>
