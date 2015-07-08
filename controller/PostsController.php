@@ -88,7 +88,6 @@ class PostsController extends Controller{
 		} else {
 			$d['post'] = $this->Cache->read(Cache::POST.DS.$slug.DS.$slug, true);
 		}	
-		$this->SetHits(Cache::POST.DS.$d['post']->slug.DS.$d['post']->slug);
 
 		if(empty($d['post'])){
 			$this->e404('Page introuvable'); 
@@ -96,6 +95,7 @@ class PostsController extends Controller{
 		if($slug != $d['post']->slug){
 			$this->redirect("posts/view/id:$id/slug:".$d['post']->slug,301);
 		}
+		$this->SetHits(Cache::POST.DS.$d['post']->slug.DS.$d['post']->slug);
 		$this->set($d);
 	}
 
