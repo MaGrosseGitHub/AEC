@@ -68,15 +68,18 @@ class PostsController extends Controller{
 	* Affiche un article en particulier
 	**/
 	function view($id,$slug){	
-		if(!$this->Cache->read(Cache::POST.DS.$slug.DS.$slug)){			
+		if(!$this->Cache->read(Cache::POST.DS.$slug.DS.$slug)){
+			debug("HERE");			
 			$this->loadModel('Post');
 			$d['post']  = $this->Post->findFirst(array(
-				'fields'	 => 'Post.id,Post.content,Post.name,Post.slug,Post.category_id, Post.user_id',
+				'fields'	 => 'Post.id,Post.content_FR,Post.title_FR,Post.slug,Post.category_id, Post.user_id',
 				'conditions' => array('Post.online' => 1,'Post.id'=>$id,'Post.type'=>'post')
 			)); 
 
-			$cacheDir = Cache::POST.DS.$slug;
-			$this->Cache->write($slug, $d['post'], $cacheDir, true);
+			if(!empty($d['post'])){
+				$cacheDir = Cache::POST.DS.$slug;
+				$this->Cache->write($slug, $d['post'], $cacheDir, true);
+			}
 
 				// date timestamp to normal settings
 				// $d = new DateTime();
@@ -88,7 +91,6 @@ class PostsController extends Controller{
 		} else {
 			$d['post'] = $this->Cache->read(Cache::POST.DS.$slug.DS.$slug, true);
 		}	
-		$this->SetHits(Cache::POST.DS.$d['post']->slug.DS.$d['post']->slug);
 
 		if(empty($d['post'])){
 			$this->e404('Page introuvable'); 
@@ -96,6 +98,7 @@ class PostsController extends Controller{
 		if($slug != $d['post']->slug){
 			$this->redirect("posts/view/id:$id/slug:".$d['post']->slug,301);
 		}
+		$this->SetHits(Cache::POST.DS.$d['post']->slug.DS.$d['post']->slug);
 		$this->set($d);
 	}
 

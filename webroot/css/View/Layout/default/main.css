@@ -43,21 +43,15 @@ a:hover, a:focus { text-decoration: none; }
 }*/
 
 .ct-nav-main li a {
-    /*position: relative;*/
-    /*top: 5px;*/
-    /*display: block;*/
-    /*margin: -5px 0 0;*/
     border-bottom: 5px solid transparent;
-    padding: 28px 0;
-    /*text-align: center;*/
-    /*text-decoration: none;*/
-    /*text-transform: uppercase;*/
+    padding: 0 0 25px 0;
+    font-size: 1.1em;
 }
 
-.n1:hover ~ li.quebec { left: 260; width: 90px; }
+/*.n1:hover ~ li.quebec { left: 260; width: 90px; }
 .n2:hover ~ li.quebec { left: 370px; width: 65px; }
 .n3:hover ~ li.quebec { left: 455px; width: 100px; }
-.n4:hover ~ li.quebec { left: 575px; width: 120px; }
+.n4:hover ~ li.quebec { left: 575px; width: 120px; }*/
 
 .n1 { width: 80px; }
 .n2 { width: 50px; }
@@ -66,6 +60,7 @@ a:hover, a:focus { text-decoration: none; }
     width: 120px;
     padding-right: 0 !important;
 }
+
 .ct-nav-main li a.selected {
     border-bottom: 5px solid #000;
     color: #340e56;

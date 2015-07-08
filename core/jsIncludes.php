@@ -72,7 +72,7 @@
     echo HTML::JS("datepicker-fr");  //**  
     echo HTML::JS("redactor/langs/fr");  //** 
     echo HTML::JS("redactor/redactor");   //**
-    echo HTML::JS("filter");
+    // echo HTML::JS("filter");
     echo HTML::JS("toucheffects");
     // echo HTML::JS("jquery.stringToSlug.min");
     ?>  
@@ -98,10 +98,6 @@
     <script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
 <script type="text/javascript">
-    
-    $(document).ready(function() {
-        // new UISearch( document.getElementById( 'ct-search' ) );
-    });
 
     // "js/html5shiv.js"
     //"js/html5shiv-printshiv.js" 
@@ -109,8 +105,56 @@
     
     $(document).ready(function() {
 
-        $('filter').hide();
-        $('filterInput').hide();
+        //menus related code
+        $('.underline_m').on("hover", function(){
+        var quebecWidth = $(this).children('a').width() + 10;
+        var elemPos = $(this).children('a').position().left + 5;
+        $(this).parent().children('.quebec').css({
+                                                  width : quebecWidth,
+                                                  left: elemPos
+                                                });
+        }).on('mouseleave', function(){
+            $(this).parent().children('.quebec').css({
+                                                  width : 0,
+                                                  left: 0
+                                                });
+        });
+
+        function addMenuSelected(){
+            var selectedMenu  = 1;
+            if($("#menuSelected").length != 0 && $("#menuSelected").html() != ""){
+                $("#menuSelected").hide();
+                selectedMenu = $("#menuSelected").text();
+            }
+            if(exists(menuSelected)){            
+                selectedMenu = $("#menuSelected").text();
+            }
+            var elem = $('.underline_m').children("a[menu-data='"+selectedMenu+"']");
+            if(!elem.hasClass("selected")) {
+                $('.underline_m').children("a[menu-data='"+selectedMenu+"']").addClass("selected");                
+            }
+            return $('.underline_m').children("a[menu-data='"+selectedMenu+"']");
+        }
+
+        function changeMenuBorderSize(){      
+          if($(window).width() < 1190){
+            $('.underline_m').children("a.selected").css("border-width", "0px");
+          } else {
+            var elem = addMenuSelected();
+            elem.css("border-width", "5px")
+          }
+        }
+
+        addMenuSelected();
+        changeMenuBorderSize();
+
+        $(window).resize(function() {
+          changeMenuBorderSize();
+        });
+        //end of menu code
+
+        // $('filter').hide();
+        // $('filterInput').hide();
 
         $('#loader').hide();
         $('#loaderWhite').hide();

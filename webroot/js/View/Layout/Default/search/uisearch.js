@@ -92,7 +92,7 @@
 					ev.stopPropagation();
 					// trim its value
 					self.inputEl.value = self.inputEl.value.trim();
-					
+
 					if( !classie.has( self.el, openClass ) ) { // open it
 						ev.preventDefault();
 						self.open();
@@ -134,3 +134,7 @@
 	window.UISearch = UISearch;
 
 } )( window );
+
+$(document).ready(function() {
+    new UISearch( document.getElementById( 'ct-search' ) );
+});

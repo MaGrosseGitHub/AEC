@@ -1,5 +1,6 @@
 ﻿<!-- <title>TEST de title</title> -->
 <?php echo HTML::CSS("View/Posts/index"); ?>
+<span id="menuSelected">3</span>
 <div class="row">
 <div id="view"></div>
   <!-- <div id="myModal"></div> -->
@@ -301,6 +302,7 @@
 <?php echo HTML::JS("View/Post/grid3d"); ?>
 
 <script type="text/javascript">
+  menuSelected = 3;
   $(document).ready(function() {
     new grid3D( document.getElementById( 'grid3d' ) );
 

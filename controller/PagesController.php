@@ -36,7 +36,7 @@ class PagesController extends Controller{
 		$this->loadModel('Post');
 		$condition = array('type'=>'page'); 
 		$d['posts'] = $this->Post->find(array(
-			'fields'     => 'id,name,online',
+			'fields'     => 'id,title_FR,online',
 			'order' 	 => 'created DESC',
 			'conditions' => $condition,
 			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
