@@ -86,6 +86,7 @@
 
     <?php //echo HTML::JS("View/Layout/Default/search/uisearch"); ?>
     <?php echo HTML::JS("View/Layout/Default/search/search"); ?>
+    <?php echo HTML::JS("View/Layout/Default/footer/uiMorphingButton_fixed"); ?>
 
 <!-- ************************************** ************ ******************************************* -->
 <!-- ************************************** ************ ******************************************* -->

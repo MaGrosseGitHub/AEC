@@ -43,6 +43,7 @@
 
 <?php echo HTML::CSS("View/Layout/Default/main"); ?>
 <?php echo HTML::CSS("View/Layout/default/menu"); ?>
+<?php echo HTML::CSS("View/Layout/default/morphingButtons"); ?>
 
 <!-- ************************************** ************ ******************************************* -->
 <!-- ************************************** ************ ******************************************* -->
