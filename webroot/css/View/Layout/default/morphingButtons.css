@@ -62,8 +62,21 @@
 
 .morph-button-fixed .morph-content {
 	display : inline-block;
-	width: 100%;
-	height: 100%;
+	/*width: 150px;
+	height: 40px;*/
+}
+
+.morph-button-fixed .morph-content.mbt1 {
+	width: 150px;
+	height: 35px;
+}
+.morph-button-fixed .morph-content.mbt2 {
+	width: 70px;
+	height: 35px;
+}
+.morph-button-fixed .morph-content.mbt3 {
+	width: 73px;
+	height: 35px;
 }
 
 .morph-button-fixed > button {

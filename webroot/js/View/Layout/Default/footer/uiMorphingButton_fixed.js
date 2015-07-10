@@ -207,7 +207,7 @@
 
 		var morphButtons = $('.ct-fmenu li').each(function(index){
 			// var singleButton = $(this).children('div.morph-button').get();
-			var singleButton = $(this).children('div').children('div.morph-button').get();
+			var singleButton = $(this).children('div.morph-button').get();
 			if(singleButton.length != 0){
 				var morphContent = $(singleButton).children('div.morph-content');
 				// console.log($(singleButton).width());

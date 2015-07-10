@@ -53,43 +53,66 @@
             <div class="ct-search" id="ct-search" >
               <form method="get" id="searchform" action="http://tympanus.net/codrops/">
                 <div class="ct-search-input-wrap">
-                  <!-- <input class="ct-search-input" placeholder="Search..." type="text" value="" name="s" id="inputsearch"/> -->
-                  <span style="position: relative; display: inline-block; direction: ltr;" class="twitter-typeahead">
-                    <input style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background: rgb(255, 255, 255) none repeat scroll 0% 0%;" class="tt-hint" autocomplete="off" spellcheck="off" disabled="" type="text">
-                    <input dir="auto" style="position: relative; vertical-align: top; background-color: transparent;" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="Search on Codrops..." value="" name="s" id="s" type="text">
-                    <span style="position: absolute; left: -9999px; visibility: hidden; white-space: nowrap; font-family: &quot;proxima-nova&quot;,&quot;Proxima Nova&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 700; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;">ted</span>
-                    <span style="position: absolute; top: 100%; left: 0px; z-index: 100; display: block; right: auto;" class="tt-dropdown-menu">
-                      <div style="display: block;" class="tt-dataset-search">
-                        <span style="display: block;" class="tt-suggestions">
-                          <div style="white-space: nowrap; cursor: pointer;" class="tt-suggestion">
-                            <p style="white-space: normal;">
-                              <a href="http://tympanus.net/codrops/2015/02/16/create-animated-text-fills/">How to Create (Animated) Text Fills</a>
-                            </p>
+                  <input class="ct-search-input" placeholder="Search..." type="text" value="" name="s" id="inputsearch"/>
+                  <!-- <span class="twitter-typeahead">
+                    <input class="ct-search-input" placeholder="Search..." type="text" value="" name="s" id="inputsearch"/>
+                    <input class="tt-hint" autocomplete="off" spellcheck="off" disabled="" type="text">
+                    <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="" value="" name="s" id="s" type="text">
+                    <span class="ct-ted">ted</span>
+                    <span class="tt-dropdown-menu">
+                      <div class="tt-dataset-search">
+                        <span class="tt-suggestions">
+                          <div class="tt-suggestion">
+                            <div id="result" class="preview">
+                              <span id="searchBorder"></span>
+                              <div class="searchThumb">
+                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
+                              </div>
+                              <div class="searchInfo">
+                                <span title="test6">test6</span>
+                                <br>
+                                <span title="admin">admin</span>
+                              </div>
+                              <br>Post 
+                            </div>
                           </div>
-                          <div style="white-space: nowrap; cursor: pointer;" class="tt-suggestion">
-                            <p style="white-space: normal;">
-                              <a href="http://tympanus.net/codrops/2014/09/23/animated-background-headers/">Animated Background Headers</a>
-                            </p>
+                          <div class="tt-suggestion">
+                            <div id="result" class="preview">
+                              <span id="searchBorder"></span>
+                              <div class="searchThumb">
+                                ﻿<img class = "author" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
+                              </div>
+                              <div class="searchInfo author">
+                                <span title="test6">test6</span>
+                                <br>
+                                <span title="admin">admin</span>
+                              </div>
+                              <br>Post 
+                            </div>
                           </div>
-                          <div style="white-space: nowrap; cursor: pointer;" class="tt-suggestion">
-                            <p style="white-space: normal;">
-                              <a href="http://tympanus.net/codrops/2014/03/13/tilted-content-slideshow/">Tilted Content Slideshow</a>
-                            </p>
+                          <div class="tt-suggestion">
+                            <div id="result" class="preview">
+                              <span id="searchBorder"></span>
+                              <div class="searchThumb">
+                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
+                              </div>
+                              <div class="searchInfo project">
+                                <span title="test6">test6</span>
+                                <br>
+                                <span title="admin">admin</span>
+                              </div>
+                              <br>Post 
+                            </div>
                           </div>
-                          <div style="white-space: nowrap; cursor: pointer;" class="tt-suggestion">
-                            <p style="white-space: normal;">
-                              <a href="http://tympanus.net/codrops/2013/11/14/animated-opening-type/">Animated Opening Type</a>
-                            </p>
-                          </div>
-                          <div style="white-space: nowrap; cursor: pointer;" class="tt-suggestion tt-is-under-cursor">
-                            <p style="white-space: normal;">
+                          <div class="tt-suggestion tt-is-under-cursor">
+                            <p>
                               <a href="http://tympanus.net/codrops/2013/11/05/animated-svg-icons-with-snap-svg/">Animated SVG Icons with Snap.svg</a>
                             </p>
                           </div>
                         </span>
                       </div>
                     </span>
-                  </span>
+                  </span> -->
                 </div>
                 <input type="hidden" name="search-type" value="posts" />
                 <input class="ct-search-submit" type="submit" id="go" value=""><span class="ct-icon-search"></span>
@@ -130,10 +153,9 @@
               <?php if(Language::$curLang == "fr") : ?>
                 <li><a href="<?php echo Router::url('contact/index'); ?>" >Contact</a></li>
                 <li>
-                  <div style = "width :150px; height : 40px; display : inline-block;">
                   <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
                     <button class = "morphButton" type="button">Mentions légales</button>
-                    <div class="morph-content">
+                    <div class="morph-content mbt1">
                       <div>
                         <div class="content-style-text">
                           <span class="icon icon-close">Close the dialog</span>
@@ -144,12 +166,11 @@
                       </div>
                     </div>
                   </div>
-                  </div>
                 </li>
                 <li>
                   <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
                     <button class = "morphButton" type="button">Credits</button>
-                    <div class="morph-content">
+                    <div class="morph-content mbt2">
                       <div>
                         <div class="content-style-text">
                           <span class="icon icon-close">Close the dialog</span>
@@ -164,7 +185,7 @@
                 <li>
                   <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
                     <button class = "morphButton" type="button">Licence</button>
-                    <div class="morph-content">
+                    <div class="morph-content mbt3">
                       <div>
                         <div class="content-style-text">
                           <span class="icon icon-close">Close the dialog</span>
@@ -178,9 +199,51 @@
                 </li>
               <?php else : ?>
                 <li><a href="<?php echo Router::url('contact/index'); ?>" >Contact</a></li>
-                <li><a href="<?php echo Router::url('posts/index'); ?>" >Terms & conditions</a></li>
-                <li><a href="<?php echo Router::url('posts/index'); ?>" >Credits</a></li>
-                <li><a href="<?php echo Router::url('posts/index'); ?>" >License</a></li>
+                <li>
+                  <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
+                    <button class = "morphButton" type="button">Terms & conditions</button>
+                    <div class="morph-content mbt1">
+                      <div>
+                        <div class="content-style-text">
+                          <span class="icon icon-close">Close the dialog</span>
+                          <h2>Terms &amp; Conditions</h2>
+                          <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.</p>
+                          <p><input id="terms" type="checkbox" /><label for="terms">I accept the terms &amp; conditions.</label></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
+                    <button class = "morphButton" type="button">Credits</button>
+                    <div class="morph-content mbt2">
+                      <div>
+                        <div class="content-style-text">
+                          <span class="icon icon-close">Close the dialog</span>
+                          <h2>Terms &amp; Conditions</h2>
+                          <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.</p>
+                          <p><input id="terms" type="checkbox" /><label for="terms">I accept the terms &amp; conditions.</label></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="morph-button morph-button-modal morph-button-modal-1 morph-button-fixed">
+                    <button class = "morphButton" type="button">License</button>
+                    <div class="morph-content mbt3">
+                      <div>
+                        <div class="content-style-text">
+                          <span class="icon icon-close">Close the dialog</span>
+                          <h2>Terms &amp; Conditions</h2>
+                          <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.</p>
+                          <p><input id="terms" type="checkbox" /><label for="terms">I accept the terms &amp; conditions.</label></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
               <?php endif; ?>
             </ul>
           </nav>    

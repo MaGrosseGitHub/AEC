@@ -5,7 +5,7 @@
 
 	//pseudo-equivalent of php's isset()
 	function exists($var) {
-	    if(typeof $var != "undefined" && $var !== "" && $var != null) {
+	    if(typeof $var !== "undefined" && $var !== "" && $var != null) {
 	    	return true;
 	    } else {
 	    	return false;

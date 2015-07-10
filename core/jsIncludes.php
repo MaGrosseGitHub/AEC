@@ -122,12 +122,12 @@
         });
 
         function addMenuSelected(){
-            var selectedMenu  = 1;
+            var selectedMenu  = 0;
             if($("#menuSelected").length != 0 && $("#menuSelected").html() != ""){
                 $("#menuSelected").hide();
                 selectedMenu = $("#menuSelected").text();
             }
-            if(exists(menuSelected)){            
+            if(typeof menuSelected !== "undefined" && exists(menuSelected)){            
                 selectedMenu = $("#menuSelected").text();
             }
             var elem = $('.underline_m').children("a[menu-data='"+selectedMenu+"']");
