@@ -176,5 +176,70 @@ class Comments{
 			</rss>';
 		die();
 	}
+
+	private static function GetNbOfShares(){
+		
+      $fql  = "SELECT url, normalized_url, share_count, like_count, comment_count, ";
+      $fql .= "total_count, commentsbox_count, comments_fbid, click_count FROM ";
+      $fql .= "link_stat WHERE url = 'www.apple.com'";
+
+      $apifql="https://api.facebook.com/method/fql.query?format=json&query=".urlencode($fql);
+      $json=file_get_contents($apifql);
+      debug( json_decode($json)); //Facebook
+
+      $twitterLink = "http://urls.api.twitter.com/1/urls/count.json?url=www.apple.com";
+      $twitterNB = file_get_contents($twitterLink);
+      debug( json_decode($twitterNB)); //Twitter
+
+      $url = 'http://apple.com';
+      $gplus_type = true ? 'shares' : '+1s';
+
+      /**
+       * Get Google+ shares or +1's.
+       * See out post at stackoverflow.com/a/23088544/328272
+       */
+      function get_gplus_count($url, $type = 'shares') {
+        $curl = curl_init();
+
+        // According to stackoverflow.com/a/7321638/328272 we should use certificates
+        // to connect through SSL, but they also offer the following easier solution.
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        if ($type == 'shares') {
+          // Use the default developer key AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ, see
+          // tomanthony.co.uk/blog/google_plus_one_button_seo_count_api.
+          curl_setopt($curl, CURLOPT_URL, 'https://clients6.google.com/rpc?key=AIzaSyCKSbrvQasunBoV16zDH9R33D88CeLr9gQ');
+          curl_setopt($curl, CURLOPT_POST, 1);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, '[{"method":"pos.plusones.get","id":"p","params":{"nolog":true,"id":"' . $url . '","source":"widget","userId":"@viewer","groupId":"@self"},"jsonrpc":"2.0","key":"p","apiVersion":"v1"}]');
+          curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        }
+        elseif ($type == '+1s') {
+          curl_setopt($curl, CURLOPT_URL, 'https://plusone.google.com/_/+1/fastbutton?url='.urlencode($url));
+        }
+        else {
+          throw new Exception('No $type defined, possible values are "shares" and "+1s".');
+        }
+
+        $curl_result = curl_exec($curl);
+        curl_close($curl);
+
+        if ($type == 'shares') {
+          $json = json_decode($curl_result, true);
+          return intval($json[0]['result']['metadata']['globalCounts']['count']);
+        }
+        elseif ($type == '+1s') {
+          libxml_use_internal_errors(true);
+          $doc = new DOMDocument();
+          $doc->loadHTML($curl_result);
+          $counter=$doc->getElementById('aggregateCount');
+          return $counter->nodeValue;
+        }
+      }
+
+      // Get Google+ count.
+      $gplus_count = get_gplus_count($url, $gplus_type);
+      debug($gplus_count); //Google+
+	}
 }
 ?>

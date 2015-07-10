@@ -1,5 +1,6 @@
 ﻿<!-- <title>TEST de title</title> -->
 <?php echo HTML::CSS("View/Posts/index"); ?>
+<span id="menuSelected">3</span>
 <div class="row">
 <div id="view"></div>
   <!-- <div id="myModal"></div> -->
@@ -9,8 +10,7 @@
     </div>
 
     <div id ="posts" class="posts"> 
-
-
+    
       <div class="container">
         <section class="grid3d vertical" id="grid3d">
           <div class="grid-wrap">
@@ -59,6 +59,86 @@
               <li>
                 <figure>
                   <div><?php echo HTML::getImg("posts/5.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                  </figcaption>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
@@ -222,6 +302,7 @@
 <?php echo HTML::JS("View/Post/grid3d"); ?>
 
 <script type="text/javascript">
+  menuSelected = 3;
   $(document).ready(function() {
     new grid3D( document.getElementById( 'grid3d' ) );
 

@@ -49,13 +49,19 @@ body {
 	transform: translateZ(-1500px);
 }
 
-.grid figure,
-.grid .placeholder {
-	width: 300px;
-	height: 300px;
+.grid ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
 }
 
-.grid figure {
+.grid li,
+.grid .placeholder {
+	width: 260px;
+	height: 240px;
+}
+
+.grid li {
 	margin: 10px;
 	display: inline-block;
 	cursor: pointer;
@@ -67,7 +73,7 @@ body {
 	user-select: none;
 }
 
-.grid figure.active {
+.grid li.active {
 	opacity: 0;
 }
 
@@ -368,7 +374,7 @@ p.dummy-text:nth-child(3) {
 
 @media screen and (max-width: 1000px) {
 
-	.grid figure,
+	.grid li,
 	.grid .placeholder {
 		width: 240px;
 		height: 212px;
@@ -386,9 +392,9 @@ p.dummy-text:nth-child(3) {
 
 .trucmuche li {
 	display: inline-block;
-	width: 300px;
+	/*width: 300px;*/
 	margin: 0;
-	padding: 20px;
+	padding: 0px 10px;
 	text-align: left;
 	position: relative;
 }
@@ -511,7 +517,8 @@ p.dummy-text:nth-child(3) {
 	}
 	.trucmuche li {
 		width: 100%;
-		min-width: 300px;
+		min-width: 240px;
+		max-width: 240px;
 	}
 }
 

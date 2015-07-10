@@ -1,4 +1,10 @@
 ﻿    <!-- JS Files -->
+
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** Dependencies ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
     <!--<script type="text/javascript" src="//code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
    <script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>   -->
@@ -66,54 +72,118 @@
     echo HTML::JS("datepicker-fr");  //**  
     echo HTML::JS("redactor/langs/fr");  //** 
     echo HTML::JS("redactor/redactor");   //**
-    echo HTML::JS("filter");
+    // echo HTML::JS("filter");
     echo HTML::JS("toucheffects");
     // echo HTML::JS("jquery.stringToSlug.min");
     ?>  
 
-    <script>
-        // "js/html5shiv.js"
-        //"js/html5shiv-printshiv.js" 
-        //"js/css3-mediaqueries.js" 
-    </script>
 
-    <!--[if lt IE 9]>
-        <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
-    <![endif]-->
-    <script type="text/javascript">
-        $(document).ready(function() {
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- **************************************    Layout    ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
 
-            $('filter').hide();
-            $('filterInput').hide();
+    <?php //echo HTML::JS("View/Layout/Default/search/uisearch"); ?>
+    <?php echo HTML::JS("View/Layout/Default/search/search"); ?>
+    <?php echo HTML::JS("View/Layout/Default/footer/uiMorphingButton_fixed"); ?>
 
-            $('#loader').hide();
-            $('#loaderWhite').hide();
-            if($('.selectpicker').length){
-                $('.selectpicker').selectpicker(); 
-            }
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- **************************************    Inline    ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
+<!-- ************************************** ************ ******************************************* -->
 
-            $('.hastip').tooltipsy();
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+<script type="text/javascript">
 
-            if($( ".datepicker" ).length){
-                $( ".datepicker" ).datepicker({
-                    dateFormat : 'dd-mm-yy',
-                    changeMonth: true,
-                    changeYear: true,
-                    defaultDate : $(this).val(),
-                    yearRange: "-100:+10",
-                });
-            }
+    // "js/html5shiv.js"
+    //"js/html5shiv-printshiv.js" 
+    //"js/css3-mediaqueries.js" 
+    
+    $(document).ready(function() {
 
-            // setTimeout(function(){
-            //     $.setNotif();
-            //     $("#notifications").css("top", ($(document).scrollTop()+20)+'px');
-            // },500);
-            $.setNotif(null, function(){
-                $("#notifications").css("top", ($(document).scrollTop()+80)+'px');
-                $("notif").hide(); 
-            });
+        //menus related code
+        $('.underline_m').on("hover", function(){
+        var quebecWidth = $(this).children('a').width() + 10;
+        var elemPos = $(this).children('a').position().left + 5;
+        $(this).parent().children('.quebec').css({
+                                                  width : quebecWidth,
+                                                  left: elemPos
+                                                });
+        }).on('mouseleave', function(){
+            $(this).parent().children('.quebec').css({
+                                                  width : 0,
+                                                  left: 0
+                                                });
         });
-    </script>  
+
+        function addMenuSelected(){
+            var selectedMenu  = 1;
+            if($("#menuSelected").length != 0 && $("#menuSelected").html() != ""){
+                $("#menuSelected").hide();
+                selectedMenu = $("#menuSelected").text();
+            }
+            if(exists(menuSelected)){            
+                selectedMenu = $("#menuSelected").text();
+            }
+            var elem = $('.underline_m').children("a[menu-data='"+selectedMenu+"']");
+            if(!elem.hasClass("selected")) {
+                $('.underline_m').children("a[menu-data='"+selectedMenu+"']").addClass("selected");                
+            }
+            return $('.underline_m').children("a[menu-data='"+selectedMenu+"']");
+        }
+
+        function changeMenuBorderSize(){      
+          if($(window).width() < 1190){
+            $('.underline_m').children("a.selected").css("border-width", "0px");
+          } else {
+            var elem = addMenuSelected();
+            elem.css("border-width", "5px")
+          }
+        }
+
+        addMenuSelected();
+        changeMenuBorderSize();
+
+        $(window).resize(function() {
+          changeMenuBorderSize();
+        });
+        //end of menu code
+
+        // $('filter').hide();
+        // $('filterInput').hide();
+
+        $('#loader').hide();
+        $('#loaderWhite').hide();
+        if($('.selectpicker').length){
+            $('.selectpicker').selectpicker(); 
+        }
+
+        $('.hastip').tooltipsy();
+
+        if($( ".datepicker" ).length){
+            $( ".datepicker" ).datepicker({
+                dateFormat : 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                defaultDate : $(this).val(),
+                yearRange: "-100:+10",
+            });
+        }
+
+        // setTimeout(function(){
+        //     $.setNotif();
+        //     $("#notifications").css("top", ($(document).scrollTop()+20)+'px');
+        // },500);
+        $.setNotif(null, function(){
+            $("#notifications").css("top", ($(document).scrollTop()+80)+'px');
+            $("notif").hide(); 
+        });
+    });
+</script>  
 
 <?php echo $this->Form->JSFlush(); ?>

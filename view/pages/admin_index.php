@@ -16,7 +16,7 @@
 			<tr>
 				<td><?php echo $v->id; ?></td>
 				<td><span class="label <?php echo ($v->online==1)?'success':'error'; ?>"><?php echo ($v->online==1)?'En ligne':'Hors ligne'; ?></span></td>
-				<td><?php echo $v->name; ?></td>
+				<td><?php echo $v->title_FR; ?></td>
 				<td>
 					<a href="<?php echo Router::url('admin/pages/edit/'.$v->id); ?>">Editer</a>
 					<a onclick="return confirm('Voulez vous vraiment supprimer ce contenu'); " href="<?php echo Router::url('admin/pages/delete/'.$v->id); ?>">Supprimer</a>

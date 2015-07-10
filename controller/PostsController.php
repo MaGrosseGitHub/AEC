@@ -8,7 +8,7 @@ class PostsController extends Controller{
 		$perPage = 5; 
 		if(isset($user) && !empty($user))
 			$perPage = 1000;
-
+		
 		$this->loadModel('Post');
 		if(!isset($user) || empty($user))
 			$condition = array('online' => 1,'type'=>'post'); 
@@ -68,15 +68,18 @@ class PostsController extends Controller{
 	* Affiche un article en particulier
 	**/
 	function view($id,$slug){	
-		if(!$this->Cache->read(Cache::POST.DS.$slug.DS.$slug)){			
+		if(!$this->Cache->read(Cache::POST.DS.$slug.DS.$slug)){
+			debug("HERE");			
 			$this->loadModel('Post');
 			$d['post']  = $this->Post->findFirst(array(
-				'fields'	 => 'Post.id,Post.content,Post.name,Post.slug,Post.category_id, Post.user_id',
+				'fields'	 => 'Post.id,Post.content_FR,Post.title_FR,Post.slug,Post.category_id, Post.user_id',
 				'conditions' => array('Post.online' => 1,'Post.id'=>$id,'Post.type'=>'post')
 			)); 
 
-			$cacheDir = Cache::POST.DS.$slug;
-			$this->Cache->write($slug, $d['post'], $cacheDir, true);
+			if(!empty($d['post'])){
+				$cacheDir = Cache::POST.DS.$slug;
+				$this->Cache->write($slug, $d['post'], $cacheDir, true);
+			}
 
 				// date timestamp to normal settings
 				// $d = new DateTime();

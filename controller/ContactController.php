@@ -333,7 +333,7 @@ EOD;
 
 		$d['id'] = $id;
 		if($this->request->data){
-			debug($this->request->data);
+			// debug($this->request->data);
 			if($this->Contact->validates($this->request->data)){
 				$this->request->data->contact = "admin";
 				$this->Contact->save($this->request->data);
@@ -341,14 +341,14 @@ EOD;
 				$cacheDir = Cache::CONTACT.DS;
 				$this->Cache->write("contactData", $this->request->data, $cacheDir, true);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success');
-				// $this->redirect('admin/contact/index'); 
+				$this->redirect('admin/contact/index'); 
 			} else {				
 				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
 			}
 		} else {
 			$this->request->data = $this->Contact->findFirst();
-			debug($this->request->data);
-			debug($id);
+			// debug($this->request->data);
+			// debug($id);
 		}
 		$this->set($d);
 	}

@@ -163,7 +163,7 @@
 		} else {
 	        $.ajax({
 	                type: "get",
-	                url: 'https://localhost/AEC/webroot/lookFor/users/logout',
+	                url: 'http://localhost/AEC/webroot/lookFor/users/logout',
 	                data: "ajax", 
 	                success: function(response) {
 	              		response = jQuery.trim(response);

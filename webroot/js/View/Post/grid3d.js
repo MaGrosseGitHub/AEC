@@ -43,7 +43,7 @@
 			// console.log($(this.gridItems));
 			// console.log($(this.gridItems).children());
 			// console.log($(this.gridItems).children().get());
-			// this.gridItems = $(this.gridItems).children().get();
+			this.gridItems = $(this.gridItems).children().get();
 			// default sizes for grid items
 			this.itemSize = { width : this.gridItems[0].offsetWidth, height : this.gridItems[0].offsetHeight };
 			// content
@@ -102,6 +102,8 @@
 				return false;
 			}
 			this.isAnimating = true;
+			var gridDiv = $(this.gridItems[ pos ]);
+			gridDiv.children('figure').children("figcaption").hide();
 
 			var self = this,
 				loadContent = function() {
@@ -180,6 +182,9 @@
 			var self = this,
 				contentItem = this.el.querySelector( 'div.content > .show' ),
 				currentItem = this.gridItems[ this.contentItems.indexOf( contentItem ) ];
+				
+			var gridDiv = $(this.gridItems[ this.contentItems.indexOf( contentItem ) ]);
+			gridDiv.children('figure').children("figcaption").show();
 			
 			$(contentItem).children(":first").html("");
 			classie.removeClass( contentItem, 'show' );
