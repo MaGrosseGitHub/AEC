@@ -74,6 +74,7 @@
     echo HTML::JS("redactor/redactor");   //**
     // echo HTML::JS("filter");
     echo HTML::JS("toucheffects");
+    echo HTML::JS("sly");
     // echo HTML::JS("jquery.stringToSlug.min");
     ?>  
 
@@ -138,7 +139,7 @@
         }
 
         function changeMenuBorderSize(){      
-          if($(window).width() < 1190){
+          if($(window).width() <= 1190){
             $('.underline_m').children("a.selected").css("border-width", "0px");
           } else {
             var elem = addMenuSelected();

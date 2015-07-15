@@ -10,6 +10,17 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'icomoon';
+	src:url('./fonts/icomoon/selected/icomoon.eot');
+	src:url('./fonts/icomoon/selected/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('./fonts/icomoon/selected/icomoon.woff') format('woff'),
+		url('./fonts/icomoon/selected/icomoon.ttf') format('truetype'),
+		url('./fonts/icomoon/selected/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .navbar {
 	/*margin-top : -30px;*/
 }

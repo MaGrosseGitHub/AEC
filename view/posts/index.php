@@ -315,7 +315,7 @@
 
     changeGridOrientation();
     function changeGridOrientation(){      
-      if($(window).width() < 770){
+      if($(window).width() <= 770){
         if($("#grid3d").hasClass("vertical")){
           $("#grid3d").removeClass("vertical").addClass("horizontal")
         }

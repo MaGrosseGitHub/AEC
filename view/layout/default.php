@@ -51,29 +51,30 @@
 
           <div class="ct-header-items-right ct-cf">
             <div class="ct-search" id="ct-search" >
-              <form method="get" id="searchform" action="http://tympanus.net/codrops/">
-                <div class="ct-search-input-wrap">
-                  <input class="ct-search-input" placeholder="Search..." type="text" value="" name="s" id="inputsearch"/>
-                  <!-- <span class="twitter-typeahead">
-                    <input class="ct-search-input" placeholder="Search..." type="text" value="" name="s" id="inputsearch"/>
+              <form method="get" id="searchform" action="">
+                <div class="ct-search-input-wrap single-search">
+                  <input id = "searchSlider" id="inputsearch" class="ct-search-input" placeholder="Search..." type="text" value="" name="s" />
+                  <span class="twitter-typeahead">
+                    <input  id="inputsearch" class="ct-search-input" placeholder="Search..." type="text" value="" name="s"/>
                     <input class="tt-hint" autocomplete="off" spellcheck="off" disabled="" type="text">
-                    <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="" value="" name="s" id="s" type="text">
+                    <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="Search..." value="" name="s" id="s" type="text">
                     <span class="ct-ted">ted</span>
-                    <span class="tt-dropdown-menu">
-                      <div class="tt-dataset-search">
+                    <span class="tt-dropdown-menu" id="searchResults">
+                      <div id="searchResults" class="tt-dataset-search">
                         <span class="tt-suggestions">
                           <div class="tt-suggestion">
                             <div id="result" class="preview">
                               <span id="searchBorder"></span>
                               <div class="searchThumb">
-                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
+                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test7/test7_150x100.jpg" alt="test6_150x100">        
                               </div>
                               <div class="searchInfo">
-                                <span title="test6">test6</span>
+                                <span class = "si-name" title="test6">Lorem ipsum Duis pariatur dolor Ut sit Duis aliqua ex exercitation nulla reprehenderit dolore eiusmod nostrud incididunt ullamco ut ut tempor.</span>
                                 <br>
-                                <span title="admin">admin</span>
+                                <span class = "si-pname" title="admin">Lorem ipsum Anim in ad ex id consequat laboris nulla fugiat culpa id pariatur velit Duis deserunt nisi do ex consequat exercitation ut ut proident culpa elit dolor est exercitation.</span>
                               </div>
-                              <br>Post 
+                              <div class="infoType project">
+                              </div>
                             </div>
                           </div>
                           <div class="tt-suggestion">
@@ -83,28 +84,45 @@
                                 ﻿<img class = "author" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
                               </div>
                               <div class="searchInfo author">
-                                <span title="test6">test6</span>
+                                <span class = "si-name" title="test6">test6</span>
                                 <br>
-                                <span title="admin">admin</span>
+                                <span class = "si-pname" title="admin">admin</span>
                               </div>
-                              <br>Post 
+                              <div class="infoType author">
+                              </div>
                             </div>
                           </div>
                           <div class="tt-suggestion">
                             <div id="result" class="preview">
                               <span id="searchBorder"></span>
                               <div class="searchThumb">
-                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
+                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test9/test9_150x100.jpg" alt="test6_150x100">        
                               </div>
                               <div class="searchInfo project">
-                                <span title="test6">test6</span>
+                                <span class = "si-name" title="test6">test6</span>
                                 <br>
-                                <span title="admin">admin</span>
+                                <span class = "si-pname" title="admin">admin</span>
                               </div>
-                              <br>Post 
+                              <div class="infoType organization">
+                              </div>
                             </div>
                           </div>
-                          <div class="tt-suggestion tt-is-under-cursor">
+                          <div class="tt-suggestion">
+                            <div id="result" class="preview">
+                              <span id="searchBorder"></span>
+                              <div class="searchThumb noresults">
+                                ﻿<img class = "noresults" src="<?php echo Router::webroot('css/View/Layout/default/img/noresults2bw.png'); ?>" alt="noresults">        
+                              </div>
+                              <div class="searchInfo noresults">
+                                <span class = "si-name" title="test6">No results</span>
+                                <br>
+                                <span class = "si-pname" title="admin">Pas de résultats</span>
+                              </div>
+                              <div class="infoType noresults">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tt-suggestion tt-is-under-cursor" style = "display : none;">
                             <p>
                               <a href="http://tympanus.net/codrops/2013/11/05/animated-svg-icons-with-snap-svg/">Animated SVG Icons with Snap.svg</a>
                             </p>
@@ -112,19 +130,19 @@
                         </span>
                       </div>
                     </span>
-                  </span> -->
+                  </span>
                 </div>
                 <input type="hidden" name="search-type" value="posts" />
                 <input class="ct-search-submit" type="submit" id="go" value=""><span class="ct-icon-search"></span>
               </form>     
-              <div id="searchResults"></div>  
+              <!-- <div id="searchResults"></div>   -->
             </div>
             
             <ul class="ct-connect">
               <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>Rss Feed</span></a></li>
-              <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li>
               <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>Codrops on Twitter</span></a></li>
               <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>Codrops on Facebook</span></a></li>
+              <!-- <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li> -->
               <li><a class="ct-icon-google-plus" href="https://plus.google.com/101095823814290637419" rel="publisher"><span>Codrops on Google+</span></a></li>
               <li><a class="ct-icon-github" href="https://github.com/codrops"><span>Codrops on Github</span></a></li>
             </ul>
@@ -251,9 +269,9 @@
           <span class = "ct-span">    
             <ul class="ct-connect">
               <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>Rss Feed</span></a></li>
-              <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li>
               <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>Codrops on Twitter</span></a></li>
               <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>Codrops on Facebook</span></a></li>
+              <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li>
               <li><a class="ct-icon-google-plus" href="https://plus.google.com/101095823814290637419" rel="publisher"><span>Codrops on Google+</span></a></li>
             </ul>  
           </span>    

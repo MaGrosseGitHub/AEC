@@ -776,7 +776,6 @@ a.ct-commenttime,
 
 .ct-copyright {
     margin-right: 0px;
-    width: 155px;
     height: 72px;
 }
 
@@ -913,7 +912,7 @@ a.ct-commenttime,
     float: right;
     margin: 15px 22px 0 0;
     padding: 0px;
-    width: 232px;
+    width: 202px;
     height: 34px;
 }
 
@@ -1010,18 +1009,53 @@ a.ct-commenttime,
 
 .ct-search-input-wrap {
     position: absolute;
-    right: 34px;
+    right: 0px; /*34px;*/
     width: 265px;
     height: 34px;
-    opacity: 0;
+    /*opacity: 0;*/
     pointer-events: none;
+}
+
+.ct-search .ct-search-input-wrap {
+    pointer-events: auto;
+    /*opacity: 0;*/
+    margin: 0;
 }
 
 .ct-search.ct-search-open .ct-search-input-wrap {
     pointer-events: auto;
-    opacity: 1;
+    /*opacity: 1;
     -webkit-transition: opacity 0.2s;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s;*/
+}
+
+input[type="text"].ct-search-input,
+input[type="text"].tt-hint {
+    margin: 0;
+    padding: 2px 7px;
+    height: 34px;
+    outline: none;
+    border: none;
+    background: #fff;
+    font-family: inherit;
+    font-weight: bold;
+    position : absolute;
+    top : 0px;
+    right : 0px;
+
+    min-width:0px; 
+    width:0%; 
+    -webkit-transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    transition: width 0.3s;
+    -webkit-backface-visibility: hidden;
+}
+
+.ct-search.ct-search-open input[type="text"].ct-search-input {
+    width: 100% !important;
+    position : absolute;
+    top : 0px;
+    right : 34px;
 }
 
 .ct-container .twitter-typeahead {
@@ -1080,34 +1114,6 @@ input[type="submit"].ct-search-submit {
     padding-top : 7px;
 }
 
-input[type="text"].ct-search-input,
-input[type="text"].tt-hint {
-    margin: 0;
-    padding: 2px 7px;
-    height: 34px;
-    outline: none;
-    border: none;
-    background: #fff;
-    font-family: inherit;
-    /*opacity: 0;*/
-    font-weight: bold;
-    position : absolute;
-    top : 0px;
-    right : 0px;
-
-    min-width:0px; /* min-width as the pixel value */
-    width:0%; /* width as the % value */
-    -webkit-transition: width 0.3s;
-    -moz-transition: width 0.3s;
-    transition: width 0.3s;
-    -webkit-backface-visibility: hidden;
-}
-
-.ct-search.ct-search-open input[type="text"].ct-search-input {
-    /*opacity: 1*/
-
-    width: 100% !important;
-}
 
 ::-webkit-input-placeholder {
     color: #ddd
@@ -1124,6 +1130,266 @@ input[type="text"].tt-hint {
 :-ms-input-placeholder {
     color: #ddd
 }
+
+/*Search results (preview)*/
+.twitter-typeahead{
+  position: relative; 
+  display: inline-block; 
+  direction: ltr;
+}
+
+.ct-search-input.ttquery {
+  position: relative;
+  vertical-align: top; 
+  background-color: transparent;
+}
+
+.ct-ted {
+  position: absolute; 
+  left: -9999px; 
+  visibility: hidden; 
+  white-space: nowrap; 
+  font-family: &quot;proxima-nova&quot;,&quot;Proxima Nova&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; 
+  font-size: 13px; 
+  font-style: normal; 
+  font-variant: normal; 
+  font-weight: 700; 
+  word-spacing: 0px; 
+  letter-spacing: 0px; 
+  text-indent: 0px; 
+  text-rendering: optimizelegibility; 
+  text-transform: none;
+}
+
+.tt-dropdown-menu{
+  position: absolute; 
+  top: 100%; 
+  left: 0px; 
+  z-index: 100; 
+  display: block; 
+  right: auto;
+  background-color : transparent;
+}
+
+.tt-dataset-search{
+  display: block;
+  width : 299px;
+  background: rgb(201, 198, 198) none repeat scroll 0% 0%;
+  position : absolute;
+  right : 0px;
+}
+
+.tt-suggestions{
+  display: block;
+}
+
+.tt-suggestion{
+  white-space: nowrap; 
+  cursor: pointer;
+  background-color: #BEBEBE;
+  margin : 2px 0;
+}
+
+.tt-suggestion p {
+  white-space: normal;
+}
+
+  #result {
+    /*margin : 2px;*/
+    background :#ebeaeb;
+
+    overflow: hidden; 
+    position: relative;
+    width : 100%;
+    /*overflow: scroll; */
+  }
+  #result:hover {
+    /*margin : 2px;*/
+    background :#acacac;
+  }
+
+  .preview {
+    width : 300px;
+    height : 70px;
+    vertical-align: middle;
+  }
+
+  .searchThumb {
+    width : 25%;
+    margin : 0;
+    padding : 0;
+    display: inline-block;
+  }
+
+  .searchThumb .project{
+    /*width : 80%;
+    height : 80%;
+    margin : 10% 10%;*/
+    width : 100%;
+    height : 100%;
+  }
+
+  .searchThumb .author{
+    /*height : 80px;*/
+    /*width : 80px;*/
+    width : 95%;
+    height : 95%;
+    border: 1px solid transparent;
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    
+    margin : 2.5% 2.5%;
+  }
+
+  .searchThumb.noresults {
+    border-right: 2px solid #C9C6C6;
+    background-color: #ebeaeb;
+  }
+
+  .searchThumb .noresults{
+    width : 80%;
+    height : 80%;
+    
+    margin : 10% 10%;
+  }
+
+  .searchInfo {
+    width : 60%;
+    display: inline-block;
+    vertical-align: middle;
+    padding-left : 20px;
+    padding-right : 5px;
+    margin-left : -7px;
+    line-height: 170%;
+    text-overflow: ellipsis; /* will make [...] at the end */
+    white-space: nowrap; /* paragraph to one line */
+    overflow:hidden;
+  }
+
+  .si-name {
+    font-family: "Lato" !important;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+  }
+
+  .si-pname {
+    font-family: "Lato" !important;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+  }
+
+  .infoType {
+    width : 15%;
+    display: inline-block;
+    vertical-align: middle;
+    /*padding-left : 20px;*/
+  }
+
+  .infoType.author:before {
+    font-family: 'icomoon';
+    content : "\e671";
+    color : white;
+    font-size: 22px;
+    background : #d5d5d5;
+    border : 1px solid transparent;
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding : 7px;
+  }
+
+  .infoType.project:before {
+    font-family: 'icomoon';
+    content : "\e60e";
+    color : white;
+    font-size: 22px;
+    background : #d5d5d5;
+    border : 1px solid transparent;
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding : 7px;
+  }
+
+  .infoType.organization:before {
+    font-family: 'icomoon';
+    content : "\e6ae";
+    color : white;
+    font-size: 22px;
+    background : #d5d5d5;
+    border : 1px solid transparent;
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding : 7px;
+  }
+
+  .infoType.noresults:before {
+    font-family: 'icomoon';
+    content : "\e70f";
+    color : #e74c3c;
+    font-size: 22px;
+    background : #d5d5d5;
+    border : 1px solid transparent;
+    webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    padding : 7px;
+  }
+
+  .searchInfo.noresults{
+    color : #e74c3c;
+  }
+
+  .searchInfo.project:after {
+    right: 75%;
+    top: 50%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: solid transparent;
+    border-color: rgba(190, 190, 190, 0);
+    border-right-color: #ebeaeb;
+    border-width: 10px;
+    margin-top: -10px;
+    z-index:950;
+  }
+
+  #result:hover .searchInfo.project:after {
+    right: 75%;
+    top: 50%;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border: solid transparent;
+    border-color: rgba(190, 190, 190, 0);
+    border-right-color: #acacac;
+    border-width: 10px;
+    margin-top: -10px;
+    z-index:950;
+  }
+
+  #searchBorder{
+    position : absolute;
+    background: #acacac;
+    width : 10px;
+    height : 80px;
+    top : 0px;
+    left : 0px;
+    z-index: 1000;
+    display: none;
+  }
+
+  #result:hover #searchBorder {
+    display: inline-block;
+  }
 
 .fm-editor {
     background-color: #fff;
@@ -1473,7 +1739,7 @@ table.fm-data-summary-table {
     width: 100%;
     margin-top: 34px;
     /*padding: 8px 0;*/
-    background-color: #fff;
+    /*background-color: #fff;*/
     /*border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, 0.2);*/
     /*-webkit-border-radius: 8px;
@@ -1675,146 +1941,6 @@ table.fm-data-summary-table {
     background-position: -396px -36px
 }
 
-/*Search results (preview)*/
-.twitter-typeahead{
-  position: relative; 
-  display: inline-block; 
-  direction: ltr;
-}
-
-.ct-search-input.ttquery {
-  position: relative;
-  vertical-align: top; 
-  background-color: transparent;
-}
-
-.ct-ted {
-  position: absolute; 
-  left: -9999px; 
-  visibility: hidden; 
-  white-space: nowrap; 
-  font-family: &quot;proxima-nova&quot;,&quot;Proxima Nova&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; 
-  font-size: 13px; 
-  font-style: normal; 
-  font-variant: normal; 
-  font-weight: 700; 
-  word-spacing: 0px; 
-  letter-spacing: 0px; 
-  text-indent: 0px; 
-  text-rendering: optimizelegibility; 
-  text-transform: none;
-}
-
-.tt-dropdown-menu{
-  position: absolute; 
-  top: 100%; 
-  left: 0px; 
-  z-index: 100; 
-  display: block; 
-  right: auto;
-  background-color : transparent;
-}
-
-.tt-dataset-search{
-  display: block;
-}
-
-.tt-suggestions{
-  display: block;
-}
-
-.tt-suggestion{
-  white-space: nowrap; 
-  cursor: pointer;
-  background-color: #BEBEBE;
-  margin : 2px 0;
-}
-
-.tt-suggestion p {
-  white-space: normal;
-}
-
-  #result {
-    /*margin : 2px;*/
-    background :#BEBEBE;
-
-    overflow: hidden; 
-    position: relative;
-    width : 100%;
-    /*overflow: scroll; */
-  }
-
-  .preview {
-    width : 300px;
-    height : 70px;
-    vertical-align: middle;
-  }
-
-  .searchThumb {
-    width : 25%;
-    margin : 0;
-    padding : 0;
-    display: inline-block;
-  }
-
-  .searchThumb .project{
-    /*height : 80px;*/
-    /*width : 80px;*/
-    width : 100%;
-    height : 100%;
-  }
-
-  .searchThumb .author{
-    /*height : 80px;*/
-    /*width : 80px;*/
-    width : 95%;
-    height : 95%;
-    border: 1px solid transparent;
-    webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    
-    margin : 2.5% 2.5%;
-  }
-
-  .searchInfo {
-    width : 75%;
-    display: inline-block;
-    vertical-align: middle;
-    padding-left : 20px;
-  }
-
-  .searchInfo.project:after {
-    right: 70%;
-    top: 45%;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border: solid transparent;
-    border-color: rgba(190, 190, 190, 0);
-    border-right-color: #BEBEBE;
-    border-width: 15px;
-    margin-top: -10px;
-    z-index:950;
-  }
-
-  #searchBorder{
-    position : absolute;
-    background: red;
-    width : 10px;
-    height : 80px;
-    top : 0px;
-    left : 0px;
-    z-index: 1000;
-    display: none;
-  }
-
-  #result:hover #searchBorder {
-    display: inline-block;
-  }
-
 
 /* Media queries */
 
@@ -1855,6 +1981,12 @@ table.fm-data-summary-table {
 
     .tt-dataset-search{
       width : 299px;
+    }
+
+    .ct-copyright {
+        margin-right: 0px;
+        width: 175px;
+        height: 72px;
     }
 }
 
@@ -2328,12 +2460,23 @@ table.fm-data-summary-table {
 
     .ct-search .ct-search-input-wrap,
     .ct-search.ct-search-open .ct-search-input-wrap {
-        opacity: 1;
+        /*opacity: 1;*/
         pointer-events: auto;
-        width: 228px;
-        -webkit-transition: none;
+        /*width: 228px;*/
+        /*-webkit-transition: none;
         -moz-transition: none;
-        transition: none;
+        transition: none;*/
+
+        width:100% !important; 
+        min-width:228px; /* min-width as the pixel value */
+        max-width:228px; /* min-width as the pixel value */
+        /*-webkit-transition: width 0.3s;
+        -moz-transition: width 0.3s;
+        transition: width 0.3s;
+        -webkit-backface-visibility: hidden;*/
+        position : absolute;
+        top : 0px;
+        right : 0px;
     }
 
     .ct-search .ct-icon-search {
@@ -2344,7 +2487,14 @@ table.fm-data-summary-table {
     }
 
     .ct-search input[type="text"].ct-search-input {
-        opacity: 1
+        /*opacity: 1*/
+
+        width:0%; 
+        min-width:0px; /* min-width as the pixel value */
+        -webkit-transition: width 0.3s;
+        -moz-transition: width 0.3s;
+        transition: width 0.3s;
+        -webkit-backface-visibility: hidden;
     }
 
     .ct-search input[type="submit"].ct-search-submit {
