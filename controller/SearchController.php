@@ -159,14 +159,15 @@ class SearchController extends Controller{
 
 
 	function getLevenshteinArray($str, $array, $wordPosition = true){
+		//wordPosition will reorganize the search results based on the position of each word, the first one being the most important and the last one being the least important
 		$keywords = explode("+", $str);
 		$results = array();
-		$wordCount = 0.5;
+		$wordCount = 0.5; //start by 0.5 so as not to divide by 0
 		foreach ($keywords as $keyind => $keyword) {
 			foreach ($array as $key => $value) {
 				foreach ($value as $field => $fieldVal) {
 					$divider = 1;
-					if($wordPosition) //wordPosition will make the search based on the position of each word, the first one being the most important and the last one being the last important
+					if($wordPosition) 
 						$wordCount*2;
 					if(!isset($results[$key]))
 						$results[$key] = levenshtein($keyword, $fieldVal)/$wordCount*2;

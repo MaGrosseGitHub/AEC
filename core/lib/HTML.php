@@ -60,8 +60,9 @@ class HTML{
 			} 
 			return $newUrl;
 		} else {
+			$noPicfile = "img_not_found.png";
 			if($notExistImg){
-				$newUrl = Router::webroot("css/img/noPic.png");
+				$newUrl = Router::webroot("css/img/".$noPicfile);
 				if(!$custom) {
 					$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
 				} 
@@ -71,7 +72,7 @@ class HTML{
 					$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
 					return $newUrl;
 				} else {
-					$newUrl = Router::webroot("css/img/noPic.png");
+					$newUrl = Router::webroot("css/img/".$noPicfile);
 					if(!$custom) {
 						$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
 					} 

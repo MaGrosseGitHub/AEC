@@ -691,12 +691,19 @@ a.ct-commenttime,
     margin: 0 auto
 }
 
+.footer-separation{
+    padding : 30px;
+}
+
+
 .ct-footer {
-    position: relative;
-    bottom: 0px;
+    position: absolute;
+    bottom: -100px;
     padding: 20px 0 10px 0;
     width: 100%;
     background: #30abd5;
+    margin-top : 300px;
+    z-index : 3300;
 }
 
 .ct-footer .ct-inner {
@@ -1288,7 +1295,7 @@ input[type="submit"].ct-search-submit {
     /*padding-left : 20px;*/
   }
 
-  .infoType.author:before {
+  .infoType.author span:before {
     font-family: 'icomoon';
     content : "\e671";
     color : white;
@@ -1301,7 +1308,7 @@ input[type="submit"].ct-search-submit {
     padding : 7px;
   }
 
-  .infoType.project:before {
+  .infoType.project span:before {
     font-family: 'icomoon';
     content : "\e60e";
     color : white;
@@ -1314,7 +1321,7 @@ input[type="submit"].ct-search-submit {
     padding : 7px;
   }
 
-  .infoType.organization:before {
+  .infoType.organization span:before {
     font-family: 'icomoon';
     content : "\e6ae";
     color : white;
@@ -1327,7 +1334,7 @@ input[type="submit"].ct-search-submit {
     padding : 7px;
   }
 
-  .infoType.noresults:before {
+  .infoType.noresults span:before {
     font-family: 'icomoon';
     content : "\e70f";
     color : #e74c3c;
@@ -2503,7 +2510,7 @@ table.fm-data-summary-table {
 
 
 
-  .infoType.author:before {
+  .infoType.author span:before {
     font-family: 'icomoon';
     content : "\e671";
     color : white;
@@ -2516,7 +2523,7 @@ table.fm-data-summary-table {
     padding : 5px;
   }
 
-  .infoType.project:before {
+  .infoType.project span:before {
     font-family: 'icomoon';
     content : "\e60e";
     color : white;
@@ -2529,7 +2536,7 @@ table.fm-data-summary-table {
     padding : 5px;
   }
 
-  .infoType.organization:before {
+  .infoType.organization span:before {
     font-family: 'icomoon';
     content : "\e6ae";
     color : white;
@@ -2542,7 +2549,7 @@ table.fm-data-summary-table {
     padding : 5px;
   }
 
-  .infoType.noresults:before {
+  .infoType.noresults span:before {
     font-family: 'icomoon';
     content : "\e70f";
     color : #e74c3c;

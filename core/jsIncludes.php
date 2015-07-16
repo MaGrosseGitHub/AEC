@@ -33,6 +33,8 @@
     <!-- lines for Adaptive images -->
     <script> 
     var isHistoryAvailable, prevPageTitle = "", eventIndex = false, prevIndex = false;
+
+    var $searchLoadingImg = "<?php echo Router::webroot('css/img/searchloader2.gif'); ?>";
     </script>
 
     <?php 
@@ -65,6 +67,7 @@
     echo HTML::JS("validate/validationEngine");
     echo HTML::JS("validate/languages/jquery.validationEngine-fr");
 
+    echo HTML::JS("sly");
     echo HTML::JS("main"); 
     echo HTML::JS("jquery.nicescroll.min"); 
     echo HTML::JS("jquery-ias");

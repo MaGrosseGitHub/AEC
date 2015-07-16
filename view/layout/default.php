@@ -13,7 +13,7 @@
       <?php require CORE.DS.'jsIncludes.php'; ?>      
     </head>
     <body>  
-
+    <span style ="min-height : 100%, position : relative">
       <header class="ct-header">
         <div class="ct-inner ct-cf">  
 
@@ -59,74 +59,9 @@
                     <input class="tt-hint" autocomplete="off" spellcheck="off" disabled="" type="text">
                     <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="Search..." value="" name="s" id="s" type="text">
                     <span class="ct-ted">ted</span>
-                    <span class="tt-dropdown-menu" id="searchResults">
-                      <div id="searchResults" class="tt-dataset-search">
-                        <span class="tt-suggestions">
-                          <div class="tt-suggestion">
-                            <div id="result" class="preview">
-                              <span id="searchBorder"></span>
-                              <div class="searchThumb">
-                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test7/test7_150x100.jpg" alt="test6_150x100">        
-                              </div>
-                              <div class="searchInfo">
-                                <span class = "si-name" title="test6">Lorem ipsum Duis pariatur dolor Ut sit Duis aliqua ex exercitation nulla reprehenderit dolore eiusmod nostrud incididunt ullamco ut ut tempor.</span>
-                                <br>
-                                <span class = "si-pname" title="admin">Lorem ipsum Anim in ad ex id consequat laboris nulla fugiat culpa id pariatur velit Duis deserunt nisi do ex consequat exercitation ut ut proident culpa elit dolor est exercitation.</span>
-                              </div>
-                              <div class="infoType project">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="tt-suggestion">
-                            <div id="result" class="preview">
-                              <span id="searchBorder"></span>
-                              <div class="searchThumb">
-                                ﻿<img class = "author" src="/AEC/webroot/img/cache/post/test6/test6_150x100.jpg" alt="test6_150x100">        
-                              </div>
-                              <div class="searchInfo author">
-                                <span class = "si-name" title="test6">test6</span>
-                                <br>
-                                <span class = "si-pname" title="admin">admin</span>
-                              </div>
-                              <div class="infoType author">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="tt-suggestion">
-                            <div id="result" class="preview">
-                              <span id="searchBorder"></span>
-                              <div class="searchThumb">
-                                ﻿<img class = "project" src="/AEC/webroot/img/cache/post/test9/test9_150x100.jpg" alt="test6_150x100">        
-                              </div>
-                              <div class="searchInfo project">
-                                <span class = "si-name" title="test6">test6</span>
-                                <br>
-                                <span class = "si-pname" title="admin">admin</span>
-                              </div>
-                              <div class="infoType organization">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="tt-suggestion">
-                            <div id="result" class="preview">
-                              <span id="searchBorder"></span>
-                              <div class="searchThumb noresults">
-                                ﻿<img class = "noresults" src="<?php echo Router::webroot('css/View/Layout/default/img/noresults2bw.png'); ?>" alt="noresults">        
-                              </div>
-                              <div class="searchInfo noresults">
-                                <span class = "si-name" title="test6">No results</span>
-                                <br>
-                                <span class = "si-pname" title="admin">Pas de résultats</span>
-                              </div>
-                              <div class="infoType noresults">
-                              </div>
-                            </div>
-                          </div>
-                          <div class="tt-suggestion tt-is-under-cursor" style = "display : none;">
-                            <p>
-                              <a href="http://tympanus.net/codrops/2013/11/05/animated-svg-icons-with-snap-svg/">Animated SVG Icons with Snap.svg</a>
-                            </p>
-                          </div>
+                    <span class="tt-dropdown-menu">
+                      <div class="tt-dataset-search" style = "max-height : 220px; overflow : hidden">
+                        <span  id="searchResults" class="tt-suggestions">
                         </span>
                       </div>
                     </span>
@@ -162,6 +97,7 @@
       </div>
       </div>
       
+      <div class="footer-separation"></div>
 
       <footer class="ct-footer">
         
@@ -283,7 +219,7 @@
           </div>
         </div>
       </footer>
-  
+  </span>
       <?php //echo HTML::JS("modal/classie"); ?>
       <?php //echo HTML::JS("mlpushmenu"); ?>
       <?php //echo HTML::CSS("icons"); ?>

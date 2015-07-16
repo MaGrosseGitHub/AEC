@@ -62,6 +62,10 @@ jQuery(document).ready(function($) {
 
 			openSearch();
 
+			$searchSuggestions.off('click').on( 'click', function(e) {
+				return false;
+			} );
+
 			$body.off( 'click' ).on( 'click', function(e) {
 				closeSearch();
 			} );

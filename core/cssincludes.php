@@ -241,4 +241,28 @@ label.error:after {
   left : 0;
   top : 330px;
 }
+
+/* Scrollbar */
+.scrollbar {
+    position: absolute;
+    right:  -5px;
+    width: 2px;
+    height: 285px;
+    background: #ccc;
+    line-height: 0;
+    z-index : 3500;
+}
+.scrollbar .handle {
+    width: 100%;
+    height: 100px;
+    background: #292a33;
+    cursor: pointer;
+}
+.scrollbar .handle .mousearea {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 22px;
+    height: 100%;
+}
 </style>
