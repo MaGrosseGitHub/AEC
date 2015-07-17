@@ -183,6 +183,7 @@
 	});
 
 	$resultsCount = 0;
+	$slyLoaded = false;
 	$(".twitter-typeahead").children("#s").keyup(function(e) {
 		var search = $(this).val();
 		var data = search;
@@ -218,49 +219,105 @@
 					$resultsCount = $('#searchResults').children('.tt-suggestion').length;
 
 					if($resultsCount > 3){
+						if($('.tt-dataset-search').parent().find('div.scrollbar').length){
+							$('.tt-dataset-search').parent().find('div.scrollbar').remove();
+						}
+						if($('.tt-dataset-search').parent().find('div#btnBackward').length){
+							$('.tt-dataset-search').parent().find('div#btnBackward').remove();
+						}
+						if($('.tt-dataset-search').parent().find('div#btnForward').length){
+							$('.tt-dataset-search').parent().find('div#btnForward').remove();
+						} 
+
 						var $frame = $('.tt-dataset-search');
 						var $wrap  = $frame.parent();
 
-						$wrap.prepend('<div id="btnBackward" style="height: 35px; vertical-align: middle; overflow: hidden; width: 299px; margin-left: -34px; margin-bottom: -1px; border-bottom: 2px solid #ACACAC;" class="tt-suggestion"><div style="height: 35px; vertical-align: middle;" id="result" class="preview"><span id="searchBorder"></span><div style="text-align: center; border-right: 2px solid rgb(172, 172, 172); height: 100%; vertical-align: middle; padding-top: 7px; font-size: 32px; font-family: &quot;Lato&quot; ! important; font-style: normal; color: rgb(107, 107, 107);" class="searchThumb"><span><button style = "outline: none; border: none; background-color: transparent;" class = "toEnd">>></button></span></div><div class="searchInfo" style="width: 75%; height: 100%; font-family: lato; text-align: center; margin-top: -23px;"><span style="font-size: 50px; color: rgb(107, 107, 107);" class="si-name" title="test6"><button style = "outline: none; border: none; background-color: transparent;" class = "backward">...</button></span></div><div class="infoType"><span></span></div></div></div>');
-						$wrap.append('<div id="btnForward" style="height: 35px; vertical-align: middle; overflow: hidden; position: absolute; top: 253px; left: 0px; width: 100%; z-index: 3000; width: 299px; margin-left: -34px; margin-top: 0px; border-top: 2px solid #ACACAC" class="tt-suggestion"><div style="height: 35px; vertical-align: middle; border-bottom: 2px solid rgb(172, 172, 172);" id="result" class="preview"><span id="searchBorder"></span><div style="text-align: center; border-right: 2px solid rgb(172, 172, 172); height: 100%; vertical-align: middle; padding-top: 7px; font-size: 32px; font-family: &quot;lato&quot; !important; font-style: normal; color: rgb(107, 107, 107);" class="searchThumb"><span><button style = "outline: none; border: none; background-color: transparent;" class = "toStart"><<</button></span></div><div class="searchInfo" style="width: 75%; height: 100%; font-family: lato; text-align: center; margin-top: -23px;"><span style="font-size: 50px; color: rgb(107, 107, 107);" class="si-name" title="test6"><button style = "outline: none; border: none; background-color: transparent;" class = "forward">...</button></span></div><div class="infoType"><span></span></div></div></div>');
+						$wrap.prepend('<div id="btnBackward" style="height: 35px; vertical-align: middle; overflow: hidden; width: 299px; margin-left: -34px; margin-bottom: -1px; border-bottom: 2px solid #ACACAC;" class="tt-suggestion"><div style="height: 35px; vertical-align: middle;" id="result" class="preview"><span id="searchBorder"></span><div style="text-align: center; border-right: 2px solid rgb(172, 172, 172); height: 100%; vertical-align: middle; padding-top: 7px; font-size: 32px; font-family: &quot;Lato&quot; ! important; font-style: normal; color: rgb(107, 107, 107);" class="searchThumb"><span><button style = "outline: none; border: none; background-color: transparent; color :#ACACAC;width: 110%; height: 120%;" class = "toEnd">>></button></span></div><div class="searchInfo" style="width: 75%; height: 100%; font-family: lato; text-align: center; margin-top: -23px;"><span style="font-size: 50px; color: rgb(107, 107, 107);" class="si-name" title="test6"><button style = "outline: none; border: none; background-color: transparent;color :#ACACAC; width: 110%; height: 120%;" class = "backward">...</button></span></div><div class="infoType"><span></span></div></div></div>');
+						$wrap.append('<div id="btnForward" style="height: 35px; vertical-align: middle; overflow: hidden; position: absolute; top: 253px; left: 0px; width: 100%; z-index: 3000; width: 299px; margin-left: -34px; margin-top: 0px; border-top: 2px solid #ACACAC" class="tt-suggestion"><div style="height: 35px; vertical-align: middle; border-bottom: 2px solid rgb(172, 172, 172);" id="result" class="preview"><span id="searchBorder"></span><div style="text-align: center; border-right: 2px solid rgb(172, 172, 172); height: 100%; vertical-align: middle; padding-top: 7px; font-size: 32px; font-family: &quot;lato&quot; !important; font-style: normal; color: rgb(107, 107, 107);" class="searchThumb"><span><button style = "outline: none; border: none; background-color: transparent;color :#ACACAC;width: 110%;height: 120%;" class = "toStart"><<</button></span></div><div class="searchInfo" style="width: 75%; height: 100%; font-family: lato; text-align: center; margin-top: -23px;"><span style="font-size: 50px; color: rgb(107, 107, 107);" class="si-name" title="test6"><button style = "outline: none; border: none; background-color: transparent;color :#ACACAC;width: 110%; height: 120%;" class = "forward">...</button></span></div><div class="infoType"><span></span></div></div></div>');
 
 						$wrap.prepend('<div class="scrollbar"><div class="handle"><div class="mousearea"></div></div></div>');
 
-						// Call Sly on frame
-						$frame.sly({
-							speed: 300,
-							easing: 'easeOutExpo',
-							// pagesBar: $wrap.find('.pages'),
-							activatePageOn: 'click',
-							scrollBar: $wrap.find('.scrollbar'),
-							scrollBy: 100,
-							dragHandle: 1,
-							dynamicHandle: 1,
-							clickBar: 1,
-							moveBy: 600,
+						if(!$slyLoaded){
+							// Call Sly on frame
+							curSly = $frame.sly({
+								speed: 300,
+								easing: 'easeOutExpo',
+								// pagesBar: $wrap.find('.pages'),
+								activatePageOn: 'click',
+								scrollBar: $wrap.find('.scrollbar'),
+								scrollBy: 100,
+								dragHandle: 1,
+								dynamicHandle: 1,
+								clickBar: 1,
+								moveBy: 600,
+								startAt: 1,
 
-							// Buttons
-							forward: $wrap.find('button.forward'),
-							backward: $wrap.find('button.backward')
-							// prevPage: $wrap.find('.prevPage'),
-							// nextPage: $wrap.find('.nextPage')
-						});
+								// Buttons
+								forward: $wrap.find('button.forward'),
+								backward: $wrap.find('button.backward')
+								// prevPage: $wrap.find('.prevPage'),
+								// nextPage: $wrap.find('.nextPage')
+							});
 
-						// To Start button
-						$wrap.find('.toStart').on('click', function () {
-							var item = $(this).data('item');
-							// Animate a particular item to the start of the frame.
-							// If no item is provided, the whole content will be animated.
-							$frame.sly('toStart', item);
-						});
+							// To Start button
+							$wrap.find('.toStart').on('click', function () {
+								var item = $(this).data('item');
+								// Animate a particular item to the start of the frame.
+								// If no item is provided, the whole content will be animated.
+								$frame.sly('toStart', item);
+							});
 
-						// To End button
-						$wrap.find('.toEnd').on('click', function () {
-							var item = $(this).data('item');
-							// Animate a particular item to the end of the frame.
-							// If no item is provided, the whole content will be animated.
-							$frame.sly('toEnd', item);
-						});
+							// To End button
+							$wrap.find('.toEnd').on('click', function () {
+								var item = $(this).data('item');
+								// Animate a particular item to the end of the frame.
+								// If no item is provided, the whole content will be animated.
+								$frame.sly('toEnd', item);
+							});
+
+							$( ".toStart" ).trigger( "click" );
+
+							$slyLoaded = true;
+						} else {
+							$frame.sly(false);
+							// Call Sly on frame
+							$frame.sly({
+								speed: 300,
+								easing: 'easeOutExpo',
+								// pagesBar: $wrap.find('.pages'),
+								activatePageOn: 'click',
+								scrollBar: $wrap.find('.scrollbar'),
+								scrollBy: 100,
+								dragHandle: 1,
+								dynamicHandle: 1,
+								clickBar: 1,
+								moveBy: 600,
+
+								// Buttons
+								forward: $wrap.find('button.forward'),
+								backward: $wrap.find('button.backward')
+								// prevPage: $wrap.find('.prevPage'),
+								// nextPage: $wrap.find('.nextPage')
+							});
+
+							// To Start button
+							$wrap.find('.toStart').on('click', function () {
+								var item = $(this).data('item');
+								// Animate a particular item to the start of the frame.
+								// If no item is provided, the whole content will be animated.
+								$frame.sly('toStart', item);
+							});
+
+							// To End button
+							$wrap.find('.toEnd').on('click', function () {
+								var item = $(this).data('item');
+								// Animate a particular item to the end of the frame.
+								// If no item is provided, the whole content will be animated.
+								$frame.sly('toEnd', item);
+							});
+
+							$( ".toStart" ).trigger( "click" );
+						}
 					}
 				},
 				error: function (e) {
