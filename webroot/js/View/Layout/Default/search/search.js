@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
 		$searchSlider = $("#searchSlider"),
 		$open = false,
 		openSearch = function() {
+			// $('.ct-search-input-wrap.single-search').show();
 			$ctsearch.data('open',true).addClass('ct-search-open');
 			if($("#searchResults").length != 0){
 				$("#searchResults").show();
@@ -13,6 +14,7 @@ jQuery(document).ready(function($) {
 		    $open = true;
 			$searchSlider.on("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend", function(e){
 				if($open){
+					// $('.ct-search-input-wrap.single-search').width(265);
 				    $searchSlider.hide();
 				    $searchSuggestions.show();
 					$ctsearchinput.focus();
@@ -27,15 +29,20 @@ jQuery(document).ready(function($) {
 		    $searchSlider.show();
 		    $searchSuggestions.hide();
 			$ctsearch.data('open',false).removeClass('ct-search-open');
+
 		    $open = false;
 		    $searchSlider.on("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend", function(e){
 				// console.log($searchSuggestions.children("#inputsearch"));
 			    // console.log("end close");
 			    // console.log("open = >"+$open);
+				// $('.ct-search-input-wrap.single-search').hide();
+				// $('.ct-search-input-wrap.single-search').width(0);
 			});
 		};
 
 	$searchSuggestions.hide();
+	// $('.ct-search-input-wrap.single-search').hide();
+	// $('.ct-search-input-wrap.single-search').width(0);
 
 	var searchOpened = false;
     checkSearchStatus = function(){    	

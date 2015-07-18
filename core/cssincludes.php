@@ -10,7 +10,7 @@
     // echo HTML::CSS("normalize"); 
     echo HTML::CSS("normalize_update"); 
     // echo HTML::CSS("component"); //CSS used by the medias page
-    // echo HTML::CSS("Flick/Flick");
+    echo HTML::CSS("Flick/Flick"); //datepicker
 
     ?>
     <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->

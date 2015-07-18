@@ -207,7 +207,7 @@ a {
 
 .ct-post a,
 a code {
-    color: #237dac;
+    color: #D73438;
 }
 
 a:hover,
@@ -483,7 +483,7 @@ ul.browser-support li::after {
     float: right !important
 }
 
-.button,
+/*.button,
 .ct-post p.ct-tags a,
 .buttonbig,
 input[type="submit"],
@@ -498,7 +498,7 @@ input[type="submit"],
     font-size: 14px;
     line-height: 20px;
     cursor: pointer;
-}
+}*/
 
 .ct-post p.ct-tags a {
     background: #fff;
@@ -517,7 +517,7 @@ input[type="submit"],
     background: #056495
 }
 
-.buttonbig.action,
+/*.buttonbig.action,
 input[type="submit"] {
     background: #f78297;
     color: #fff;
@@ -533,7 +533,7 @@ input[type="submit"]:hover {
 input[type="submit"]:active {
     background: #f78297;
     color: #fff;
-}
+}*/
 
 .ct-latest-bottom a,
 .ct-latest-any-bottom a,
@@ -597,7 +597,7 @@ a.ct-commenttime,
     position: relative;
     z-index: 999;
     padding: 20px 0 0 0;
-    background: #0099cc;
+    background: #000;
 }
 
 .ct-branding {
@@ -652,7 +652,7 @@ a.ct-commenttime,
 
 .ct-nav-main ul li {
     display: inline;
-    color: #237dac;
+    color: #D73438;
 }
 
 .ct-nav-main ul li a {
@@ -663,7 +663,7 @@ a.ct-commenttime,
 }
 
 .ct-nav-main ul li a:hover {
-    color: #056495;
+    color: #D73438;
     text-shadow: none;
     text-decoration: none;
 }
@@ -701,7 +701,7 @@ a.ct-commenttime,
     bottom: -100px;
     padding: 20px 0 10px 0;
     width: 100%;
-    background: #30abd5;
+    background: #000;
     margin-top : 300px;
     z-index : 3300;
 }
@@ -755,7 +755,7 @@ a.ct-commenttime,
 }
 
 .ct-footer ul li a:hover {
-    color: #056495
+    color: #D73438;
 }
 
 .ct-items {
@@ -771,7 +771,7 @@ a.ct-commenttime,
 }
 
 .ct-item span {
-    color: #237dac;
+    color: #C6BDBD;
     font-size: 13px;
 }
 
@@ -919,7 +919,7 @@ a.ct-commenttime,
     float: right;
     margin: 15px 22px 0 0;
     padding: 0px;
-    width: 202px;
+    width: 242px;
     height: 34px;
 }
 
@@ -958,9 +958,9 @@ a.ct-commenttime,
     -webkit-font-smoothing: antialiased;
 }
 
-.ct-connect li a:hover:before {
-    color: #056495
-}
+/*.ct-connect li a:hover:before {
+    color: #D73438;
+}*/
 
 .ct-connect li a:hover {
     text-decoration: none;
@@ -974,24 +974,48 @@ a.ct-commenttime,
     content: "\e001"
 }
 
+.ct-icon-google-plus:hover:before {
+    color : #c0392b;
+}
+
 .ct-icon-facebook:before {
     content: "\e002"
+}
+
+.ct-icon-facebook:hover:before {
+    color : #056495;
 }
 
 .ct-icon-github:before {
     content: "\e003"
 }
 
+.ct-icon-github:hover:before {
+    color : #056495;
+}
+
 .ct-icon-twitter:before {
     content: "\e000"
+}
+
+.ct-icon-twitter:hover:before {
+    color : #3498db;
 }
 
 .ct-icon-feed:before {
     content: "\e004"
 }
 
+.ct-icon-feed:hover:before {
+    color : #d35400;
+}
+
 .ct-icon-mail:before {
     content: "\e005"
+}
+
+.ct-icon-mail:hover:before {
+    color : #D73438;
 }
 
 .ct-icon-search:before {
@@ -1090,14 +1114,19 @@ input[type="submit"].ct-search-submit {
 
 .ct-icon-search {
     z-index: 90;
-    background: #0099cc;
-    color: #237dac;
+    background: transparent;
+    color: #C6BDBD;
     padding-top : 7px;
+}
+
+.ct-icon-search:hover {
+    background: #D73438;
+    color: #FFF;
 }
 
 .ct-search.ct-search-open .ct-icon-search {
     z-index: 1;
-    background: #237dac;
+    background: #D73438;
     color: #fff;
     pointer-events: none;
 }
@@ -1123,19 +1152,19 @@ input[type="submit"].ct-search-submit {
 
 
 ::-webkit-input-placeholder {
-    color: #ddd
+    color: #C6BDBD
 }
 
 :-moz-placeholder {
-    color: #ddd
+    color: #C6BDBD
 }
 
 ::-moz-placeholder {
-    color: #ddd
+    color: #C6BDBD
 }
 
 :-ms-input-placeholder {
-    color: #ddd
+    color: #C6BDBD
 }
 
 /*Search results (preview)*/
@@ -1821,7 +1850,7 @@ table.fm-data-summary-table {
     width: 120px;
     height: auto;
     border-radius: 5px;
-    background: #056495;
+    background: #D73438;
     color: #fff;
     text-align: center;
     text-indent: 0px;
@@ -2016,7 +2045,7 @@ table.fm-data-summary-table {
         display: inline;
         /*float: none;*/
         margin : 0 auto;
-        color: #237dac;
+        color: #D73438;
     }
 
     .ct-footer .ct-connect {        
@@ -2027,7 +2056,7 @@ table.fm-data-summary-table {
         display: inline;
         float: left;
         margin : 0 auto;
-        color: #237dac;
+        color: #D73438;
         margin-right: -20px;
     }
 
@@ -2488,7 +2517,7 @@ table.fm-data-summary-table {
 
     .ct-search .ct-icon-search {
         z-index: 1;
-        background: #237dac;
+        background: #D73438;
         color: #fff;
         pointer-events: none;
     }

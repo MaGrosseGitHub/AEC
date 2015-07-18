@@ -2,7 +2,9 @@
 	<h1>Gérer les catégories</h1>
 </div>
 
-<table>
+<a href="<?php echo Router::url('admin/categories/edit'); ?>" class="primary btn">Ajouter une Catégorie</a>
+
+<table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -23,5 +25,3 @@
 		<?php endforeach ?>
 	</tbody>
 </table>
-
-<a href="<?php echo Router::url('admin/categories/edit'); ?>" class="primary btn">Ajouter une Catégorie</a>

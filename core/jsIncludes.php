@@ -78,6 +78,8 @@
     // echo HTML::JS("filter");
     echo HTML::JS("toucheffects");
     echo HTML::JS("sly");
+    echo HTML::JS("classie");
+    // echo HTML::JS("View/Post/classie");
     // echo HTML::JS("jquery.stringToSlug.min");
     ?>  
 

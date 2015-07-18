@@ -74,10 +74,10 @@
             </div>
             
             <ul class="ct-connect">
-              <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>Rss Feed</span></a></li>
-              <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>Codrops on Twitter</span></a></li>
-              <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>Codrops on Facebook</span></a></li>
-              <!-- <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li> -->
+              <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>AEC Paris 8 Rss Feed</span></a></li>
+              <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>AEC Paris 8 on Twitter</span></a></li>
+              <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>AEC Paris 8 on Facebook</span></a></li>
+              <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>contact</span></a></li>
               <li><a class="ct-icon-google-plus" href="https://plus.google.com/101095823814290637419" rel="publisher"><span>Codrops on Google+</span></a></li>
               <li><a class="ct-icon-github" href="https://github.com/codrops"><span>Codrops on Github</span></a></li>
             </ul>
@@ -204,9 +204,9 @@
 
           <span class = "ct-span">    
             <ul class="ct-connect">
-              <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>Rss Feed</span></a></li>
-              <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>Codrops on Twitter</span></a></li>
-              <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>Codrops on Facebook</span></a></li>
+              <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>AEC Paris 8 Rss Feed</span></a></li>
+              <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>AEC Paris 8 on Twitter</span></a></li>
+              <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>AEC Paris 8 on Facebook</span></a></li>
               <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>Email Updates</span></a></li>
               <li><a class="ct-icon-google-plus" href="https://plus.google.com/101095823814290637419" rel="publisher"><span>Codrops on Google+</span></a></li>
             </ul>  

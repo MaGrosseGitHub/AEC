@@ -32,11 +32,14 @@
         <h3>Images et vidéos</h3>
          <hr align = "left" size = "1" style = "border-color : #3d3d3d; width : 70%; ">
 
+        <?php $vidPlayers = array('Youtube','Vimeo','Server'); ?>
+        <?php (isset($this->request->data->player_id) && !$this->request->data->player_id == "")?$this->request->data->player_id:$this->request->data->player_id="youtube"; ?>
+        <?php echo $this->Form->input('player_id','Player utilisé pour lire la vidéo',array('options' => $vidPlayers, 'class'=>'selectpicker', 'listInvert' => true)); ?>
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
-        <?php echo $this->Form->input('video_server','Vidéo correspandante sur le serveur <span style = "color : red;">Vimeo</span>'); ?>
+        <?php echo $this->Form->input('video_server','Vidéo correspandante sur le serveur'); ?>
 
-        <button type="button" id="browseVid">Browse for video</button>
+        <button class="btn primary" type="button" id="browseVid">Browse for video</button>
         <div class="browser">
           <p style = "display : none;" class="pfilter">filter files by type
             <input type="hidden" id="txtFilter" value=""/>
@@ -58,7 +61,7 @@
                 <a href="#" id="browse">Browse</a> <br><br>
                 Refresh to see uploaded files on homepage
             </div>
-              <button type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
+              <button class="btn primary" type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
             <div id="filelist">
               <?php 
                 if(isset($imagesData) && !empty($imagesData)){
@@ -67,6 +70,7 @@
                               <img src="'.Router::webroot($img).'"/> '.substr(basename($img), 0, 10).'...
                               <div class="actions">
                                 <a href="'.Router::url('admin/posts/delete_img/'.$id.'/'.basename($img)).'" class="del">Supprimer</a>
+                                <a href="'.Router::url('admin/posts/delete_img/'.$id.'/'.basename($img)).'" class="">Img Principale</a>
                               </div> 
                             </div>';        
                     echo $html;
@@ -91,7 +95,7 @@
         <label class="control-label" for="inputauthors">Auteur(s)</label>
 
         <br>
-        <button  type="button" id = "switchAuthors" >Voir les auteurs par organizations</button>
+        <button class="btn primary" type="button" id = "switchAuthors" >Voir les auteurs par organizations</button>
 
         <p><span id="inputauthors" class="selectivity-input"></span></p>
         <p><span id="inputauthors_cat" class="selectivity-input"></span></p>

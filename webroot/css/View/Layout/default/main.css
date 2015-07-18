@@ -73,8 +73,12 @@ a:hover, a:focus { text-decoration: none; }
 }
 
 .ct-nav-main li a.selected {
-    border-bottom: 5px solid #000;
-    color: #340e56;
+    border-bottom: 5px solid #D73438;
+    color: #D73438;
+}
+
+.ct-nav-main li:hover a {
+    color: #D73438;
 }
 
 .ct-nav-main .quebec {
@@ -89,7 +93,7 @@ a:hover, a:focus { text-decoration: none; }
     padding: 0;
     overflow: hidden;
     text-indent: -9999em;
-    background: #511d7f;
+    background: #D73438;
     
     -webkit-transition-property: left, width;
     -moz-transition-property: left, width;

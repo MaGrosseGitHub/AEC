@@ -2,7 +2,20 @@
 	<h1><?php echo $total; ?> Pages</h1>
 </div>
 
-<table>
+<a href="<?php echo Router::url('admin/pages/edit'); ?>" class="primary btn">Ajouter une page</a>
+
+<style>
+	.label.success {
+		color : #2ecc71;
+	}
+
+	.label.error {
+		color : #e74c3c;
+	}
+
+</style>
+
+<table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>
 			<th>ID</th>
@@ -34,5 +47,3 @@
   <?php endfor; ?>
   </ul>
 </div>
-
-<a href="<?php echo Router::url('admin/pages/edit'); ?>" class="primary btn">Ajouter une page</a>

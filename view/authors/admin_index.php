@@ -2,6 +2,8 @@
 	<h1><?php echo $total; ?> Auteurs</h1>
 </div>
 
+<a href="<?php echo Router::url('admin/authors/edit'); ?>" class="primary btn">Ajouter un auteur</a>
+
 <table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>
@@ -36,6 +38,4 @@
   <?php endfor; ?>
   </ul>
 </div>
-
-<a href="<?php echo Router::url('admin/authors/edit'); ?>" class="primary btn">Ajouter un auteur</a>
 

@@ -69,12 +69,13 @@ class PagesController extends Controller{
 		if($this->request->data){
 			if($this->Post->validates($this->request->data)){
 				$this->request->data->type = 'page';
+				$this->request->data->slug = makeSlug($this->request->data->title_EN, 200);
 
 				$this->Post->save($this->request->data);
-				$this->Session->setFlash('Le contenu a bien été modifié'); 
+				$this->Notification->setFlash('Le contenu a bien été modifié'); 
 				$this->redirect('admin/pages/index'); 
 			}else{
-				$this->Session->setFlash('Merci de corriger vos informations','error'); 
+				$this->Notification->setFlash('Merci de corriger vos informations','error'); 
 			}
 			
 		}else{

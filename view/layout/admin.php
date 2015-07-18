@@ -48,10 +48,10 @@
                 <li><a href="<?php echo Router::url('admin/authors/index'); ?>">Auteurs</a></li>
                 <li><a href="<?php echo Router::url('admin/organizations/index'); ?>">Organisations</a></li>
                 <li><a href="<?php echo Router::url('admin/categories/index'); ?>">Catégories</a></li>
-                <li><a href="<?php echo Router::url('admin/events/index'); ?>">Events</a></li>
+                <!-- <li><a href="<?php echo Router::url('admin/events/index'); ?>">Events</a></li> -->
                 <li><a href="<?php echo Router::url('admin/pages/index'); ?>">Pages</a></li>
                 <li><a href="<?php echo Router::url('admin/contact/index'); ?>">Contact</a></li>
-                <li class = "active"><a href="<?php echo Router::url('admin/medias/index'); ?>" class = "active">Galerie</a></li>
+                <!-- <li class = "active"><a href="<?php echo Router::url('admin/medias/index'); ?>" class = "active">Galerie</a></li> -->
                 <li><a href="<?php echo Router::url(); ?>">Voir le site</a></li>
                 <li><a class = "logout" href="<?php echo Router::url('lookFor/users/logout'); ?>">Se déconnecter</a></li>
               </ul>

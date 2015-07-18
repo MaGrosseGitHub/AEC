@@ -296,8 +296,7 @@
 
 <?php //echo HTML::JS("jquery.mixitup.min"); ?>
 <?php //echo HTML::JS("jquery.mixitup"); ?>
-<?php echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"); ?>
-<?php echo HTML::JS("View/Post/classie"); ?>
+<?php //echo HTML::JS("//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"); ?>
 <?php echo HTML::JS("View/Post/helper"); ?>
 <?php echo HTML::JS("View/Post/grid3d"); ?>
 

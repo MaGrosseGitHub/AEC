@@ -194,6 +194,7 @@ class PostsController extends Controller{
 				$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
 
 				$link = "http://".$_SERVER['SERVER_NAME']."/".Router::url("posts/view/id:{$this->request->data->id}/slug:{$this->request->data->slug}");
+				$link = "http://linz2015.univ-paris8.fr";
 				QRCodeLib::GenerateQRCodes($link, Cache::POST.DS.$this->request->data->slug.DS.$this->request->data->slug);
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success');
 				// ob_clean();
