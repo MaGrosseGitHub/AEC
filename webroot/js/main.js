@@ -1,4 +1,4 @@
-﻿jQuery(function($){
+jQuery(function($){
 
 	//Gestion du LocalStorage
 	$.fn.formBackUp = function(){
@@ -236,28 +236,30 @@
 						$wrap.append('<div id="btnForward" style="height: 35px; vertical-align: middle; overflow: hidden; position: absolute; top: 253px; left: 0px; width: 100%; z-index: 3000; width: 299px; margin-left: -34px; margin-top: 0px; border-top: 2px solid #ACACAC" class="tt-suggestion"><div style="height: 35px; vertical-align: middle; border-bottom: 2px solid rgb(172, 172, 172);" id="result" class="preview"><span id="searchBorder"></span><div style="text-align: center; border-right: 2px solid rgb(172, 172, 172); height: 100%; vertical-align: middle; padding-top: 7px; font-size: 32px; font-family: &quot;lato&quot; !important; font-style: normal; color: rgb(107, 107, 107);" class="searchThumb"><span><button style = "outline: none; border: none; background-color: transparent;color :#ACACAC;width: 110%;height: 120%;" class = "toStart"><<</button></span></div><div class="searchInfo" style="width: 75%; height: 100%; font-family: lato; text-align: center; margin-top: -23px;"><span style="font-size: 50px; color: rgb(107, 107, 107);" class="si-name" title="test6"><button style = "outline: none; border: none; background-color: transparent;color :#ACACAC;width: 110%; height: 120%;" class = "forward">...</button></span></div><div class="infoType"><span></span></div></div></div>');
 
 						$wrap.prepend('<div class="scrollbar"><div class="handle"><div class="mousearea"></div></div></div>');
+						
+						$slySettings = {
+							speed: 300,
+							easing: 'easeOutExpo',
+							// pagesBar: $wrap.find('.pages'),
+							activatePageOn: 'click',
+							scrollBar: $wrap.find('.scrollbar'),
+							scrollBy: 100,
+							dragHandle: 1,
+							dynamicHandle: 1,
+							touchDragging: 1,
+							clickBar: 1,
+							moveBy: 600,
+							startAt: 1,
 
+							// Buttons
+							forward: $wrap.find('button.forward'),
+							backward: $wrap.find('button.backward')
+							// prevPage: $wrap.find('.prevPage'),
+							// nextPage: $wrap.find('.nextPage')
+						};
 						if(!$slyLoaded){
 							// Call Sly on frame
-							curSly = $frame.sly({
-								speed: 300,
-								easing: 'easeOutExpo',
-								// pagesBar: $wrap.find('.pages'),
-								activatePageOn: 'click',
-								scrollBar: $wrap.find('.scrollbar'),
-								scrollBy: 100,
-								dragHandle: 1,
-								dynamicHandle: 1,
-								clickBar: 1,
-								moveBy: 600,
-								startAt: 1,
-
-								// Buttons
-								forward: $wrap.find('button.forward'),
-								backward: $wrap.find('button.backward')
-								// prevPage: $wrap.find('.prevPage'),
-								// nextPage: $wrap.find('.nextPage')
-							});
+							curSly = $frame.sly($slySettings);
 
 							// To Start button
 							$wrap.find('.toStart').on('click', function () {
@@ -281,24 +283,7 @@
 						} else {
 							$frame.sly(false);
 							// Call Sly on frame
-							$frame.sly({
-								speed: 300,
-								easing: 'easeOutExpo',
-								// pagesBar: $wrap.find('.pages'),
-								activatePageOn: 'click',
-								scrollBar: $wrap.find('.scrollbar'),
-								scrollBy: 100,
-								dragHandle: 1,
-								dynamicHandle: 1,
-								clickBar: 1,
-								moveBy: 600,
-
-								// Buttons
-								forward: $wrap.find('button.forward'),
-								backward: $wrap.find('button.backward')
-								// prevPage: $wrap.find('.prevPage'),
-								// nextPage: $wrap.find('.nextPage')
-							});
+							$frame.sly($slySettings);
 
 							// To Start button
 							$wrap.find('.toStart').on('click', function () {

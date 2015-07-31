@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+<!-- CSS reset -->
+	<!-- <link rel="stylesheet" href="css/reset.css">  -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Contact Form | CodyHouse</title>
+</head>
+<body>
+	<form class="cd-form floating-labels">
+		<fieldset>
+
+			<div class="icon">
+				<label class="cd-label" for="cd-textarea">Project description</label>
+      			<textarea class="message" name="cd-textarea" id="cd-textarea" required></textarea>
+			</div>
+
+			<div>
+		      	<input type="submit" value="Send Message">
+		    </div>
+		</fieldset>
+	</form>
+<script src="js/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		if( $('.floating-labels').length > 0 ) floatLabels();
+
+		function floatLabels() {
+			var inputFields = $('.floating-labels .cd-label').next();
+			inputFields.each(function(){
+				var singleInput = $(this);
+				//check if user is filling one of the form fields 
+				checkVal(singleInput);
+				singleInput.on('change keyup', function(){
+					checkVal(singleInput);	
+				});
+			});
+		}
+
+		function checkVal(inputField) {
+			( inputField.val() == '' ) ? inputField.prev('.cd-label').removeClass('float') : inputField.prev('.cd-label').addClass('float');
+		}
+	});
+</script>
+<!-- Resource jQuery -->
+<!-- <script src="js/main.js"></script>  -->
+</body>
+</html>

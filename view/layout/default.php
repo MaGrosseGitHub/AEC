@@ -77,7 +77,7 @@
               <li><a class="ct-icon-feed" href="http://feeds2.feedburner.com/tympanus"><span>AEC Paris 8 Rss Feed</span></a></li>
               <li><a class="ct-icon-twitter" href="http://www.twitter.com/codrops"><span>AEC Paris 8 on Twitter</span></a></li>
               <li><a class="ct-icon-facebook" href="http://www.facebook.com/pages/Codrops/159107397912"><span>AEC Paris 8 on Facebook</span></a></li>
-              <li><a class="ct-icon-mail" href="http://feedburner.google.com/fb/a/mailverify?uri=tympanus&amp;loc=en_US"><span>contact</span></a></li>
+              <li><a class="ct-icon-mail" href="<?php echo Router::url('contact/index'); ?>"><span>contact</span></a></li>
               <li><a class="ct-icon-google-plus" href="https://plus.google.com/101095823814290637419" rel="publisher"><span>Codrops on Google+</span></a></li>
               <li><a class="ct-icon-github" href="https://github.com/codrops"><span>Codrops on Github</span></a></li>
             </ul>
@@ -161,6 +161,8 @@
                         <div class="content-style-text">
                           <span class="icon icon-close">Close the dialog</span>
                           <h2>Terms &amp; Conditions</h2>
+                          <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.
+                          <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.
                           <p>Pea horseradish azuki bean lettuce avocado asparagus okra. Kohlrabi radish okra azuki bean corn fava bean mustard tigernut juccama green bean celtuce collard greens avocado quandong <strong>fennel gumbo</strong> black-eyed pea. Grape silver beet watercress potato tigernut corn groundnut. Chickweed okra pea winter purslane coriander yarrow sweet pepper radish garlic brussels sprout groundnut summer purslane earthnut pea <strong>tomato spring onion</strong> azuki bean gourd.</p>
                           <p><input id="terms" type="checkbox" /><label for="terms">I accept the terms &amp; conditions.</label></p>
                         </div>

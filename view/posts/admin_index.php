@@ -9,13 +9,14 @@
 
 </style>
 
-<a href = "<?php echo Router::url('admin/posts/dump/'); ?>" class = "btn-primary">Dump Database</a>
+<button onclick="window.location.href='<?php echo Router::url('admin/posts/dump/'); ?>'" class = "btn primary">Dump Database</button>
 <div class="page-header">
 	<h1><?php echo $total; ?> Articles</h1>
 </div>
 
-<a href="<?php echo Router::url('admin/posts/edit'); ?>" class="primary btn">Ajouter un article</a>
-
+<button onclick="window.location.href='<?php echo Router::url('admin/posts/edit'); ?>'" class="btn primary">Ajouter un article</button>
+<br>
+<br>
 <table class = "table table-bordered table-striped table-hover ">
 	<thead>
 		<tr>

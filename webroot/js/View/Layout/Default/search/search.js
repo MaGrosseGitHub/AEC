@@ -14,7 +14,7 @@ jQuery(document).ready(function($) {
 		    $open = true;
 			$searchSlider.on("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend", function(e){
 				if($open){
-					// $('.ct-search-input-wrap.single-search').width(265);
+					$('.ct-search-input-wrap.single-search').animate({width : 265}, 300);
 				    $searchSlider.hide();
 				    $searchSuggestions.show();
 					$ctsearchinput.focus();
@@ -36,13 +36,13 @@ jQuery(document).ready(function($) {
 			    // console.log("end close");
 			    // console.log("open = >"+$open);
 				// $('.ct-search-input-wrap.single-search').hide();
-				// $('.ct-search-input-wrap.single-search').width(0);
+				$('.ct-search-input-wrap.single-search').width(0);
 			});
 		};
 
 	$searchSuggestions.hide();
 	// $('.ct-search-input-wrap.single-search').hide();
-	// $('.ct-search-input-wrap.single-search').width(0);
+	$('.ct-search-input-wrap.single-search').width(0);
 
 	var searchOpened = false;
     checkSearchStatus = function(){    	

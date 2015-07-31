@@ -406,7 +406,7 @@ class Images{
   }
 
   static public function DeleteImg($file){
-    if(strpos(strtolower(mime_content_type($file)),'image') !== false){
+    if(strpos(strtolower(_mime_content_type($file)),'image') !== false){
       if(file_exists($file)){
         $fileData = pathinfo($file);
         $fileName = $fileData['filename'];

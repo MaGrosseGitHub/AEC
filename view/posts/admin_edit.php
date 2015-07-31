@@ -33,7 +33,7 @@
          <hr align = "left" size = "1" style = "border-color : #3d3d3d; width : 70%; ">
 
         <?php $vidPlayers = array('Youtube','Vimeo','Server'); ?>
-        <?php (isset($this->request->data->player_id) && !$this->request->data->player_id == "")?$this->request->data->player_id:$this->request->data->player_id="youtube"; ?>
+        <?php (isset($this->request->data->player_id) && !$this->request->data->player_id == "")?$this->request->data->player_id:$this->request->data->player_id=$defaultPlayer; ?>
         <?php echo $this->Form->input('player_id','Player utilisé pour lire la vidéo',array('options' => $vidPlayers, 'class'=>'selectpicker', 'listInvert' => true)); ?>
         <?php echo $this->Form->input('video_youtube','lien Video <span style = "color : red;">Youtube</span>'); ?>
         <?php echo $this->Form->input('video_vimeo','lien Video <span style = "color : red;">Vimeo</span>'); ?>
@@ -54,6 +54,10 @@
         </div>
 
         <?php echo  $this->Form->input('images_id','hidden', array('inputValue'=> '')); ?>
+        <?php echo  $this->Form->input('images_main','hidden', array('inputValue'=> '')); ?>
+
+        <br>
+        <br>
         <div id="plupload">
             <div id="droparea">
                 <p>Drag & drop files here</p>
@@ -61,7 +65,9 @@
                 <a href="#" id="browse">Browse</a> <br><br>
                 Refresh to see uploaded files on homepage
             </div>
-              <button class="btn primary" type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
+            <br>
+            <br>
+            <button class="btn primary" type="button" id = "deleteAllImgs" >Supprimer toutes les images</button>
             <div id="filelist">
               <?php 
                 if(isset($imagesData) && !empty($imagesData)){
@@ -70,7 +76,7 @@
                               <img src="'.Router::webroot($img).'"/> '.substr(basename($img), 0, 10).'...
                               <div class="actions">
                                 <a href="'.Router::url('admin/posts/delete_img/'.$id.'/'.basename($img)).'" class="del">Supprimer</a>
-                                <a href="'.Router::url('admin/posts/delete_img/'.$id.'/'.basename($img)).'" class="">Img Principale</a>
+                                <a href="main_Img/'.basename($img).'" class="main_Img">Img Principale</a>
                               </div> 
                             </div>';        
                     echo $html;
@@ -109,8 +115,9 @@
         ?>
     </div>
         <?php
-            $this->Form->JSCheck("form");
+            // $this->Form->JSCheck("form");
         ?>
+    <br>
     <br>
 	<div class="actions">
 		<input id = "send" type="submit" class="btn primary" value="Envoyer">
@@ -134,6 +141,9 @@
     var filesData2 = '<?php echo $images_id; ?>';
     var elem = document.getElementById("inputimages_id");
     elem.value = filesData2;
+    var fileDataMain = '<?php echo $images_main; ?>';
+    var elemMain = document.getElementById("inputimages_main");
+    elemMain.value = fileDataMain;
 
     url = window.location.href;
     findEdit = "edit";
@@ -160,6 +170,40 @@
                 authorCat = false;
             }
         });
+
+        var curMainImg = "";
+        $('body').on('click', 'a.main_Img', function(e){
+            e.preventDefault();
+            if(curMainImg == ""){
+                validateMainImg($(this));
+            } else {
+                if(curMainImg.is($(this))){
+                    return false;
+                } else {
+                    curMainImg.html("  Img Principale")
+                    curMainImg.closest('div.file').removeClass('mainImg');
+
+                    validateMainImg($(this));
+                }
+            }
+        });
+
+        if(fileDataMain != ""){
+            $('a.main_Img').each(function(){
+                if($(this).attr('href') == ("main_Img/"+fileDataMain)){
+                    validateMainImg($(this));
+                    return false;
+                }
+            });
+        }
+
+        function validateMainImg($imgElem){
+            $mainImg = $imgElem.attr('href').replace('main_Img/', '');
+            $imgElem.html(' - <img alt="Embedded Image" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjwhRE9DVFlQRSBzdmcgIFBVQkxJQyAnLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4nICAnaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkJz48c3ZnIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDk2IDk2IiBoZWlnaHQ9Ijk2cHgiIGlkPSJjaXJjbGVfY2hlY2siIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDk2IDk2IiB3aWR0aD0iOTZweCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHBhdGggZD0iTTQ4LDRDMjMuNyw0LDQsMjMuNjk5LDQsNDhzMTkuNyw0NCw0NCw0NHM0NC0xOS42OTksNDQtNDRTNzIuMyw0LDQ4LDR6IE00OCw4NGMtMTkuODgyLDAtMzYtMTYuMTE4LTM2LTM2czE2LjExOC0zNiwzNi0zNiAgczM2LDE2LjExOCwzNiwzNlM2Ny44ODIsODQsNDgsODR6Ii8+PHBhdGggZD0iTTY0LjI4NCwzNy4xN2MtMS41NjItMS41NjEtNC4wOTUtMS41NjEtNS42NTcsMEw0NC40ODUsNTEuMzEzbC01LjY1Ny01LjY1N2MtMS41NjItMS41NjItNC4wOTQtMS41NjItNS42NTcsMCAgYy0xLjU2MiwxLjU2Mi0xLjU2Miw0LjA5NSwwLDUuNjU4bDguNDg0LDguNDgzYzEuNTYyLDEuNTYyLDQuMDk2LDEuNTYyLDUuNjU4LDBsMTYuOTctMTYuOTcgIEM2NS44NDYsNDEuMjY1LDY1Ljg0OCwzOC43MzMsNjQuMjg0LDM3LjE3eiIvPjwvc3ZnPg==" />');
+            $('#inputimages_main').val($mainImg);
+            $imgElem.closest('div.file').addClass('mainImg');
+            curMainImg = $imgElem;
+        }
 
         var selectItems = '<?php echo $authors; ?>';
         selectItems = JSON.parse(selectItems);        

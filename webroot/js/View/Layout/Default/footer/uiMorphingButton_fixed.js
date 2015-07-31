@@ -126,6 +126,7 @@
 						self.options.onAfterClose();
 					}
 					else {
+						console.log("TEST");
 						self.options.onAfterOpen();
 					}
 

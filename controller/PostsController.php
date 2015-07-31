@@ -152,7 +152,6 @@ class PostsController extends Controller{
 				));
 				$id = $this->Post->id;
 			} 
-
 			if(file_exists("img/galerie/".$id)){
 				// rmdir("img/galerie/".$id);
 				// MakePath("img/galerie/".$id."/",false, 0777); 
@@ -166,6 +165,7 @@ class PostsController extends Controller{
 			}
 		}
 		$d['id'] = $id; 
+		$d['defaultPlayer'] = 'youtube';
 		if($this->request->data){
 			if($this->Post->validates($this->request->data)){
 				//general settings
@@ -187,12 +187,57 @@ class PostsController extends Controller{
 				unset($this->request->data->video_youtube);
 				unset($this->request->data->video_vimeo);
 				unset($this->request->data->video_server);
+
+				//Cache main image and check if authors have main images of their own
+				$mainImageProcessed = false;
+				$mainImg = "";
+				if(isset($this->request->data->images_main) && !empty($this->request->data->images_main)){
+					$mainImg = $this->request->data->images_main;
+					$this->processMainImage($id, $mainImg, Cache::POST.DS.$this->request->data->slug);
+					$mainImageProcessed = true;
+				} else {
+					if(isset($this->request->data->images_id) && !empty($this->request->data->images_id)){
+						$postImgs = json_decode($this->request->data->images_id);
+						$mainImg = pathinfo($postImgs[0])['basename'];
+						$this->request->data->images_main = $mainImg;
+						$this->processMainImage($id, $mainImg, Cache::POST.DS.$this->request->data->slug);
+
+						$mainImageProcessed = true;
+					}
+				}
+
 				// $preDir = "tmp/Post/";
 				$this->Post->save($this->request->data);
 
 				$cacheDir = Cache::POST.DS.$this->request->data->slug;
 				$this->Cache->write($this->request->data->slug, $this->request->data, $cacheDir, true);
 
+
+				if($mainImageProcessed){
+					// debug($this->request->data);
+					$postAuthors = json_decode($this->request->data->author_id);
+					foreach ($postAuthors as $autKey => $author) {						
+						$this->loadModel('Author');
+
+						$authorBdd = $this->Author->findFirst(array(
+							'conditions' => array('id' => $author->id),
+							'fields' => 'id, slug, auth_group'
+						));
+						$autDest = Cache::AUTHOR.DS.$authorBdd->slug;
+						if(empty($authorBdd->auth_group) && !empty($authorBdd)) {
+							$this->processMainImage($id, $mainImg, $autDest, $authorBdd->slug);
+							$authorBdd->auth_group = $mainImg;
+							$this->Author->save($authorBdd);
+						} 
+
+						if (!file_exists(Cache::AUTHOR.DS.$authorBdd->slug.DS.$authorBdd->slug.'.jpg')) {
+							$this->processMainImage($id, $mainImg, $autDest, $authorBdd->slug);
+							$authorBdd->auth_group = $mainImg;
+							$this->Author->save($authorBdd);
+						}
+					}
+				}
+				
 				$link = "http://".$_SERVER['SERVER_NAME']."/".Router::url("posts/view/id:{$this->request->data->id}/slug:{$this->request->data->slug}");
 				$link = "http://linz2015.univ-paris8.fr";
 				QRCodeLib::GenerateQRCodes($link, Cache::POST.DS.$this->request->data->slug.DS.$this->request->data->slug);
@@ -240,7 +285,7 @@ class PostsController extends Controller{
 			else
 				$d['author_id'] = "";
 
-
+			$d['images_main'] = $this->request->data->images_main;
 			//test delete from bdd function
 			//add img save in bdd
 			//add possiblity to select default img
@@ -313,7 +358,7 @@ class PostsController extends Controller{
 				$v = Router::webroot($image);
 				$v = str_replace('\\','/',$v);
 
-				$html = '<div class="file"><img src="'.$v.'"/> '.basename($_FILES['file']['name']).'<div class="actions"><a href="delete_img/'.$fileId.'/'.basename($v).'" class="del">Supprimer</a></div> </div>';
+				$html = '<div class="file"><img src="'.$v.'"/> '.basename($_FILES['file']['name']).'<div class="actions"><a href="delete_img/'.$fileId.'/'.basename($v).'" class="del">Supprimer</a><a href="main_Img/'.basename($v).'" class="main_Img">  Img Principale</a></div> </div>';
 				$html = str_replace('"','\\"',$html);
 
 				die('{"error":false, "html": "'.$html.'", "imgData" : "'.$imgData.'"}');
@@ -398,6 +443,89 @@ class PostsController extends Controller{
 		}
 	}
 
+	/**
+	* Permet de supprimer un article
+	**/
+	function admin_delete($id){
+		$this->loadModel('Post');
+		$this->Post->delete($id);
+		$this->Notification->setFlash('Le contenu a bien été supprimé', 'success'); 
+		$this->redirect('admin/posts/index'); 
+	}
+
+	function admin_dump(){
+		$dump = new Dump($this);
+		$dumpList = array(array('type' => Dump::IMG), array('type' => DUMP::FILTERED));
+		$dump->DumpLastModifiedList($dumpList);
+
+		//Send to ftp and or dropbox
+		$this->redirect('admin/posts/index'); 
+	}
+
+	function admin_test(){
+		if($this->request->data && !empty($this->request->data) ){
+			debug($this->request->data);
+			// debug($_FILES);
+
+			// $imgDir = "img/galerie/test/";
+			// if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
+
+			// $ext = substr($_FILES['file']['name'], -4);
+			// $imageName = generateRandomString();
+			// $image = $imgDir.$imageName.time().$ext;
+
+			// move_uploaded_file($_FILES['file']['tmp_name'], $image);
+			// debug(pathinfo($image));
+			// $imgData = Images::SetImgBDD($image);
+
+		} else {
+			Comments::RSS($this);
+			// QRCodeLib::GenerateQRCodes("http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg", "img/galerie/test/16");
+			// $this->redirect('admin/posts/index'); 
+		}
+	}
+
+	function RSS($share = false){
+		$this->loadModel('Post');
+		if($share)
+			$share = 1;
+		else
+			$share = 0;
+		$condition = array('online' => 1,'type'=>'post', 'social_online'=>$share);
+		$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id', 'created'];
+		$fields = implode(",", $fields);
+		$options = array(
+			'conditions' => $condition,
+			'fields' => $fields,
+			'order'      => 'created DESC'
+		);
+
+		$posts = $this->Post->find($options);
+		$data = array(
+			'stream' => $posts, 
+			'fields' => array(
+				'title' => 'title_FR', 
+				'description'=>'content_FR', 
+				'link' => array(
+					"posts/view/id:",
+					"id",
+					"/slug:",
+					"slug"
+					)
+				,
+				'pubDate' => array(
+					'field' => 'created',
+					'format' => 'Y-m-d h:i'
+					)
+				)
+			);
+		Comments::RSS($this, $data);
+	}
+
+	function RSS_Share(){
+		$this->RSS(true);
+	}
+
 	protected function DecodeVideo($url, $service){
 		if(!empty($url)) {
 			if($service == "youtube") {
@@ -475,78 +603,30 @@ class PostsController extends Controller{
 		return $d;
 	}
 
-	/**
-	* Permet de supprimer un article
-	**/
-	function admin_delete($id){
-		$this->loadModel('Post');
-		$this->Post->delete($id);
-		$this->Notification->setFlash('Le contenu a bien été supprimé', 'success'); 
-		$this->redirect('admin/posts/index'); 
-	}
+	protected function processMainImage($id, $mainImg, $destination, $newName = null){		
 
-	function admin_test(){
-		if($this->request->data && !empty($this->request->data) ){
-			debug($this->request->data);
-			// debug($_FILES);
+		$mainImgInfo = pathinfo("img/galerie/".$id.'/'.$mainImg);
+		$imgName = $mainImgInfo['basename'];
+		$imgDir = $mainImgInfo['dirname'];
+		$imgNameExt = $mainImgInfo['filename'];
 
-			// $imgDir = "img/galerie/test/";
-			// if(!file_exists($imgDir)) MakePath($imgDir,false, 0777); 
-
-			// $ext = substr($_FILES['file']['name'], -4);
-			// $imageName = generateRandomString();
-			// $image = $imgDir.$imageName.time().$ext;
-
-			// move_uploaded_file($_FILES['file']['tmp_name'], $image);
-			// debug(pathinfo($image));
-			// $imgData = Images::SetImgBDD($image);
-
+		$originGery = "grayscale_".$imgNameExt."_180x135.".$mainImgInfo['extension'];
+		$originminiature = $imgNameExt."_180x135.".$mainImgInfo['extension'];	
+		MakePath($destination);
+		
+		if(empty($newName)){
+			copy($imgDir.DS.$originGery, $destination.DS.$originGery);
+			copy($imgDir.DS.$originminiature, $destination.DS.$originminiature);
+			copy($imgDir.DS.$mainImg, $destination.DS.$mainImg);		
 		} else {
-			Comments::RSS($this);
-			// QRCodeLib::GenerateQRCodes("http://localhost/AEC/webroot/img/galerie/test/0CEk8eQyYgGOJDPuLRF11386252356.jpg", "img/galerie/test/16");
-			// $this->redirect('admin/posts/index'); 
+			$greyScale = "grayscale_".$newName."_180x135.".$mainImgInfo['extension'];
+			$miniature = $newName."_180x135.".$mainImgInfo['extension'];	
+			$full = $newName.'.'.$mainImgInfo['extension'];
+
+			copy($imgDir.DS.$originGery, $destination.DS.$greyScale);
+			copy($imgDir.DS.$originminiature, $destination.DS.$miniature);
+			copy($imgDir.DS.$mainImg, $destination.DS.$full);
 		}
-	}
-
-	function RSS($share = false){
-		$this->loadModel('Post');
-		if($share)
-			$share = 1;
-		else
-			$share = 0;
-		$condition = array('online' => 1,'type'=>'post', 'social_online'=>$share);
-		$fields = ['id', 'title_FR', 'content_FR', 'slug', 'user_id', 'category_id', 'created'];
-		$fields = implode(",", $fields);
-		$options = array(
-			'conditions' => $condition,
-			'fields' => $fields,
-			'order'      => 'created DESC'
-		);
-
-		$posts = $this->Post->find($options);
-		$data = array(
-			'stream' => $posts, 
-			'fields' => array(
-				'title' => 'title_FR', 
-				'description'=>'content_FR', 
-				'link' => array(
-					"posts/view/id:",
-					"id",
-					"/slug:",
-					"slug"
-					)
-				,
-				'pubDate' => array(
-					'field' => 'created',
-					'format' => 'Y-m-d h:i'
-					)
-				)
-			);
-		Comments::RSS($this, $data);
-	}
-
-	function RSS_Share(){
-		$this->RSS(true);
 	}
 
 	/**
@@ -557,15 +637,6 @@ class PostsController extends Controller{
 		$this->layout = 'modal'; 
 		$d['posts'] = $this->Post->find();
 		$this->set($d);
-	}
-
-	function admin_dump(){
-		$dump = new Dump($this);
-		$dumpList = array(array('type' => Dump::IMG), array('type' => DUMP::FILTERED));
-		$dump->DumpLastModifiedList($dumpList);
-
-		//Send to ftp and or dropbox
-		$this->redirect('admin/posts/index'); 
 	}
       
 }

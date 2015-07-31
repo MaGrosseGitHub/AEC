@@ -697,12 +697,12 @@ a.ct-commenttime,
 
 
 .ct-footer {
-    position: absolute;
-    bottom: -100px;
+    position: relative;
+    /*bottom: -100px;*/
     padding: 20px 0 10px 0;
     width: 100%;
     background: #000;
-    margin-top : 300px;
+    /*margin-top : 300px;*/
     z-index : 3300;
 }
 
@@ -762,6 +762,7 @@ a.ct-commenttime,
     float: right;
     /*width: 600px;*/
     text-align: left;
+    margin-top : -45px;
 }
 
 .ct-item {
@@ -983,7 +984,7 @@ a.ct-commenttime,
 }
 
 .ct-icon-facebook:hover:before {
-    color : #056495;
+    color : #3B5998;
 }
 
 .ct-icon-github:before {

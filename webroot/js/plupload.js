@@ -92,7 +92,7 @@ $(function($){
 	   }
 	});
 
-	$('.del').live('click',function(e){
+	$('body').on('click','.del', function(e){
 		e.preventDefault();
 		var elem = $(this);
 		if(confirm('Voulez vous vraiment supprimer cette image ?')){
@@ -108,13 +108,15 @@ $(function($){
 			  	data: { id : $("#inputid").val() , img : imgName }
 			}).done(function(data){
 				console.log(data);
+			}).error(function(data){
+				console.log(data);
 			});
 			elem.parent().parent().slideUp(); 
 		}
 		return false; 
 	});
 
-	$('#deleteAllImgs').live('click',function(e){
+	$('body').on('click','#deleteAllImgs',function(e){
 		e.preventDefault();
 		var elem = $(this);
 		filesData = [];

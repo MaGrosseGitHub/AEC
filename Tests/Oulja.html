@@ -1,0 +1,87 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polygon</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script>
+    function DMStoDD($deg,$min,$sec)
+    {
+
+        // Converting DMS ( Degrees / minutes / seconds ) to decimal format
+        return $deg+((($min*60)+($sec))/3600);
+    } 
+
+    function DDtoDMS($dec)
+    {
+        // Converts decimal format to DMS ( Degrees / minutes / seconds ) 
+        $vars = explode(".",$dec);
+        $deg = $vars[0];
+        $tempma = "0.".$vars[1];
+
+        $tempma = $tempma * 3600;
+        $min = floor($tempma / 60);
+        $sec = $tempma - ($min*60);
+
+        return {"deg" : $deg,"min" : $min,"sec" : $sec};
+    }
+
+    // $test = DMStoDD(33, 59, 02);
+    // console.log($test);
+    // $test = DMStoDD(06 , 45, 35);
+    // console.log($test);
+// This example creates a simple polygon representing the Bermuda Triangle.
+
+function initialize() {
+  var mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(33.9839, -6.7597),
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var bermudaTriangle;
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // Define the LatLng coordinates for the polygon's path.
+  var triangleCoords = [
+    new google.maps.LatLng(33.9839, -6.7597),
+    new google.maps.LatLng(33.9856, -6.7436),
+    new google.maps.LatLng(33.9228, -6.7986),
+    new google.maps.LatLng(33.935, -6.8017)
+  ];
+
+  // Construct the polygon.
+  bermudaTriangle = new google.maps.Polygon({
+    paths: triangleCoords,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+
+  bermudaTriangle.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
+

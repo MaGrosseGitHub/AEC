@@ -4,33 +4,36 @@ class OrganizationsController extends Controller{
 	/**
 	* Blog, liste les articles
 	**/
-	function index($user = null){
-		$perPage = 5; 
-		if(isset($user) && !empty($user))
-			$perPage = 1000;
-
-		$this->loadModel('Post');
-		if(!isset($user) || empty($user))
-			$condition = array('online' => 1,'type'=>'post'); 
-		elseif(isset($user) && !empty($user))
-			$condition = array('online' => 1,'type'=>'post', 'user_id'=>$user);
-		$fields = ['id', 'name', 'created', 'online', 'type', 'slug', 'user_id', 'category_id'];
-		$fields = implode(",", $fields).', LEFT(content, 500) as content';
-		// SELECT LEFT(field name, 40) FROM table name WHERE condition for first 40 and 
-		// SELECT RIGHT(field name, 40) FROM table name WHERE condition for last 40
+	function index(){
+		$this->loadModel('Author');
+		$condition = array('type'=>'organization'); 
+		$fields = ['id', 'firstName', 'lastName', 'type', 'slug'];
+		$fields = implode(",", $fields);
 		$options = array(
 			'conditions' => $condition,
 			'fields' => $fields,
-			'order'      => 'created DESC',
-			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
+			'order'      => 'firstName'
 		);
-		$d['posts'] = $this->Post->find($options);
+		$d['organizations'] = $this->Author->find($options);
 
-		$d['total'] = $this->Post->findCount($condition); 
-		$d['page'] = ceil($d['total'] / $perPage);
-		$d['curPage'] = $this->request->page;
-		$d["title_for_layout"] = "Index";
+		$orderedOrga = array();
+		foreach ($d['organizations'] as $resKey => $result) {
+			if(strtolower($result->firstName) == "other")
+				continue;
+			$firstLetter = strtoupper(substr($result->firstName, 0, 1));
 
+			if(!isset($orderedOrga[$firstLetter])){
+				$orderedOrga[$firstLetter] = array();
+			}
+
+			if(isset($orderedOrga[$firstLetter]) ){
+				array_push($orderedOrga[$firstLetter], $result);
+				sort($orderedOrga[$firstLetter]);
+			} 
+		}
+
+		$d['orderOrga'] = $orderedOrga;
+		$d["title_for_layout"] = "CE : Orgnization Index";
 		$this->set($d);
 	}
 

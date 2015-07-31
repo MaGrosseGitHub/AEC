@@ -5,36 +5,25 @@ class AuthorsController extends Controller{
 	* Blog, liste les articles
 	**/
 	function index(){
-		$perPage = 5; 
-
 		$this->loadModel('Author');
-		if(!isset($user) || empty($user))
-			$condition = array('type'=>'individual'); 
+		$condition = array('type'=>'individual'); 
 		$fields = ['id', 'firstName', 'lastName', 'organization', 'slug'];
 		$fields = implode(",", $fields);
-		// SELECT LEFT(field name, 40) FROM table name WHERE condition for first 40 and 
-		// SELECT RIGHT(field name, 40) FROM table name WHERE condition for last 40
 		$options = array(
 			'conditions' => $condition,
 			'fields' => $fields,
-			'order'      => 'organization',
-			'limit'      => ($perPage*($this->request->page-1)).','.$perPage
+			'order'      => 'organization'
 		);
 		$d['authors'] = $this->Author->find($options);
-		debug('<br><br><br><br><br><br>');
 
 		$organizationAuthor = array();
 		foreach($d['authors'] as $aEntry) {
 		    $organizationAuthor[strtolower($aEntry->organization)][] = $aEntry;
+		    sort($organizationAuthor[strtolower($aEntry->organization)]);
 		}
 		$d['authors'] = $organizationAuthor;
-		debug($d['authors']);
 
-		$d['total'] = $this->Author->findCount($condition); 
-		$d['page'] = ceil($d['total'] / $perPage);
-		$d['curPage'] = $this->request->page;
 		$d["title_for_layout"] = "Authors Index";
-
 		$this->set($d);
 	}
 

@@ -621,3 +621,13 @@ function rrmdir($dir) {
 function stringToColorCode($color) {
   return dechex(hexdec(str_replace('#', '', $color)));
 }
+
+function _mime_content_type($filename) {
+    $result = new finfo(FILEINFO_MIME_TYPE);
+
+    if (is_resource($result) === true) {
+        return $result->file($filename);
+    }
+
+    return false;
+}
