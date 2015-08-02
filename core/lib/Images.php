@@ -7,7 +7,7 @@ class Images{
     self::$pathToLib  = ROOT.DS.'core'.DS.'lib/imagine.phar';
   }
 
-  static public function convert($image, $format = "jpg", $unlink = false, $watermark = false, $quality = 100, $watermarkImg = null, $watermarkOpacity = null){
+  static public function convert($image, $format = "jpg", $unlink = false, $watermark = false, $quality = 100, $watermarkImg = null, $watermarkOpacity = null, $saveToBDD = true){
     if(self::checkFormat($format)) {
       self::init();
       require_once self::$pathToLib;
@@ -30,7 +30,9 @@ class Images{
       if($unlink && $ext != $format) {
         unlink($image);
       }
-      Images::SetImgBDD($dest);
+      if($saveToBDD)
+        Images::SetImgBDD($dest);
+
       return $dest;
     } else {
       return false;
@@ -257,7 +259,7 @@ class Images{
               move_uploaded_file($img['tmp_name'], $saveOptions['directory'] .'/'. $saveOptions['imgName'] .'.'.$extension_upload);
               $image = $saveOptions['directory'] .'/'. $saveOptions['imgName'] .'.'.$extension_upload;
               if(isset($saveOptions['convert']) && $saveOptions['convert']){                
-                self::convert($image, "jpg", true, false);
+                self::convert($image, "jpg", true, false, 100, null, null, false);
                 $converted = true;
               }
               if(isset($saveOptions['resize']) && $saveOptions['resize']){

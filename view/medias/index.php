@@ -1683,16 +1683,16 @@
             }
 
             //Filter function
-            $(".filelist li").DataFilter({
-              div : true,
-              appendTo : $('div.galleryFilters'),
-              callbackEvent : ['click', 'keyup'],
-              callback : [function(){
-                filterCallbackFunction();
-              }, function(){
-                filterCallbackFunction();
-              }]
-            });
+            // $(".filelist li").DataFilter({
+            //   div : true,
+            //   appendTo : $('div.galleryFilters'),
+            //   callbackEvent : ['click', 'keyup'],
+            //   callback : [function(){
+            //     filterCallbackFunction();
+            //   }, function(){
+            //     filterCallbackFunction();
+            //   }]
+            // });
 
             //infinite ajax scroll loader
             if(!phpIsAlbum){

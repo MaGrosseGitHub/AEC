@@ -13,7 +13,7 @@
       <?php require CORE.DS.'jsIncludes.php'; ?>      
     </head>
     <body>  
-    <span style ="min-height : 100%, position : relative">
+    <!-- <span style ="min-height : 100%, position : relative"> -->
       <header class="ct-header">
         <div class="ct-inner ct-cf">  
 
@@ -50,14 +50,15 @@
           </div>
 
           <div class="ct-header-items-right ct-cf">
-            <div class="ct-search" id="ct-search" >
-              <form method="get" id="searchform" action="">
+            <div class="ct-search morphsearch" id="ct-search" >
+              <form class = "searchform" method="get" id="searchform" action="">
                 <div class="ct-search-input-wrap single-search">
                   <input id = "searchSlider" id="inputsearch" class="ct-search-input" placeholder="Search..." type="text" value="" name="s" />
                   <span class="twitter-typeahead">
                     <input  id="inputsearch" class="ct-search-input" placeholder="Search..." type="text" value="" name="s"/>
                     <input class="tt-hint" autocomplete="off" spellcheck="off" disabled="" type="text">
-                    <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query" placeholder="Search..." value="" name="s" id="s" type="text">
+                    <input dir="auto" spellcheck="false" autocomplete="off" class="ct-search-input tt-query morphsearch-input" placeholder="Search..." value="" name="s" id="s" type="text">
+                    <button class="morphsearch-submit" type="submit">Search</button>
                     <span class="ct-ted">ted</span>
                     <span class="tt-dropdown-menu">
                       <div class="tt-dataset-search" style = "max-height : 220px; overflow : hidden">
@@ -69,8 +70,31 @@
                 </div>
                 <input type="hidden" name="search-type" value="posts" />
                 <input class="ct-search-submit" type="submit" id="go" value=""><span class="ct-icon-search"></span>
-              </form>     
-              <!-- <div id="searchResults"></div>   -->
+              </form>  
+              <div class="morphsearch-content">
+                <div class="dummy-column">
+                  <h2>Posts</h2>
+                  <a class="dummy-media-object" href="http://twitter.com/SaraSoueidan">
+                    <img class="round" src="http://0.gravatar.com/avatar/81b58502541f9445253f30497e53c280?s=50&d=identicon&r=G" alt="Sara Soueidan"/>
+                    <h3>Sara Soueidan</h3>
+                  </a>
+                </div>
+                <div class="dummy-column">
+                  <h2>Authors</h2>
+                  <a class="dummy-media-object" href="http://tympanus.net/codrops/2014/08/05/page-preloading-effect/">
+                    <img src="img/thumbs/PagePreloadingEffect.png" alt="PagePreloadingEffect"/>
+                    <h3>Page Preloading Effect</h3>
+                  </a>
+                </div>
+                <div class="dummy-column">
+                  <h2>Organization</h2>
+                  <a class="dummy-media-object" href="http://tympanus.net/codrops/2014/10/07/tooltip-styles-inspiration/">
+                    <img src="img/thumbs/TooltipStylesInspiration.png" alt="TooltipStylesInspiration"/>
+                    <h3>Tooltip Styles Inspiration</h3>
+                  </a>
+                </div>
+              </div><!-- /morphsearch-content -->
+              <span class="morphsearch-close"></span>   
             </div>
             
             <ul class="ct-connect">
@@ -221,7 +245,7 @@
           </div>
         </div>
       </footer>
-  </span>
+  <!-- </span> -->
       <?php //echo HTML::JS("modal/classie"); ?>
       <?php //echo HTML::JS("mlpushmenu"); ?>
       <?php //echo HTML::CSS("icons"); ?>

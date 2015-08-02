@@ -1,5 +1,6 @@
 ﻿<!-- <title>TEST de title</title> -->
 <?php echo HTML::CSS("View/Posts/index"); ?>
+
 <span id="menuSelected">3</span>
 <div class="row">
 <div id="view"></div>
@@ -16,146 +17,315 @@
           <div class="grid-wrap">
             <div class="grid">
             <ul class="trucmuche cs-style-4">
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/1.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/2.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/3.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/4.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/5.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
-              <li>
+              <li class = "file">
                 <figure>
-                  <div><?php echo HTML::getImg("posts/6.jpg"); ?></div>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
                   <figcaption>
                     <h3>Safari</h3>
                     <span>Jacob Cummings</span>
-                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
                   </figcaption>
                 </figure>
               </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              <li class = "file">
+                <figure>
+                  <div>
+                    <?php //echo HTML::getImg("posts/1.jpg"); ?>                    
+                    <?php $slug = $img = "/AEC/webroot/img/galerie/club1/8AlVREBNk3MnSZJKfuq61382077589_150x100.jpg"; ?>
+                    <?php echo HTML::getImg('loading.gif', true, false, 'data-src="'.$img.'" class = "photo" slug = "'.$slug.'"', true); ?>  
+                  </div>
+                  <figcaption>
+                    <h3>Safari</h3>
+                    <span>Jacob Cummings</span>
+                    <a href="http://dribbble.com/shots/1116775-Safari">Take a look</a>                    
+                  </figcaption>
+                </figure>
+              </li>
+              
               
             </ul>
               <!-- <figure><?php echo HTML::getImg("posts/1.jpg"); ?></figure>
@@ -300,9 +470,18 @@
 <?php echo HTML::JS("View/Post/helper"); ?>
 <?php echo HTML::JS("View/Post/grid3d"); ?>
 
+<?php echo HTML::JS("jquery.unveil.min"); ?>
+
 <script type="text/javascript">
   menuSelected = 3;
   $(document).ready(function() {
+
+    $("li img").unveil(200, function(){
+      $(this).load(function() {
+        $(this).css('width', '240px').css('height', '212px');
+      });
+    });
+
     new grid3D( document.getElementById( 'grid3d' ) );
 
     $(window).resize(function() {

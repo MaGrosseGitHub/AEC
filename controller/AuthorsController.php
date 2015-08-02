@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 class AuthorsController extends Controller{
 	
 	/**
@@ -17,11 +17,25 @@ class AuthorsController extends Controller{
 		$d['authors'] = $this->Author->find($options);
 
 		$organizationAuthor = array();
+		$d['organizations'] = array();
 		foreach($d['authors'] as $aEntry) {
 		    $organizationAuthor[strtolower($aEntry->organization)][] = $aEntry;
 		    sort($organizationAuthor[strtolower($aEntry->organization)]);
+
+		    if(!in_array(strtolower($aEntry->organization), $d['organizations']))
+		    	$d['organizations'][] = strtolower($aEntry->organization);
 		}
 		$d['authors'] = $organizationAuthor;
+
+		$orgInfo = array();
+		foreach ($d['organizations'] as $singleOrgaInfo) {
+			$singleOrgaBDD = $this->Author->findFirst(array(
+				'conditions' => array('firstName' => $singleOrgaInfo),
+				'fields'     => 'id,slug'
+			));
+			$orgInfo[$singleOrgaInfo] = $singleOrgaBDD;
+		}
+		$d['organizations'] = $orgInfo;
 
 		$d["title_for_layout"] = "Authors Index";
 		$this->set($d);
@@ -63,7 +77,7 @@ class AuthorsController extends Controller{
 		if(!$this->Cache->read(Cache::AUTHOR.DS.$slug.DS.$slug)){			
 			$this->loadModel('Author');
 			$d['author']  = $this->Author->findFirst(array(
-				'fields'	 => 'Author.id,Author.slug,Author.firstName,Author.lastName,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
+				'fields'	 => 'Author.id,Author.slug,Author.firstName,Author.lastName,Author.slug,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
 				'conditions' => array('Author.id'=>$id,'Author.type'=>'individual')
 			));
 
@@ -115,6 +129,19 @@ class AuthorsController extends Controller{
 		$GLOBALS['title_for_layout'] = "Edit auteur";
 		$this->loadModel('Author'); 
 		if($id === null){
+			$author = $this->Author->findFirst(array(
+				'conditions' => array('type' => -1),
+			));
+			if(!empty($author)){
+				$id = $author->id;
+			}else{
+				$this->Author->save(array(
+					'type' => -1,
+				));
+				$id = $this->Author->id;
+			} 
+		}
+		if($id === null){
 			$id = "";
 		}
 		$d['id'] = $id; 
@@ -125,11 +152,13 @@ class AuthorsController extends Controller{
 				$this->request->data->slug = $slug;
 
 				$preDir = "tmp/Author/";
-				Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$slug, 'imgName' => $slug, "convert" => true));
-
 				$this->Author->save($this->request->data);
+
 				$cacheDir = Cache::AUTHOR.DS.$slug;
 				$this->Cache->write($slug, $this->request->data, $cacheDir, true);
+
+				Images::checkImg($this, $_FILES['file'], null, true, array('directory' => $preDir.$slug, 'imgName' => $slug, "convert" => true));
+				
 				$this->Notification->setFlash('Le contenu a bien été modifié', 'success'); 
 				$this->redirect('admin/authors/index'); 
 			}else{

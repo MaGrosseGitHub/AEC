@@ -33,7 +33,7 @@ class OrganizationsController extends Controller{
 		}
 
 		$d['orderOrga'] = $orderedOrga;
-		$d["title_for_layout"] = "CE : Orgnization Index";
+		$d["title_for_layout"] = "AEC : Orgnization Index";
 		$this->set($d);
 	}
 
@@ -76,6 +76,8 @@ class OrganizationsController extends Controller{
 				'fields'	 => 'Author.id,Author.slug,Author.firstName,Author.lastName,Author.website,Author.organization, Author.bio_'.strtoupper(Language::$curLang),
 				'conditions' => array('Author.id'=>$id,'Author.type'=>'individual')
 			));
+
+			debug($d['author']);
 
 			$cacheDir = Cache::AUTHOR.DS.$d['author']->slug;
 			$this->Cache->write($d['author']->slug, $d['author'], $cacheDir, true);

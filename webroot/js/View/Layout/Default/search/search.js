@@ -1,8 +1,10 @@
 jQuery(document).ready(function($) {
 	var $ctsearch = $( '#ct-search' ),
 		$ctsearchinput = $ctsearch.find('input.ct-search-input'),
+		$ctsearchinputView = $ctsearch.find('input.ct-search-input.tt-query'),
 		$body = $('html,body'),
 		$searchSuggestions = $('.twitter-typeahead'),
+		$singleSearchSuggestion = $('.tt-suggestion'),
 		$searchSlider = $("#searchSlider"),
 		$open = false,
 		openSearch = function() {
@@ -14,7 +16,7 @@ jQuery(document).ready(function($) {
 		    $open = true;
 			$searchSlider.on("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend", function(e){
 				if($open){
-					$('.ct-search-input-wrap.single-search').animate({width : 265}, 300);
+					$('.ct-search-input-wrap.single-search').animate({width : 265}, 300); //may conflict with css rules
 				    $searchSlider.hide();
 				    $searchSuggestions.show();
 					$ctsearchinput.focus();
@@ -41,6 +43,7 @@ jQuery(document).ready(function($) {
 		};
 
 	$searchSuggestions.hide();
+	$ctsearchinput.val("");
 	// $('.ct-search-input-wrap.single-search').hide();
 	$('.ct-search-input-wrap.single-search').width(0);
 
@@ -65,18 +68,22 @@ jQuery(document).ready(function($) {
 
 	$ctsearch.on('click',function(e) {
 		e.stopPropagation();
+
+		console.log($ctsearchinput);
+		console.log($ctsearch);
+		if($ctsearchinput.val() !== '' || $ctsearchinputView.val() !== ''){
+			alert("FUL SEARCH");
+		}
+
 		if( !$ctsearch.data('open') ) {
-
 			openSearch();
-
-			$searchSuggestions.off('click').on( 'click', function(e) {
-				return false;
-			} );
-
 			$body.off( 'click' ).on( 'click', function(e) {
 				closeSearch();
 			} );
 
+			$searchSuggestions.off('click').on( 'click', function(e) {
+				return false;
+			} );
 		}
 		else {
 			if( $ctsearchinput.val() === '' ) {
@@ -86,4 +93,94 @@ jQuery(document).ready(function($) {
 		}
 	});
 
+	$singleSearchSuggestion.off('click').on( 'click', function(e) {
+		alert("test click");
+		return false;
+	} );
+
 });
+
+
+			$(document).ready(function($) {
+				(function() {
+					var morphSearch = $("#ct-search")[0];
+					if($(morphSearch).length){
+						var input = morphSearch.querySelector( 'input.morphsearch-input' ),
+						ctrlClose = morphSearch.querySelector( 'span.morphsearch-close' ),
+						isOpen = isAnimating = false;
+					}
+						// show/hide search area
+					toggleSearch = function(evt) {
+						if($(morphSearch).length){
+							// return if open and the input gets focused
+							if( evt.type.toLowerCase() === 'focus' && isOpen ) return false;
+
+							var offsets = morphSearch.getBoundingClientRect();
+							if( isOpen ) {
+								classie.remove( morphSearch, 'open' );
+
+								// trick to hide input text once the search overlay closes 
+								// todo: hardcoded times, should be done after transition ends
+								if( input.value !== '' ) {
+									setTimeout(function() {
+										classie.add( morphSearch, 'hideInput' );
+										setTimeout(function() {
+											classie.remove( morphSearch, 'hideInput' );
+											input.value = '';
+										}, 300 );
+									}, 500);
+								}
+								
+								input.blur();
+								searchEnterPressed = false;
+								$('.morphsearch-submit').hide();
+							}
+							else {
+								classie.add( morphSearch, 'open' );
+								$('.morphsearch-submit').show();
+							}
+							isOpen = !isOpen;
+						} else {
+							return false;
+						}
+					};
+
+					// events
+					// input.addEventListener( 'focus', toggleSearch );
+					searchEnterPressed = false;
+					$('.morphsearch-submit').hide();
+					$(input).keydown(function(e) {
+						if(e.keyCode == 13)
+					    {
+					    	e.preventDefault();
+					        $(this).trigger("enterKey");	
+					    }
+						$(input).bind("enterKey",function(e){
+							if(!searchEnterPressed){
+								e.preventDefault();
+								toggleSearch(e);
+								searchEnterPressed = true;
+							}
+						});
+					});
+
+					if($(morphSearch).length){
+						ctrlClose.addEventListener( 'click', toggleSearch );
+					}
+					// esc key closes search overlay
+					// keyboard navigation events
+					document.addEventListener( 'keydown', function( ev ) {
+						var keyCode = ev.keyCode || ev.which;
+						if( keyCode === 27 && isOpen ) {
+							toggleSearch(ev);
+						}
+					} );
+
+					$("form.searchform").submit(function (e) {
+      					e.preventDefault();
+      				});
+
+					/***** for demo purposes only: don't allow to submit the form *****/
+					// morphSearch.querySelector( 'button[type="submit"]' ).addEventListener( 'click', function(ev) { ev.preventDefault(); } );
+				})();
+			});

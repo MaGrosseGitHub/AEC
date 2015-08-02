@@ -775,3 +775,65 @@ p.dummy-text:nth-child(3) {
 .tructruc li.shown h3 {
 	visibility: visible;
 }
+
+
+
+.file .photo, .albumImg .photoAlbum {
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
+  -ms-filter: grayscale(0);
+  -o-filter: grayscale(0);
+  filter: grayscale(0);
+
+  transition:all 0.25s linear;
+  -webkit-transition:all 0.25s linear;
+  -moz-transition:all 0.25s linear;
+  -ms-transition:all 0.25s linear;
+  -o-transition:all 0.25s linear;
+}
+.file:hover .photo, .albumImg:hover .photoAlbum  {
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
+  -ms-filter: grayscale(1);
+  -o-filter: grayscale(1);
+  filter: grayscale(1);
+
+  transition:all 0.25s linear;
+  -webkit-transition:all 0.25s linear;
+  -moz-transition:all 0.25s linear;
+  -ms-transition:all 0.25s linear;
+  -o-transition:all 0.25s linear;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
+  -ms-filter: grayscale(1);
+  -o-filter: grayscale(1);
+  filter: grayscale(1);
+
+  transition:all 0.25s linear;
+  -webkit-transition:all 0.25s linear;
+  -moz-transition:all 0.25s linear;
+  -ms-transition:all 0.25s linear;
+  -o-transition:all 0.25s linear;
+}
+
+.grayscaleLeave {
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
+  -ms-filter: grayscale(0);
+  -o-filter: grayscale(0);
+  filter: grayscale(0);
+
+  transition:all 1s linear;
+  -webkit-transition:all 1s linear;
+  -moz-transition:all 1s linear;
+  -ms-transition:all 1s linear;
+  -o-transition:all 1s linear;
+}
+
+.file{
+  transition: margin-top 350ms ease; 
+  -webkit-transition: margin-top 350ms ease;
+}

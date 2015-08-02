@@ -54,10 +54,13 @@ class HTML{
 			$distant = true;
 			$newUrl = $url;
 		}
-		if(file_exists($imgPath.$url) || $distant) {
+		if(file_exists($imgPath.$url) || $distant || file_exists($url)) {
 			if(!$custom) {
 				$newUrl = '<img src="'.$newUrl.'" '.$options.'>';
 			} 
+			if(file_exists($url)){
+				$newUrl = '<img src="'.Router::webroot($url).'" '.$options.'>';
+			}
 			return $newUrl;
 		} else {
 			$noPicfile = "img_not_found.png";

@@ -14,6 +14,8 @@
 
     ?>
     <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="//flatstrap.goradiantweb.com/files/cache/css/flatstrap/assets/css/bootstrap-responsive.css"> -->
+
     <!-- <link rel="stylesheet" href="//twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css"> -->
     <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/flick/jquery-ui.css">-->
     <?php     
@@ -43,6 +45,7 @@
 
 <?php echo HTML::CSS("View/Layout/Default/main"); ?>
 <?php echo HTML::CSS("View/Layout/default/menu"); ?>
+<?php echo HTML::CSS("View/Layout/default/fullsearch"); ?>
 <?php echo HTML::CSS("View/Layout/default/morphingButtons"); ?>
 
 <!-- ************************************** ************ ******************************************* -->

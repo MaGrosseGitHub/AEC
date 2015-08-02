@@ -578,7 +578,8 @@ Custom icons
 }
 
 .nl-submit:before {
-  content: "\e600";
+  content: "\e73c";
+  font-family: 'icomoon';
   color: #fff;
   float: left;
   padding: 0 0.7em;

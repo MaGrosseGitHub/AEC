@@ -182,6 +182,7 @@ jQuery(function($){
 		return false;
 	});
 
+
 	$resultsCount = 0;
 	$slyLoaded = false;
 	$(".twitter-typeahead").children("#s").keyup(function(e) {
@@ -305,21 +306,22 @@ jQuery(function($){
 						}
 					}
 				},
-				error: function (e) {
-					console.log(e.message);
+				error: function (response) {
+					console.log(response.message);
 				}
 			});
+
+		    // if(e.keyCode == 13)
+		    // {
+		    // 	alert("TEST ENTER");
+		    //     $(this).trigger("enterKey");
+		    // }
 		} else if(search.length == 0){
 			$('#searchResults').html("");
 		}
-
-	    if(e.keyCode == 13)
-	    {
-	        $(this).trigger("enterKey");
-	    }
 	});
-	$('#inputsearch').bind("enterKey",function(e){
-		alert("test");
-	});
+	// $('#inputsearch').bind("enterKey",function(e){
+	// 	alert("test");
+	// });
 
 });
